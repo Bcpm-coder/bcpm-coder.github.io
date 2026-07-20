@@ -1,0 +1,153 @@
+<div class="blog-reader" [class.light-theme]="theme() === 'light'">
+  <header class="blog-toolbar">
+    <div class="toolbar-brand">
+      <span class="brand-mark">E</span>
+      <div>
+        <strong>EVEROOT JOURNAL</strong>
+        <small>Markdown Reading Room</small>
+      </div>
+    </div>
+
+    <div class="toolbar-actions">
+      <button
+        type="button"
+        class="library-toggle"
+        [attr.aria-expanded]="libraryOpen()"
+        aria-label="打开文章目录"
+        (click)="toggleLibrary()">
+        <span aria-hidden="true">☰</span>
+        目录
+      </button>
+
+      <div class="theme-switch" role="group" aria-label="阅读主题">
+        <button
+          type="button"
+          [class.active]="theme() === 'light'"
+          [attr.aria-pressed]="theme() === 'light'"
+          (click)="setTheme('light')">
+          <span aria-hidden="true">☼</span>
+          Light
+        </button>
+        <button
+          type="button"
+          [class.active]="theme() === 'dark'"
+          [attr.aria-pressed]="theme() === 'dark'"
+          (click)="setTheme('dark')">
+          <span aria-hidden="true">☾</span>
+          Dark
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="blog-content" [class.library-open]="libraryOpen()">
+    <button
+      type="button"
+      class="library-backdrop"
+      aria-label="关闭文章目录"
+      (click)="closeLibrary()">
+    </button>
+    <aside class="library">
+      <header class="library-header">
+        <span class="brand-kicker">NOTES & STORIES</span>
+        <h2>博客</h2>
+        <p>记录学习、生活与偶尔的碎碎念</p>
+      </header>
+
+      <label class="search-box">
+        <span aria-hidden="true">⌕</span>
+        <input
+          type="search"
+          placeholder="搜索文章或标签"
+          [value]="query()"
+          (input)="onSearch($event)"
+          aria-label="搜索博客文章">
+      </label>
+
+      <nav class="category-list" aria-label="文章分类">
+        @for (category of categories; track category) {
+          <button
+            type="button"
+            [class.active]="activeCategory() === category"
+            [attr.aria-pressed]="activeCategory() === category"
+            (click)="selectCategory(category)">
+            <span>{{ category }}</span>
+            <strong>{{ categoryCount(category) }}</strong>
+          </button>
+        }
+      </nav>
+
+      <div class="library-summary">
+        <span>{{ activeCategory() === '全部' ? '全部文章' : activeCategory() }}</span>
+        <strong>{{ filteredPosts().length }} 篇</strong>
+      </div>
+
+      <nav class="post-list" aria-label="博客文章">
+        @for (post of filteredPosts(); track post.id) {
+          <button
+            type="button"
+            class="post-card"
+            [class.active]="activePost()?.id === post.id"
+            [attr.aria-current]="activePost()?.id === post.id ? 'page' : null"
+            (click)="selectPost(post)">
+            <span class="post-topline">
+              <span class="post-category">{{ post.category }}</span>
+              <span class="post-date">{{ post.date }}</span>
+            </span>
+            <strong>{{ post.title }}</strong>
+            <small>{{ post.excerpt }}</small>
+            <span class="post-meta">{{ post.tags.join(' / ') }}</span>
+          </button>
+        } @empty {
+          <p class="empty-list">没有匹配的文章。</p>
+        }
+      </nav>
+
+      <footer class="library-footer">
+        <span class="status-dot"></span>
+        Markdown Library
+      </footer>
+    </aside>
+
+    <main class="reading-pane">
+      @if (activePost(); as post) {
+        <header class="article-header">
+          <div class="article-kicker">
+            <span>{{ post.category }}</span>
+            <i></i>
+            <span>EVEROOT NOTES</span>
+          </div>
+          <h1>{{ post.title }}</h1>
+          <p>{{ post.excerpt }}</p>
+          <div class="article-meta">
+            <span>{{ post.date }}</span>
+            <i></i>
+            <span>不吃泡面</span>
+          </div>
+          <div class="article-tags">
+            @for (tag of post.tags; track tag) {
+              <span># {{ tag }}</span>
+            }
+          </div>
+        </header>
+
+        <article class="article-scroll">
+          @if (isLoading()) {
+            <div class="loading-state">
+              <span></span><span></span><span></span>
+              <p>正在读取 Markdown…</p>
+            </div>
+          } @else if (errorMessage()) {
+            <div class="reader-message">{{ errorMessage() }}</div>
+          } @else {
+            <div class="markdown-body" [innerHTML]="renderedContent()"></div>
+          }
+        </article>
+      } @else if (isLoading()) {
+        <div class="reader-message centered">正在加载博客…</div>
+      } @else {
+        <div class="reader-message centered">当前分类还没有文章。</div>
+      }
+    </main>
+  </div>
+</div>

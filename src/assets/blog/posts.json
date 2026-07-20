@@ -1,0 +1,82 @@
+[
+  {
+    "id": "welcome",
+    "title": "欢迎来到我的博客",
+    "excerpt": "关于这个 Markdown 博客阅读器，以及如何添加新文章。",
+    "date": "2026-07-20",
+    "readTime": "3 分钟阅读",
+    "category": "碎碎念",
+    "tags": ["随笔", "指南"],
+    "file": "/assets/blog/posts/welcome.md"
+  },
+  {
+    "id": "portfolio-notes",
+    "title": "构建个人主页的一些记录",
+    "excerpt": "从桌面交互到内容组织，记录这次个人主页的设计思路。",
+    "date": "2026-07-19",
+    "readTime": "4 分钟阅读",
+    "category": "学习",
+    "tags": ["前端", "Angular"],
+    "file": "/assets/blog/posts/portfolio-notes.md"
+  },
+  {
+    "id": "summer-evening",
+    "title": "夏日晚风与散步",
+    "excerpt": "离开屏幕后的一小段生活记录。",
+    "date": "2026-07-18",
+    "readTime": "2 分钟阅读",
+    "category": "生活",
+    "tags": ["日常", "散步"],
+    "file": "/assets/blog/posts/summer-evening.md"
+  },
+  {
+    "id": "cpp-stl-set",
+    "title": "C++ STL：set 高级数据结构",
+    "excerpt": "整理 set 的常用方法、红黑树特性与两种自定义排序方式。",
+    "date": "往期题解",
+    "readTime": "5 分钟阅读",
+    "category": "Coding",
+    "tags": ["C++", "STL", "set"],
+    "file": "/assets/blog/posts/C++ STL高级数据结构set.md"
+  },
+  {
+    "id": "cpp-stl-map",
+    "title": "C++ STL：map 高级数据结构",
+    "excerpt": "快速查阅 map 的增删查改、迭代器与 O(logN) 时间复杂度。",
+    "date": "往期题解",
+    "readTime": "3 分钟阅读",
+    "category": "Coding",
+    "tags": ["C++", "STL", "map"],
+    "file": "/assets/blog/posts/C++ STL高级数据结构map.md"
+  },
+  {
+    "id": "parity-game-solution",
+    "title": "奇偶游戏题解",
+    "excerpt": "使用前缀和思想与带权并查集判断区间奇偶约束何时产生矛盾。",
+    "date": "往期题解",
+    "readTime": "6 分钟阅读",
+    "category": "Coding",
+    "tags": ["AcWing", "并查集", "前缀和"],
+    "file": "/assets/blog/posts/奇偶游戏题解.md"
+  },
+  {
+    "id": "basic-math-1",
+    "title": "基础数学知识（一）",
+    "excerpt": "整理质数判定、质因数分解、线性筛与埃氏筛的原理和 C++ 实现。",
+    "date": "往期笔记",
+    "readTime": "7 分钟阅读",
+    "category": "Coding",
+    "tags": ["C++", "算法", "数论", "质数"],
+    "file": "/assets/blog/posts/基础数学知识1.md"
+  },
+  {
+    "id": "basic-math-2",
+    "title": "基础数学知识（二）",
+    "excerpt": "整理约数、约数个数与约数之和，以及欧几里得算法求最大公约数。",
+    "date": "往期笔记",
+    "readTime": "8 分钟阅读",
+    "category": "Coding",
+    "tags": ["C++", "算法", "数论", "约数", "GCD"],
+    "file": "/assets/blog/posts/基础数学知识2.md"
+  }
+]

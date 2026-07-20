@@ -1,5 +1,6 @@
-import { Component, Input, OnInit, Output, EventEmitter, signal, HostListener, ElementRef } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, signal, computed, HostListener, ElementRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { AudioSettingsService } from '../../services/audio-settings';
 
 @Component({
   selector: 'app-status-card',
@@ -8,23 +9,20 @@ import { CommonModule } from '@angular/common';
   styleUrl: './status-card.css',
 })
 export class StatusCardComponent implements OnInit {
+  private readonly elementRef = inject(ElementRef);
+  private readonly audioSettings = inject(AudioSettingsService);
+
   @Input() visible = false;
   @Input() lockScreen?: () => void;
   @Input() shutDown?: () => void;
   @Output() close = new EventEmitter<void>();
   
-  soundLevel = signal(75);
+  readonly soundLevel = computed(() => Math.round(this.audioSettings.volume() * 100));
   brightnessLevel = signal(100);
 
-  constructor(private elementRef: ElementRef) {}
-
   ngOnInit() {
-    const savedSound = localStorage.getItem('sound-level');
     const savedBrightness = localStorage.getItem('brightness-level');
     
-    if (savedSound) {
-      this.soundLevel.set(parseInt(savedSound));
-    }
     if (savedBrightness) {
       this.brightnessLevel.set(parseInt(savedBrightness));
       this.updateBrightness(this.brightnessLevel());
@@ -32,9 +30,8 @@ export class StatusCardComponent implements OnInit {
   }
 
   onSoundChange(event: Event) {
-    const value = (event.target as HTMLInputElement).value;
-    this.soundLevel.set(parseInt(value));
-    localStorage.setItem('sound-level', value);
+    const value = Number((event.target as HTMLInputElement).value);
+    this.audioSettings.setVolume(value / 100);
   }
 
   onBrightnessChange(event: Event) {

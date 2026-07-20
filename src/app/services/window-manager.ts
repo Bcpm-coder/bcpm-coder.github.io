@@ -23,6 +23,13 @@ export class WindowManagerService {
   private nextZIndex = signal(1000);
   private backgroundImage = signal('wall-1');
 
+  constructor() {
+    const savedBackground = localStorage.getItem('bg-image');
+    if (savedBackground) {
+      this.backgroundImage.set(savedBackground);
+    }
+  }
+
   getWindows() {
     return this.windows();
   }
@@ -79,12 +86,14 @@ export class WindowManagerService {
     const finalX = Math.max(5, Math.min(centerX + (windowCount * offsetPercent), 100 - windowWidthPercent - 5));
     const finalY = Math.max(5, Math.min(centerY + (windowCount * offsetPercent), 100 - windowHeightPercent - 5));
     
+    const opensMaximized = app.defaultMaximized === true;
+
     const newWindow: WindowState = {
       id: app.id,
       app,
       isOpen: true,
       isMinimized: false,
-      isMaximized: false,
+      isMaximized: opensMaximized,
       isFocused: true,
       x: finalX,
       y: finalY,
@@ -124,12 +133,6 @@ export class WindowManagerService {
     const window = windows.get(id);
     if (window) {
       window.isMaximized = !window.isMaximized;
-      if (window.isMaximized) {
-        window.x = 0;
-        window.y = 0;
-        window.width = 100;
-        window.height = 100;
-      }
       windows.set(id, window);
       this.windows.set(windows);
     }

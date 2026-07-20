@@ -7,10 +7,64 @@ export interface App {
   disabled: boolean;
   favourite: boolean;
   desktop_shortcut: boolean;
+  defaultMaximized?: boolean;
   isExternalApp?: boolean;
   url?: string;
   component?: any;
 }
+
+export interface Education {
+  school: string;
+  degree: string;
+  period: string;
+}
+
+export interface PortfolioProject {
+  name: string;
+  company?: string;
+  technologies: string[];
+  description: string;
+  impact: string[];
+}
+
+// Personal details live here so future customization only needs one file.
+export const PORTFOLIO_PROFILE = {
+  name: '不吃泡面',
+  headline: 'M.S. Student in Software Engineering at BUPT',
+  introduction: [] as string[],
+  education: [
+    {
+      school: '北京邮电大学（BUPT）',
+      degree: 'M.S. Student in Software Engineering',
+      period: '在读',
+    },
+  ] as Education[],
+  email: '',
+  github: 'github.com/bcpm-coder',
+};
+
+export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
+  {
+    name: 'Black Horse Review Platform',
+    technologies: ['Spring Boot', 'MySQL', 'Redis'],
+    description: 'A local lifestyle review application inspired by Dianping, built with Spring Boot, MySQL, and Redis.',
+    impact: [
+      'Supports user authentication, merchant discovery, coupon flash sales, social interactions, and user-generated reviews.',
+      'Uses Redis for caching, distributed locking, session management, and high-concurrency order processing to improve performance and system reliability.',
+    ],
+  },
+  {
+    name: 'Sales Data Analysis AI Agent',
+    technologies: ['Spring Boot', 'LangChain4j', 'MySQL', 'Redis', 'Qwen-Max', 'SSE'],
+    description: 'A sales data analysis AI Agent that enables sales managers to query business data through natural language without requiring additional reports or APIs.',
+    impact: [
+      'Provides five standardized tools for order queries, performance rankings, trend analysis, chart generation, and anomaly detection.',
+      'Supports multi-step tool calling, SSE streaming, conversation memory, role-based data access, caching, and prompt-injection protection.',
+      'Explicit capability boundaries improve tool-selection accuracy, while dynamic date injection ensures reliable handling of relative-time queries.',
+      'A limited ReAct iteration count prevents repeated tool calls and excessive token consumption, reducing report generation time from several hours to a few minutes.',
+    ],
+  },
+];
 
 @Injectable({
   providedIn: 'root'
@@ -19,15 +73,15 @@ export class AppConfigService {
   private apps: App[] = [
     {
       id: 'about',
-      title: 'About Eve',
-      icon: '/assets/themes/Yaru/system/user-home.png',
+      title: '关于我',
+      icon: '/assets/images/logos/avatar.jpg',
       disabled: false,
       favourite: true,
       desktop_shortcut: true,
     },
     {
       id: 'projects',
-      title: 'Projects',
+      title: '项目',
       icon: '/assets/themes/Yaru/system/folder.png',
       disabled: false,
       favourite: false,
@@ -35,7 +89,7 @@ export class AppConfigService {
     },
     {
       id: 'skills',
-      title: 'Skills',
+      title: '技能',
       icon: '/assets/themes/Yaru/system/folder.png',
       disabled: false,
       favourite: false,
@@ -43,33 +97,31 @@ export class AppConfigService {
     },
     {
       id: 'contact',
-      title: 'Contact Me',
+      title: '联系方式',
       icon: '/assets/themes/Yaru/apps/gedit.png',
       disabled: false,
       favourite: false,
       desktop_shortcut: true,
     },
     {
+      id: 'music',
+      title: '音乐',
+      icon: '/assets/themes/Yaru/apps/spotify.png',
+      disabled: false,
+      favourite: true,
+      desktop_shortcut: true,
+    },
+    {
       id: 'terminal',
-      title: 'Terminal',
+      title: '终端',
       icon: '/assets/themes/Yaru/apps/bash.png',
       disabled: false,
       favourite: true,
       desktop_shortcut: false,
     },
     {
-      id: 'github',
-      title: 'GitHub',
-      icon: '/assets/themes/Yaru/apps/github.png',
-      disabled: false,
-      favourite: false,
-      desktop_shortcut: true,
-      isExternalApp: true,
-      url: 'https://github.com/Everoot',
-    },
-    {
       id: 'settings',
-      title: 'Settings',
+      title: '设置',
       icon: '/assets/themes/Yaru/apps/gnome-control-center.png',
       disabled: false,
       favourite: true,
@@ -77,7 +129,7 @@ export class AppConfigService {
     },
     {
       id: 'chrome',
-      title: 'Google Chrome',
+      title: '浏览器',
       icon: '/assets/themes/Yaru/apps/chrome.png',
       disabled: false,
       favourite: true,
@@ -85,7 +137,7 @@ export class AppConfigService {
     },
     {
       id: 'trash',
-      title: 'Trash',
+      title: '回收站',
       icon: '/assets/themes/Yaru/system/user-trash-full.png',
       disabled: false,
       favourite: true,
@@ -101,13 +153,12 @@ export class AppConfigService {
     },
     {
       id: 'blog',
-      title: 'Blog',
-      icon: '/assets/images/logos/avatar.png',
+      title: '博客',
+      icon: '/assets/themes/Yaru/system/user-home.png',
       disabled: false,
       favourite: true,
       desktop_shortcut: true,
-      isExternalApp: true,
-      url: 'https://everoot.github.io/Blog/',
+      defaultMaximized: true,
     },
   ];
 

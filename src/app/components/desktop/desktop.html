@@ -2,13 +2,12 @@
   
   <!-- Top Navbar -->
   <app-navbar
-    [showAllApps]="showAllApps.bind(this)"
     (lockScreen)="onLockScreen()"
     (shutDown)="onShutDown()">
   </app-navbar>
   
   <!-- Windows Area -->
-  <div class="absolute h-full w-full bg-transparent" data-context="desktop-area">
+  <div class="absolute inset-0 h-full w-full bg-transparent" data-context="desktop-area">
     @for (windowState of windowManager.getWindows() | keyvalue; track windowState.key) {
       @if (windowState.value.isOpen && !windowState.value.isMinimized) {
         <app-window [windowState]="windowState.value"></app-window>
@@ -36,6 +35,10 @@
         [openApp]="openApp.bind(this)">
       </app-all-applications>
     </div>
+  }
+
+  @if (welcomeVisible()) {
+    <app-welcome-screen (enterDesktop)="enterDesktop()"></app-welcome-screen>
   }
 
 </div>

@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, signal, ViewChild, ElementRef, AfterViewC
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { WindowManagerService } from '../../../services/window-manager';
-import { AppConfigService } from '../../../services/app-config';
+import { AppConfigService, PORTFOLIO_PROFILE } from '../../../services/app-config';
 
 interface TerminalRow {
   id: number;
@@ -19,6 +19,7 @@ interface TerminalRow {
 })
 export class TerminalComponent implements OnInit, OnDestroy, AfterViewChecked {
   @ViewChild('terminalBody', { static: false }) terminalBody!: ElementRef;
+  readonly profile = PORTFOLIO_PROFILE;
   
   terminalRows = signal<TerminalRow[]>([]);
   currentDirectory = signal('~');
@@ -32,16 +33,17 @@ export class TerminalComponent implements OnInit, OnDestroy, AfterViewChecked {
   currentInputs: { [key: number]: string } = {};
   
   childDirectories: { [key: string]: string[] } = {
-    root: ['about', 'projects', 'skills', 'contact', 'resume.txt', 'README.md', '.git', '.config'],
+    root: ['about', 'projects', 'skills', 'contact', 'blog', 'resume.txt', 'README.md', '.git', '.config'],
     about: [],
     projects: ['agent-experience', 'oculomics-ai', 'housing-management', 'portfolio', 'ubuntu-portfolio'],
     skills: [],
     contact: [],
+    blog: [],
   };
 
   fileSystem: { [key: string]: { type: 'file' | 'directory', content?: string } } = {
-    'resume.txt': { type: 'file', content: 'Eve Liang\nFull-Stack Software Engineer\nEmail: byleve2022@gmail.com\nGitHub: github.com/Everoot' },
-    'README.md': { type: 'file', content: 'Welcome to Eve Liang\'s Portfolio Terminal!\n\nAvailable Commands:\n- help          Show available commands\n- ls            List directory contents\n- cd <dir>      Change directory\n- cat <file>    Display file contents\n- clear         Clear terminal\n- pwd           Show current directory\n- whoami        Show user information\n- history       Show command history\n- man <cmd>     Show manual for command' },
+    'resume.txt': { type: 'file', content: `${PORTFOLIO_PROFILE.name}\n${PORTFOLIO_PROFILE.headline}\nGitHub: ${PORTFOLIO_PROFILE.github}` },
+    'README.md': { type: 'file', content: `欢迎来到${PORTFOLIO_PROFILE.name}的个人主页终端！\n\n输入 help 查看可用命令。` },
     '.git': { type: 'directory' },
     '.config': { type: 'directory' },
   };
@@ -144,7 +146,7 @@ export class TerminalComponent implements OnInit, OnDestroy, AfterViewChecked {
       event.preventDefault();
       // Basic tab completion
       const partial = command.toLowerCase();
-      const commands = ['cd', 'ls', 'pwd', 'cat', 'echo', 'clear', 'exit', 'help', 'whoami', 'history', 'man', 'touch', 'mkdir', 'rm', 'mv', 'cp', 'about', 'projects', 'skills', 'contact', 'settings', 'code', 'chrome'];
+      const commands = ['cd', 'ls', 'pwd', 'cat', 'echo', 'clear', 'exit', 'help', 'whoami', 'history', 'man', 'touch', 'mkdir', 'rm', 'mv', 'cp', 'about', 'projects', 'skills', 'contact', 'blog', 'music', 'settings', 'code', 'chrome'];
       const matches = commands.filter(cmd => cmd.startsWith(partial));
       if (matches.length === 1) {
         input.value = matches[0] + ' ';
@@ -253,7 +255,7 @@ export class TerminalComponent implements OnInit, OnDestroy, AfterViewChecked {
                 const date = 'Jan 31 20:00';
                 const name = item;
                 const color = isDir ? 'text-ubt-blue' : 'text-white';
-                return `<span class="${color}">${type}${perms} 1 eve eve ${size} ${date} ${name}</span>`;
+                return `<span class="${color}">${type}${perms} 1 user user ${size} ${date} ${name}</span>`;
               }).join('<br>');
             } else {
               result = items.map(item => {
@@ -281,7 +283,7 @@ export class TerminalComponent implements OnInit, OnDestroy, AfterViewChecked {
               const date = 'Jan 31 20:00';
               const name = item;
               const color = isDir ? 'text-ubt-blue' : 'text-white';
-              return `<span class="${color}">${type}${perms} 1 eve eve ${size} ${date} ${name}</span>`;
+              return `<span class="${color}">${type}${perms} 1 user user ${size} ${date} ${name}</span>`;
             }).join('<br>');
           } else {
             result = items.map(item => {
@@ -294,7 +296,7 @@ export class TerminalComponent implements OnInit, OnDestroy, AfterViewChecked {
         break;
 
       case 'pwd':
-        result = this.currentDirectory().replace('~', '/home/eve');
+        result = this.currentDirectory().replace('~', '/home/user');
         break;
 
       case 'echo':
@@ -319,69 +321,81 @@ export class TerminalComponent implements OnInit, OnDestroy, AfterViewChecked {
         return;
 
       case 'help':
-        result = `Available Commands:<br>
-<span class="text-ubt-green">File Operations:</span><br>
-  ls [options] [dir]    List directory contents (-l: long format, -a: show hidden)<br>
-  cd [dir]              Change directory<br>
-  pwd                   Print working directory<br>
-  cat [file]            Display file contents<br>
-  touch [file]          Create empty file<br>
-  mkdir [dir]           Create directory<br>
-  rm [file]             Remove file<br>
-  mv [src] [dest]       Move/rename file<br>
-  cp [src] [dest]       Copy file<br>
+        result = `可用命令：<br>
+<span class="text-ubt-green">文件操作：</span><br>
+  ls [options] [dir]    列出目录内容<br>
+  cd [dir]              切换目录<br>
+  pwd                   显示当前目录<br>
+  cat [file]            查看文件内容<br>
+  touch [file]          创建空文件<br>
+  mkdir [dir]           创建目录<br>
+  rm [file]             删除文件<br>
+  mv [src] [dest]       移动或重命名<br>
+  cp [src] [dest]       复制文件<br>
 <br>
-<span class="text-ubt-green">System:</span><br>
-  whoami                Display current user<br>
-  history               Show command history<br>
-  clear                 Clear terminal<br>
-  exit                  Close terminal<br>
-  help                  Show this help message<br>
-  man [cmd]             Show manual for command<br>
+<span class="text-ubt-green">系统：</span><br>
+  whoami                显示当前用户<br>
+  history               显示命令历史<br>
+  clear                 清空终端<br>
+  exit                  关闭终端<br>
+  help                  显示帮助<br>
+  man [cmd]             显示命令手册<br>
 <br>
-<span class="text-ubt-green">Applications:</span><br>
-  about                 Open About window<br>
-  projects              Open Projects window<br>
-  skills                Open Skills window<br>
-  contact               Open Contact window<br>
-  settings              Open Settings window<br>
-  code                  Open VS Code<br>
-  chrome                Open Chrome browser`;
+<span class="text-ubt-green">应用：</span><br>
+  about                 打开关于我<br>
+  projects              打开项目<br>
+  skills                打开技能<br>
+  contact               打开联系方式<br>
+  blog                  打开博客<br>
+  music                 打开音乐播放器<br>
+  settings              打开设置<br>
+  code                  打开 VS Code<br>
+  chrome                打开浏览器`;
         break;
 
       case 'about':
         this.windowManager.openWindow(this.appConfig.getAppById('about')!);
-        result = 'Opening About window...';
+        result = '正在打开“关于我”……';
         break;
 
       case 'projects':
         this.windowManager.openWindow(this.appConfig.getAppById('projects')!);
-        result = 'Opening Projects window...';
+        result = '正在打开“项目”……';
         break;
 
       case 'skills':
         this.windowManager.openWindow(this.appConfig.getAppById('skills')!);
-        result = 'Opening Skills window...';
+        result = '正在打开“技能”……';
         break;
 
       case 'contact':
         this.windowManager.openWindow(this.appConfig.getAppById('contact')!);
-        result = 'Opening Contact window...';
+        result = '正在打开“联系方式”……';
+        break;
+
+      case 'music':
+        this.windowManager.openWindow(this.appConfig.getAppById('music')!);
+        result = '正在打开“音乐”……';
+        break;
+
+      case 'blog':
+        this.windowManager.openWindow(this.appConfig.getAppById('blog')!);
+        result = '正在打开“博客”……';
         break;
 
       case 'settings':
         this.windowManager.openWindow(this.appConfig.getAppById('settings')!);
-        result = 'Opening Settings window...';
+        result = '正在打开“设置”……';
         break;
 
       case 'code':
         this.windowManager.openWindow(this.appConfig.getAppById('vscode')!);
-        result = 'Opening VS Code...';
+        result = '正在打开 VS Code……';
         break;
 
       case 'chrome':
         this.windowManager.openWindow(this.appConfig.getAppById('chrome')!);
-        result = 'Opening Chrome...';
+        result = '正在打开浏览器……';
         break;
 
       case 'cat':
@@ -505,7 +519,7 @@ export class TerminalComponent implements OnInit, OnDestroy, AfterViewChecked {
         break;
 
       case 'whoami':
-        result = 'eve';
+        result = PORTFOLIO_PROFILE.name;
         break;
 
       case 'history':

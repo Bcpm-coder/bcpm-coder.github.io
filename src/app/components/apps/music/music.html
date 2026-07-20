@@ -1,0 +1,186 @@
+<div class="music-player" [style.--track-color]="currentTrack().color">
+  <audio
+    #audioPlayer
+    [attr.src]="currentTrack().src || null"
+    preload="metadata"
+    (loadstart)="isBuffering.set(true)"
+    (waiting)="isBuffering.set(true)"
+    (canplay)="isBuffering.set(false)"
+    (loadedmetadata)="updateDuration()"
+    (timeupdate)="updateTime()"
+    (playing)="markPlaying()"
+    (pause)="isPlaying.set(false)"
+    (ended)="handleEnded()"
+    (error)="handleAudioError()">
+  </audio>
+
+  <header class="player-toolbar">
+    <div class="toolbar-brand">
+      <span class="brand-mark">E</span>
+      <div><strong>EVEROOT AUDIO</strong><small>LOCAL LISTENING ROOM</small></div>
+    </div>
+    <div class="toolbar-status">
+      <span><i></i> LOCAL WAV</span>
+      <strong>{{ tracks().length }} TRACKS</strong>
+    </div>
+  </header>
+
+  <div class="music-content">
+    <section class="now-playing" aria-label="正在播放">
+      <div class="now-status">
+        <span class="eyebrow">NOW PLAYING · {{ (currentIndex() + 1).toString().padStart(2, '0') }}</span>
+        <span class="live-dot"><i></i>{{ isBuffering() ? 'LOADING' : (isPlaying() ? 'PLAYING' : 'READY') }}</span>
+      </div>
+
+      <div class="cover-scene" aria-hidden="true">
+        <div class="vinyl" [class.is-playing]="isPlaying()"><i></i></div>
+        <div class="cover-art">
+          <span class="cover-index">NO. {{ (currentIndex() + 1).toString().padStart(2, '0') }}</span>
+          <strong>{{ currentTrack().title.slice(0, 1) }}</strong>
+          <small>{{ currentTrack().album }}</small>
+        </div>
+      </div>
+
+      <div class="track-heading">
+        <span>{{ currentTrack().album }}</span>
+        <h2>{{ currentTrack().title }}</h2>
+        <p>{{ currentTrack().artist }} <i>·</i> {{ currentTrack().label }}</p>
+      </div>
+
+      <section class="lyrics-panel" [class.collapsed]="!showLyrics()" aria-label="同步文本" aria-live="off">
+        <button type="button" (click)="toggleLyrics()" [attr.aria-expanded]="showLyrics()">
+          <span>同步文本</span><strong>{{ showLyrics() ? '收起' : '展开' }}</strong>
+        </button>
+        @if (showLyrics()) {
+          <div class="lyric-lines">
+            @for (line of currentTrack().lyrics; track line.time; let index = $index) {
+              <p [class.active]="activeLyricIndex() === index">{{ line.text }}</p>
+            }
+          </div>
+        }
+      </section>
+
+      <div class="waveform" [class.is-playing]="isPlaying()" aria-hidden="true">
+        @for (bar of waveformBars; track $index) {
+          <i [style.height.%]="bar"></i>
+        }
+      </div>
+
+      <div class="progress-row">
+        <span>{{ formatTime(currentTime()) }}</span>
+        <input
+          class="range progress-range"
+          type="range"
+          min="0"
+          [max]="duration() || 0"
+          step="0.1"
+          [value]="currentTime()"
+          [style.--range-value]="progressPercent() + '%'"
+          (input)="seek($event)"
+          aria-label="播放进度">
+        <span>{{ formatTime(duration()) }}</span>
+      </div>
+
+      <div class="controls">
+        <button type="button" (click)="previous()" aria-label="上一首" title="上一首">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5v14M18 6l-9 6 9 6z" /></svg>
+        </button>
+        <button
+          class="play-button"
+          type="button"
+          [disabled]="libraryLoading() || !tracks().length"
+          (click)="togglePlayback()"
+          [attr.aria-label]="isPlaying() ? '暂停' : '播放'">
+          @if (isBuffering()) {
+            <span class="spinner"></span>
+          } @else if (isPlaying()) {
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5h3v14H8zM14 5h3v14h-3z" /></svg>
+          } @else {
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5l11 7-11 7z" /></svg>
+          }
+        </button>
+        <button type="button" (click)="next()" aria-label="下一首" title="下一首">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 5v14M6 6l9 6-9 6z" /></svg>
+        </button>
+      </div>
+
+      <div class="volume-row">
+        <button type="button" (click)="toggleMute()" [attr.aria-label]="volume() === 0 ? '取消静音' : '静音'" [title]="volume() === 0 ? '取消静音' : '静音'">
+          {{ volume() === 0 ? 'MUTE' : 'VOL' }}
+        </button>
+        <input
+          class="range"
+          type="range"
+          min="0"
+          max="1"
+          step="0.01"
+          [value]="volume()"
+          [style.--range-value]="volumePercent() + '%'"
+          (input)="changeVolume($event)"
+          aria-label="音量">
+        <strong>{{ volumePercent() }}</strong>
+      </div>
+
+      @if (errorMessage()) {
+        <p class="error-message">{{ errorMessage() }}</p>
+      }
+    </section>
+
+    <aside class="playlist" aria-label="播放列表">
+      <header class="playlist-heading">
+        <div><span class="eyebrow">CURATED PLAYLIST</span><h3>中国风轻音乐</h3></div>
+        <span class="track-count">{{ currentIndex() + 1 }} / {{ tracks().length }}</span>
+      </header>
+
+      <label class="library-search">
+        <span aria-hidden="true">⌕</span>
+        <input type="search" placeholder="搜索歌曲、歌手或专辑" [value]="query()" (input)="onSearch($event)" aria-label="搜索曲库">
+        <strong>{{ filteredTracks().length }}</strong>
+      </label>
+
+      <div class="mode-panel" aria-label="播放模式">
+        @for (mode of playbackModes; track mode.id) {
+          <button
+            type="button"
+            [class.active]="playbackMode() === mode.id"
+            (click)="setPlaybackMode(mode.id)"
+            [attr.aria-pressed]="playbackMode() === mode.id">
+            <span>{{ mode.icon }}</span>{{ mode.label }}
+          </button>
+        }
+      </div>
+
+      <div class="queue-label"><span>播放队列</span><span>PAGE {{ queuePage() + 1 }} / {{ queuePageCount() }}</span></div>
+      <div class="track-list">
+        @for (item of visibleTracks(); track item.track.title) {
+          <button
+            type="button"
+            class="track-item"
+            [class.active]="currentIndex() === item.index"
+            (click)="selectTrack(item.index)">
+            <span class="track-number">{{ (item.index + 1).toString().padStart(2, '0') }}</span>
+            <span class="track-color" [style.background]="item.track.color"></span>
+            <span class="track-copy">
+              <strong>{{ item.track.title }}</strong>
+              <small>{{ item.track.artist }} · {{ item.track.album }}</small>
+            </span>
+            <span class="track-state">{{ currentIndex() === item.index && isPlaying() ? 'Ⅱ' : '▶' }}</span>
+          </button>
+        } @empty {
+          <div class="empty-queue">没有匹配的歌曲</div>
+        }
+      </div>
+
+      <div class="queue-pagination">
+        <button type="button" [disabled]="queuePage() === 0" (click)="changeQueuePage(-1)" aria-label="上一页">←</button>
+        <span>{{ queuePage() + 1 }} / {{ queuePageCount() }}</span>
+        <button type="button" [disabled]="queuePage() >= queuePageCount() - 1" (click)="changeQueuePage(1)" aria-label="下一页">→</button>
+      </div>
+
+      <footer class="playlist-note">
+        <span><i></i> 曲库配置</span>
+        <code>assets/audio/tracks.json</code>
+      </footer>
+    </aside>
+  </div>
+</div>

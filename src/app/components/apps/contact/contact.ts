@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { PORTFOLIO_PROFILE } from '../../../services/app-config';
 
 @Component({
   selector: 'app-contact',
@@ -8,9 +9,5 @@ import { CommonModule } from '@angular/common';
   styleUrl: './contact.css',
 })
 export class ContactComponent {
-  contact = {
-    email: 'byleve2022@gmail.com',
-    github: 'github.com/Everoot',
-    location: 'Philadelphia, PA'
-  };
+  readonly contact = PORTFOLIO_PROFILE;
 }

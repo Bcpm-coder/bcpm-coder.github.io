@@ -1,0 +1,67 @@
+[
+  {
+    "title": "烟袋斜街",
+    "artist": "接个吻，开一枪",
+    "album": "City Walks",
+    "src": "/assets/audio/demo-morning.wav",
+    "color": "#ef8f5a",
+    "label": "试听占位",
+    "lyrics": [
+      { "time": 0, "text": "前奏响起，城市慢慢安静" },
+      { "time": 2.5, "text": "风从旧街的屋檐穿过" },
+      { "time": 5, "text": "把此刻留给耳机和夜色" }
+    ]
+  },
+  {
+    "title": "China-X",
+    "artist": "徐梦圆",
+    "album": "China Series",
+    "src": "/assets/audio/demo-walk.wav",
+    "color": "#e0a05a",
+    "label": "试听占位",
+    "lyrics": [
+      { "time": 0, "text": "古筝与电子节拍相遇" },
+      { "time": 2.5, "text": "旋律越过山川与长风" },
+      { "time": 5, "text": "一段轻音乐，一次远行" }
+    ]
+  },
+  {
+    "title": "China-E",
+    "artist": "徐梦圆",
+    "album": "China Series",
+    "src": "/assets/audio/demo-starlight.wav",
+    "color": "#65a98f",
+    "label": "试听占位",
+    "lyrics": [
+      { "time": 0, "text": "星光落进清澈的节拍" },
+      { "time": 2.5, "text": "留白之间，旋律继续生长" },
+      { "time": 5, "text": "让思绪跟随声音向前" }
+    ]
+  },
+  {
+    "title": "China-P",
+    "artist": "徐梦圆",
+    "album": "China Series",
+    "src": "/assets/audio/demo-morning.wav",
+    "color": "#7d83c7",
+    "label": "试听占位",
+    "lyrics": [
+      { "time": 0, "text": "晨雾散开，鼓点渐近" },
+      { "time": 2.5, "text": "熟悉的东方音色重新排列" },
+      { "time": 5, "text": "在循环里找到新的方向" }
+    ]
+  },
+  {
+    "title": "China-A",
+    "artist": "徐梦圆",
+    "album": "China Series",
+    "src": "/assets/audio/demo-walk.wav",
+    "color": "#b56f96",
+    "label": "试听占位",
+    "lyrics": [
+      { "time": 0, "text": "一束柔和的合成器铺开" },
+      { "time": 2.5, "text": "传统旋律落入现代节奏" },
+      { "time": 5, "text": "保持好奇，也保持松弛" }
+    ]
+  }
+]

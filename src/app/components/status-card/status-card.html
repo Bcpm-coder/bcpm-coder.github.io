@@ -1,5 +1,6 @@
 <div
   class="absolute bg-ub-cool-grey rounded-md py-4 top-9 right-3 shadow border-black border border-opacity-20 status-card"
+  (click)="$event.stopPropagation()"
   [class.visible]="visible"
   [class.invisible]="!visible"
   [class.animateShow]="visible">
@@ -48,7 +49,7 @@
       <img width="16px" height="16px" src="/assets/themes/Yaru/status/network-wireless-signal-good-symbolic.svg" alt="ubuntu wifi">
     </div>
     <div class="w-2/3 flex items-center justify-between text-gray-400">
-      <span>WiFi Network</span>
+      <span>Wi-Fi 网络</span>
       <div class="arrow-custom-right"></div>
     </div>
   </div>
@@ -59,7 +60,7 @@
       <img width="16px" height="16px" src="/assets/themes/Yaru/status/bluetooth-symbolic.svg" alt="ubuntu bluetooth">
     </div>
     <div class="w-2/3 flex items-center justify-between text-gray-400">
-      <span>Bluetooth</span>
+      <span>蓝牙</span>
       <div class="arrow-custom-right"></div>
     </div>
   </div>
@@ -77,7 +78,7 @@
       <img width="16px" height="16px" src="/assets/themes/Yaru/status/system-shutdown-symbolic.svg" alt="ubuntu lock">
     </div>
     <div class="w-2/3 text-gray-400">
-      <span>Lock Screen</span>
+      <span>锁定屏幕</span>
     </div>
   </div>
   
@@ -89,7 +90,7 @@
       <img width="16px" height="16px" src="/assets/themes/Yaru/status/power-button.svg" alt="ubuntu power">
     </div>
     <div class="w-2/3 text-gray-400">
-      <span>Shut Down</span>
+      <span>关机</span>
     </div>
   </div>
 </div>

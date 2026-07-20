@@ -8,5 +8,5 @@ import { DesktopComponent } from './components/desktop/desktop';
   styleUrl: './app.css'
 })
 export class App {
-  title = 'Eve Liang - Portfolio';
+  title = '不吃泡面 - 个人主页';
 }

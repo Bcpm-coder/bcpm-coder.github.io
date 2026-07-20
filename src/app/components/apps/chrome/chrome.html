@@ -4,12 +4,12 @@
     <div 
       (click)="refreshChrome()" 
       class="ml-2 mr-1 flex justify-center items-center rounded-full bg-gray-50 bg-opacity-0 hover:bg-opacity-10 cursor-pointer">
-      <img class="w-5" src="/assets/themes/Yaru/status/chrome_refresh.svg" alt="Ubuntu Chrome Refresh" />
+      <img class="w-5" src="/assets/themes/Yaru/status/chrome_refresh.svg" alt="刷新" />
     </div>
     <div 
       (click)="goToHome()" 
       class="mr-2 ml-1 flex justify-center items-center rounded-full bg-gray-50 bg-opacity-0 hover:bg-opacity-10 cursor-pointer">
-      <img class="w-5" src="/assets/themes/Yaru/status/chrome_home.svg" alt="Ubuntu Chrome Home" />
+      <img class="w-5" src="/assets/themes/Yaru/status/chrome_home.svg" alt="主页" />
     </div>
     <input 
       #urlBar
@@ -28,6 +28,6 @@
     [src]="safeUrl" 
     class="flex-grow" 
     frameborder="0" 
-    title="Ubuntu Chrome Url">
+    title="浏览器页面">
   </iframe>
 </div>

@@ -21,10 +21,10 @@
       <span 
         class="mx-0.5 md:mx-1.5 bg-white bg-opacity-0 hover:bg-opacity-10 rounded-full flex justify-center mt-0.5 md:mt-1 h-4 w-4 md:h-5 md:w-5 items-center cursor-pointer"
         (click)="minimize()"
-        title="Minimize">
+        title="最小化">
         <img
           src="/assets/themes/Yaru/window/window-minimize-symbolic.svg"
-          alt="Minimize"
+          alt="最小化"
           class="h-4 w-4 md:h-5 md:w-5 inline"
         />
       </span>
@@ -32,10 +32,10 @@
         <span 
           class="mx-1 md:mx-2 bg-white bg-opacity-0 hover:bg-opacity-10 rounded-full flex justify-center mt-0.5 md:mt-1 h-4 w-4 md:h-5 md:w-5 items-center cursor-pointer"
           (click)="maximize()"
-          title="Restore">
+          title="还原">
           <img
             src="/assets/themes/Yaru/window/window-restore-symbolic.svg"
-            alt="Restore"
+            alt="还原"
             class="h-4 w-4 md:h-5 md:w-5 inline"
           />
         </span>
@@ -43,10 +43,10 @@
         <span 
           class="mx-1 md:mx-2 bg-white bg-opacity-0 hover:bg-opacity-10 rounded-full flex justify-center mt-0.5 md:mt-1 h-4 w-4 md:h-5 md:w-5 items-center cursor-pointer"
           (click)="maximize()"
-          title="Maximize">
+          title="最大化">
           <img
             src="/assets/themes/Yaru/window/window-maximize-symbolic.svg"
-            alt="Maximize"
+            alt="最大化"
             class="h-4 w-4 md:h-5 md:w-5 inline"
           />
         </span>
@@ -56,10 +56,10 @@
         [id]="'close-' + windowState.id"
         class="mx-0.5 md:mx-1.5 focus:outline-none cursor-default bg-ub-orange bg-opacity-90 hover:bg-opacity-100 rounded-full flex justify-center mt-0.5 md:mt-1 h-4 w-4 md:h-5 md:w-5 items-center"
         (click)="close()"
-        title="Close">
+        title="关闭">
         <img
           src="/assets/themes/Yaru/window/window-close-symbolic.svg"
-          alt="Close"
+          alt="关闭"
           class="h-4 w-4 md:h-5 md:w-5 inline"
         />
       </button>
@@ -116,7 +116,10 @@
   }
 
   <!-- Window Content -->
-  <div class="w-full flex-grow z-20 max-h-full overflow-y-auto windowMainScreen bg-ub-cool-grey">
+  <div
+    class="w-full flex-grow z-20 min-h-0 max-h-full windowMainScreen bg-ub-cool-grey"
+    [class.overflow-hidden]="windowState.app.id === 'blog' || windowState.app.id === 'music'"
+    [class.overflow-y-auto]="windowState.app.id !== 'blog' && windowState.app.id !== 'music'">
     @switch (windowState.app.id) {
       @case ('about') {
         <app-about></app-about>
@@ -129,6 +132,12 @@
       }
       @case ('contact') {
         <app-contact></app-contact>
+      }
+      @case ('music') {
+        <app-music></app-music>
+      }
+      @case ('blog') {
+        <app-blog></app-blog>
       }
       @case ('terminal') {
         <app-terminal></app-terminal>

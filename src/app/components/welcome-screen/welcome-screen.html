@@ -1,0 +1,51 @@
+<section
+  class="welcome-screen"
+  [class.is-leaving]="leaving()"
+  [attr.aria-busy]="leaving()"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="welcome-title"
+  (animationend)="onExitAnimationEnd($event)">
+  <div class="ambient ambient-one" aria-hidden="true"></div>
+  <div class="ambient ambient-two" aria-hidden="true"></div>
+  <div class="grid" aria-hidden="true"></div>
+  <div class="scan-line" aria-hidden="true"></div>
+
+  <header class="system-bar">
+    <span class="system-name"><i></i> EVEROOT / PERSONAL SYSTEM</span>
+    <span class="system-status">SYSTEM READY</span>
+  </header>
+
+  <main class="welcome-content">
+    <div class="mark" aria-hidden="true">
+      <span class="orbit orbit-outer"></span>
+      <span class="orbit orbit-inner"></span>
+      <img class="mark-avatar" src="/assets/images/logos/avatar.jpg" alt="">
+    </div>
+
+    <div class="intro">
+      <p class="eyebrow"><span></span> PERSONAL WORKSPACE</p>
+      <h1 id="welcome-title">欢迎进入<br><strong>bcpm 的 Blog</strong></h1>
+      <p class="description">代码、项目与生活片段，都在这里慢慢生长。</p>
+
+      <button type="button" class="enter-button" autofocus [disabled]="leaving()" (click)="confirmEntry()">
+        <span>进入桌面</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M5 12h14M14 7l5 5-5 5" />
+        </svg>
+      </button>
+      <p class="hint">点击确认，开启本次浏览</p>
+    </div>
+  </main>
+
+  <footer class="welcome-footer">
+    <div class="clock">
+      <strong>{{ time() }}</strong>
+      <span>{{ date() }}</span>
+    </div>
+    <div class="boot-sequence" aria-hidden="true">
+      <span>LOADING PROFILE</span>
+      <i></i><i></i><i></i><i></i><i></i>
+    </div>
+  </footer>
+</section>

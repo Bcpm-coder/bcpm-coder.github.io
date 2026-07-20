@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, signal, computed } from '@angular/core';
+import { Component, OnInit, OnDestroy, signal } from '@angular/core';
 import { CommonModule, KeyValuePipe } from '@angular/common';
 import { AppConfigService, App } from '../../services/app-config';
 import { WindowManagerService } from '../../services/window-manager';
@@ -7,10 +7,11 @@ import { SidebarComponent } from '../sidebar/sidebar';
 import { WindowComponent } from '../window/window';
 import { NavbarComponent } from '../navbar/navbar';
 import { AllApplicationsComponent } from '../all-applications/all-applications';
+import { WelcomeScreenComponent } from '../welcome-screen/welcome-screen';
 
 @Component({
   selector: 'app-desktop',
-  imports: [CommonModule, KeyValuePipe, DesktopIconComponent, SidebarComponent, WindowComponent, NavbarComponent, AllApplicationsComponent],
+  imports: [CommonModule, KeyValuePipe, DesktopIconComponent, SidebarComponent, WindowComponent, NavbarComponent, AllApplicationsComponent, WelcomeScreenComponent],
   templateUrl: './desktop.html',
   styleUrl: './desktop.css',
 })
@@ -19,6 +20,7 @@ export class DesktopComponent implements OnInit, OnDestroy {
   hideSidebar = signal(false);
   backgroundImage = signal('wall-1');
   allAppsView = signal(false);
+  welcomeVisible = signal(true);
   private backgroundChangeHandler?: (event: any) => void;
 
   constructor(
@@ -31,7 +33,7 @@ export class DesktopComponent implements OnInit, OnDestroy {
     
     // Load background image from localStorage or use default
     const savedBg = localStorage.getItem('bg-image');
-    if (savedBg) {
+    if (savedBg && savedBg !== 'wall-light') {
       this.backgroundImage.set(savedBg);
     } else {
       this.backgroundImage.set('wall-1');
@@ -68,8 +70,13 @@ export class DesktopComponent implements OnInit, OnDestroy {
   }
 
   onLockScreen() {
-    // TODO: Implement lock screen
-    console.log('Lock screen');
+    document.querySelectorAll<HTMLMediaElement>('audio, video').forEach(media => media.pause());
+    this.allAppsView.set(false);
+    this.welcomeVisible.set(true);
+  }
+
+  enterDesktop() {
+    this.welcomeVisible.set(false);
   }
 
   onShutDown() {
@@ -81,7 +88,7 @@ export class DesktopComponent implements OnInit, OnDestroy {
     const bgImages: { [key: string]: string } = {
       'wall-1': '/assets/images/wallpapers/wall-1.png',
       'wall-2': '/assets/images/wallpapers/wall-2.jpg',
-      'wall-3': '/assets/images/wallpapers/wall-3.webp',
+      'wall-3': '/assets/images/wallpapers/wall-3.jpg',
       'wall-4': '/assets/images/wallpapers/wall-4.webp',
       'wall-5': '/assets/images/wallpapers/wall-5.webp',
       'wall-6': '/assets/images/wallpapers/wall-6.webp',

@@ -1,13 +1,13 @@
 <div class="w-full h-full flex flex-col bg-ub-cool-grey text-white select-none">
   <!-- Header -->
   <div class="flex items-center justify-between w-full bg-ub-warm-grey bg-opacity-40 text-sm">
-    <span class="font-bold ml-2">Trash</span>
+    <span class="font-bold ml-2">回收站</span>
     <div class="flex">
-      <div class="border border-black bg-black bg-opacity-50 px-3 py-1 my-1 mx-1 rounded text-gray-300">Restore</div>
+      <div class="border border-black bg-black bg-opacity-50 px-3 py-1 my-1 mx-1 rounded text-gray-300">还原</div>
       <div 
         (click)="emptyTrash()" 
         class="border border-black bg-black bg-opacity-50 px-3 py-1 my-1 mx-1 rounded hover:bg-opacity-80 cursor-pointer">
-        Empty
+        清空
       </div>
     </div>
   </div>
@@ -15,8 +15,8 @@
   <!-- Content -->
   @if (empty()) {
     <div class="flex-grow flex flex-col justify-center items-center">
-      <img class="w-24" src="/assets/themes/Yaru/status/user-trash-symbolic.svg" alt="Trash Empty" />
-      <span class="font-bold mt-4 text-xl px-1 text-gray-400">Trash is Empty</span>
+      <img class="w-24" src="/assets/themes/Yaru/status/user-trash-symbolic.svg" alt="回收站为空" />
+      <span class="font-bold mt-4 text-xl px-1 text-gray-400">回收站为空</span>
     </div>
   } @else {
     <div class="flex-grow ml-4 flex flex-wrap items-start content-start justify-start overflow-y-auto windowMainScreen">

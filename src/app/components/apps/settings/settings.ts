@@ -12,6 +12,7 @@ export class SettingsComponent {
   wallpapers: { [key: string]: string } = {
     'wall-1': '/assets/images/wallpapers/wall-1.png',
     'wall-2': '/assets/images/wallpapers/wall-2.jpg',
+    'wall-3': '/assets/images/wallpapers/wall-3.jpg',
   };
 
   wallpaperKeys = Object.keys(this.wallpapers);

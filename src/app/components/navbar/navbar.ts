@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, signal } from '@angular/core';
+import { Component, Output, EventEmitter, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ClockComponent } from '../clock/clock';
 import { StatusComponent } from '../status/status';
@@ -11,18 +11,18 @@ import { StatusCardComponent } from '../status-card/status-card';
   styleUrl: './navbar.css',
 })
 export class NavbarComponent {
-  @Input() showAllApps?: () => void;
   @Output() lockScreen = new EventEmitter<void>();
   @Output() shutDown = new EventEmitter<void>();
   
   statusCardVisible = signal(false);
 
-  onStatusBarFocus() {
-    this.statusCardVisible.set(true);
-  }
-
   onStatusBarClick() {
     this.statusCardVisible.update(v => !v);
+  }
+
+  onStatusBarKeydown(event: Event) {
+    event.preventDefault();
+    this.onStatusBarClick();
   }
 
   onStatusCardClose() {
