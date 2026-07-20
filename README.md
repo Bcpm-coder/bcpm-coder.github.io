@@ -1,6 +1,6 @@
 # Ubuntu Portfolio - Eve Liang
 
-A personal portfolio website with Ubuntu theme built with Angular, deployed at [https://everoot.github.io/](https://everoot.github.io/).
+A personal portfolio website with Ubuntu theme built with Angular, deployed at [https://bcpm-coder.github.io/](https://bcpm-coder.github.io/).
 
 A modern desktop environment simulator built with Angular 19, providing a complete Ubuntu desktop experience.
 
@@ -84,4 +84,3 @@ Edit the corresponding application components:
 - `src/app/components/apps/projects/` - Projects showcase
 - `src/app/components/apps/skills/` - Skills list
 - `src/app/components/apps/contact/` - Contact information
-
