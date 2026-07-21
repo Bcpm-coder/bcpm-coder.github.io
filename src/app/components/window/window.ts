@@ -14,10 +14,11 @@ import { VscodeComponent } from '../apps/vscode/vscode';
 import { BlogComponent } from '../apps/blog/blog';
 import { Game2048Component } from '../apps/game-2048/game-2048';
 import { HextrisComponent } from '../apps/hextris/hextris';
+import { Card2048Component } from '../apps/card-2048/card-2048';
 
 @Component({
   selector: 'app-window',
-  imports: [CommonModule, AboutComponent, ProjectsComponent, SkillsComponent, ContactComponent, TerminalComponent, SettingsComponent, ChromeComponent, TrashComponent, VscodeComponent, BlogComponent, Game2048Component, HextrisComponent],
+  imports: [CommonModule, AboutComponent, ProjectsComponent, SkillsComponent, ContactComponent, TerminalComponent, SettingsComponent, ChromeComponent, TrashComponent, VscodeComponent, BlogComponent, Game2048Component, HextrisComponent, Card2048Component],
   templateUrl: './window.html',
   styleUrl: './window.css',
 })
@@ -98,6 +99,8 @@ export class WindowComponent implements OnInit {
         return Game2048Component;
       case 'hextris':
         return HextrisComponent;
+      case 'card-2048':
+        return Card2048Component;
       case 'blog':
         return BlogComponent;
       case 'terminal':

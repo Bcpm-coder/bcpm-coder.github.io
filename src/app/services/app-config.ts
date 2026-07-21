@@ -122,6 +122,15 @@ export class AppConfigService {
       defaultMaximized: true,
     },
     {
+      id: 'card-2048',
+      title: 'Card 2048',
+      icon: '/assets/images/logos/card-2048.svg',
+      disabled: false,
+      favourite: true,
+      desktop_shortcut: true,
+      defaultMaximized: true,
+    },
+    {
       id: 'terminal',
       title: '终端',
       icon: '/assets/themes/Yaru/apps/bash.png',

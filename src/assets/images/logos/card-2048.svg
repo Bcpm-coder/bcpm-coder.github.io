@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title">
+  <title id="title">Card 2048</title>
+  <defs>
+    <linearGradient id="bg" x1="16" y1="10" x2="112" y2="118" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#273b6b"/>
+      <stop offset="1" stop-color="#11182f"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#060913" flood-opacity=".45"/>
+    </filter>
+  </defs>
+  <rect width="128" height="128" rx="27" fill="url(#bg)"/>
+  <g filter="url(#shadow)">
+    <rect x="22" y="25" width="48" height="72" rx="7" transform="rotate(-9 22 25)" fill="#f7f1e7"/>
+    <text x="43" y="65" fill="#d54747" font-family="Arial, sans-serif" font-size="25" font-weight="700" text-anchor="middle">2</text>
+    <path d="M43 73c-8 7-12 11-12 16a7 7 0 0 0 12 5 7 7 0 0 0 12-5c0-5-4-9-12-16Z" fill="#d54747"/>
+    <rect x="59" y="27" width="50" height="76" rx="8" transform="rotate(7 59 27)" fill="#fffaf1"/>
+    <text x="84" y="68" fill="#202b4e" font-family="Arial, sans-serif" font-size="27" font-weight="700" text-anchor="middle">4</text>
+    <path d="M84 76c-8 8-12 12-12 17h24c0-5-4-9-12-17Z" fill="#202b4e"/>
+  </g>
+</svg>
