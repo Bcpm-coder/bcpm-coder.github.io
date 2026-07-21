@@ -118,8 +118,8 @@
   <!-- Window Content -->
   <div
     class="w-full flex-grow z-20 min-h-0 max-h-full windowMainScreen bg-ub-cool-grey"
-    [class.overflow-hidden]="windowState.app.id === 'blog' || windowState.app.id === 'music'"
-    [class.overflow-y-auto]="windowState.app.id !== 'blog' && windowState.app.id !== 'music'">
+    [class.overflow-hidden]="windowState.app.id === 'blog'"
+    [class.overflow-y-auto]="windowState.app.id !== 'blog'">
     @switch (windowState.app.id) {
       @case ('about') {
         <app-about></app-about>
@@ -132,9 +132,6 @@
       }
       @case ('contact') {
         <app-contact></app-contact>
-      }
-      @case ('music') {
-        <app-music></app-music>
       }
       @case ('blog') {
         <app-blog></app-blog>

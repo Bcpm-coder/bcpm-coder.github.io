@@ -11,12 +11,11 @@ import { SettingsComponent } from '../apps/settings/settings';
 import { ChromeComponent } from '../apps/chrome/chrome';
 import { TrashComponent } from '../apps/trash/trash';
 import { VscodeComponent } from '../apps/vscode/vscode';
-import { MusicComponent } from '../apps/music/music';
 import { BlogComponent } from '../apps/blog/blog';
 
 @Component({
   selector: 'app-window',
-  imports: [CommonModule, AboutComponent, ProjectsComponent, SkillsComponent, ContactComponent, TerminalComponent, SettingsComponent, ChromeComponent, TrashComponent, VscodeComponent, MusicComponent, BlogComponent],
+  imports: [CommonModule, AboutComponent, ProjectsComponent, SkillsComponent, ContactComponent, TerminalComponent, SettingsComponent, ChromeComponent, TrashComponent, VscodeComponent, BlogComponent],
   templateUrl: './window.html',
   styleUrl: './window.css',
 })
@@ -93,8 +92,6 @@ export class WindowComponent implements OnInit {
         return SkillsComponent;
       case 'contact':
         return ContactComponent;
-      case 'music':
-        return MusicComponent;
       case 'blog':
         return BlogComponent;
       case 'terminal':

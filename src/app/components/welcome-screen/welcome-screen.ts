@@ -8,6 +8,7 @@ import { Component, OnDestroy, computed, output, signal } from '@angular/core';
 })
 export class WelcomeScreenComponent implements OnDestroy {
   readonly enterDesktop = output<void>();
+  readonly entryStarted = output<void>();
   readonly leaving = signal(false);
   readonly now = signal(new Date());
   readonly time = computed(() =>
@@ -32,6 +33,7 @@ export class WelcomeScreenComponent implements OnDestroy {
   confirmEntry(): void {
     if (!this.leaving()) {
       this.leaving.set(true);
+      this.entryStarted.emit();
       this.exitTimer = window.setTimeout(() => this.completeEntry(), 850);
     }
   }

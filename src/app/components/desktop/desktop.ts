@@ -21,7 +21,15 @@ export class DesktopComponent implements OnInit, OnDestroy {
   backgroundImage = signal('wall-1');
   allAppsView = signal(false);
   welcomeVisible = signal(true);
+  externalMusicReady = signal(false);
+  externalMusicCollapsed = signal(false);
+  externalMusicDragging = signal(false);
+  externalMusicSnapping = signal(false);
+  externalMusicPosition = signal<{ x: number; y: number } | null>(null);
   private backgroundChangeHandler?: (event: any) => void;
+  private musicDragPointerId?: number;
+  private musicDragOffset = { x: 0, y: 0 };
+  private musicSnapTimer?: number;
 
   constructor(
     public appConfig: AppConfigService,
@@ -45,11 +53,15 @@ export class DesktopComponent implements OnInit, OnDestroy {
       this.backgroundImage.set(event.detail);
     };
     window.addEventListener('background-changed', this.backgroundChangeHandler);
+
   }
 
   ngOnDestroy() {
     if (this.backgroundChangeHandler) {
       window.removeEventListener('background-changed', this.backgroundChangeHandler);
+    }
+    if (this.musicSnapTimer !== undefined) {
+      window.clearTimeout(this.musicSnapTimer);
     }
   }
 
@@ -71,12 +83,97 @@ export class DesktopComponent implements OnInit, OnDestroy {
 
   onLockScreen() {
     document.querySelectorAll<HTMLMediaElement>('audio, video').forEach(media => media.pause());
+    if (this.musicSnapTimer !== undefined) {
+      window.clearTimeout(this.musicSnapTimer);
+      this.musicSnapTimer = undefined;
+    }
+    this.externalMusicReady.set(false);
+    this.externalMusicCollapsed.set(false);
+    this.externalMusicDragging.set(false);
+    this.externalMusicSnapping.set(false);
+    this.externalMusicPosition.set(null);
+    this.musicDragPointerId = undefined;
     this.allAppsView.set(false);
     this.welcomeVisible.set(true);
   }
 
+  startDesktopMusic() {
+    this.externalMusicReady.set(true);
+  }
+
   enterDesktop() {
     this.welcomeVisible.set(false);
+  }
+
+  toggleExternalMusic() {
+    this.externalMusicCollapsed.update(collapsed => !collapsed);
+  }
+
+  startExternalMusicDrag(event: PointerEvent) {
+    if ((event.target as HTMLElement).closest('button')) return;
+
+    const header = event.currentTarget as HTMLElement;
+    const widget = header.closest('.external-music-widget') as HTMLElement | null;
+    if (!widget) return;
+
+    if (this.musicSnapTimer !== undefined) {
+      window.clearTimeout(this.musicSnapTimer);
+      this.musicSnapTimer = undefined;
+    }
+
+    const rect = widget.getBoundingClientRect();
+    this.musicDragPointerId = event.pointerId;
+    this.musicDragOffset = {
+      x: event.clientX - rect.left,
+      y: event.clientY - rect.top,
+    };
+    this.externalMusicPosition.set({ x: rect.left, y: rect.top });
+    this.externalMusicSnapping.set(false);
+    this.externalMusicDragging.set(true);
+    header.setPointerCapture(event.pointerId);
+    event.preventDefault();
+  }
+
+  moveExternalMusic(event: PointerEvent) {
+    if (!this.externalMusicDragging() || event.pointerId !== this.musicDragPointerId) return;
+
+    const widget = (event.currentTarget as HTMLElement).closest('.external-music-widget') as HTMLElement | null;
+    if (!widget) return;
+
+    const maxX = Math.max(4, window.innerWidth - widget.offsetWidth - 4);
+    const maxY = Math.max(32, window.innerHeight - widget.offsetHeight - 4);
+    this.externalMusicPosition.set({
+      x: Math.min(maxX, Math.max(4, event.clientX - this.musicDragOffset.x)),
+      y: Math.min(maxY, Math.max(32, event.clientY - this.musicDragOffset.y)),
+    });
+  }
+
+  finishExternalMusicDrag(event: PointerEvent) {
+    if (!this.externalMusicDragging() || event.pointerId !== this.musicDragPointerId) return;
+
+    const header = event.currentTarget as HTMLElement;
+    const widget = header.closest('.external-music-widget') as HTMLElement | null;
+    if (header.hasPointerCapture(event.pointerId)) {
+      header.releasePointerCapture(event.pointerId);
+    }
+
+    this.musicDragPointerId = undefined;
+    this.externalMusicDragging.set(false);
+    if (!widget) return;
+
+    const left = window.innerWidth <= 640 ? 62 : 74;
+    const bottom = window.innerWidth <= 640 ? 12 : 18;
+    this.externalMusicSnapping.set(true);
+    this.externalMusicPosition.set({
+      x: Math.min(left, Math.max(4, window.innerWidth - widget.offsetWidth - 4)),
+      y: Math.max(32, window.innerHeight - widget.offsetHeight - bottom),
+    });
+
+    this.musicSnapTimer = window.setTimeout(() => {
+      this.externalMusicPosition.set(null);
+      this.externalMusicSnapping.set(false);
+      this.musicSnapTimer = undefined;
+    }, 460);
   }
 
   onShutDown() {

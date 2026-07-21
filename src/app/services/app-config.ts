@@ -104,14 +104,6 @@ export class AppConfigService {
       desktop_shortcut: true,
     },
     {
-      id: 'music',
-      title: '音乐',
-      icon: '/assets/themes/Yaru/apps/spotify.png',
-      disabled: false,
-      favourite: true,
-      desktop_shortcut: true,
-    },
-    {
       id: 'terminal',
       title: '终端',
       icon: '/assets/themes/Yaru/apps/bash.png',
