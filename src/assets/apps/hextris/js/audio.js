@@ -1,4 +1,5 @@
 (function () {
+	var GAME_VOLUME_MULTIPLIER = 2;
 	var audioContext = null;
 	var masterGain = null;
 	var hasUnlocked = false;
@@ -12,7 +13,7 @@
 		try {
 			audioContext = new AudioContextClass();
 			masterGain = audioContext.createGain();
-			masterGain.gain.value = 0.13;
+			masterGain.gain.value = Math.min(1, 0.13 * GAME_VOLUME_MULTIPLIER);
 			masterGain.connect(audioContext.destination);
 		} catch (error) {
 			audioContext = null;
