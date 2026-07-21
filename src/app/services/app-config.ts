@@ -110,6 +110,7 @@ export class AppConfigService {
       disabled: false,
       favourite: true,
       desktop_shortcut: true,
+      defaultMaximized: true,
     },
     {
       id: 'hextris',
@@ -118,6 +119,7 @@ export class AppConfigService {
       disabled: false,
       favourite: true,
       desktop_shortcut: true,
+      defaultMaximized: true,
     },
     {
       id: 'terminal',
