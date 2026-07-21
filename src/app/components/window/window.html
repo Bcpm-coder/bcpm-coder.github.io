@@ -118,8 +118,8 @@
   <!-- Window Content -->
   <div
     class="w-full flex-grow z-20 min-h-0 max-h-full windowMainScreen bg-ub-cool-grey"
-    [class.overflow-hidden]="windowState.app.id === 'blog'"
-    [class.overflow-y-auto]="windowState.app.id !== 'blog'">
+    [class.overflow-hidden]="windowState.app.id === 'blog' || windowState.app.id === '2048' || windowState.app.id === 'hextris'"
+    [class.overflow-y-auto]="windowState.app.id !== 'blog' && windowState.app.id !== '2048' && windowState.app.id !== 'hextris'">
     @switch (windowState.app.id) {
       @case ('about') {
         <app-about></app-about>
@@ -132,6 +132,12 @@
       }
       @case ('contact') {
         <app-contact></app-contact>
+      }
+      @case ('2048') {
+        <app-game-2048></app-game-2048>
+      }
+      @case ('hextris') {
+        <app-hextris></app-hextris>
       }
       @case ('blog') {
         <app-blog></app-blog>

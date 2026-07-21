@@ -104,6 +104,22 @@ export class AppConfigService {
       desktop_shortcut: true,
     },
     {
+      id: '2048',
+      title: '2048',
+      icon: '/assets/apps/2048/meta/apple-touch-icon.png',
+      disabled: false,
+      favourite: true,
+      desktop_shortcut: true,
+    },
+    {
+      id: 'hextris',
+      title: 'Hextris',
+      icon: '/assets/apps/hextris/images/icons/apple-touch-180.png',
+      disabled: false,
+      favourite: true,
+      desktop_shortcut: true,
+    },
+    {
       id: 'terminal',
       title: '终端',
       icon: '/assets/themes/Yaru/apps/bash.png',
