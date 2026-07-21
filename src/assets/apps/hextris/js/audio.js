@@ -56,13 +56,25 @@
 		oscillator.stop(startTime + duration + 0.02);
 	}
 
+	function vibrateHextris(pattern) {
+		if (document.hidden || typeof navigator.vibrate !== 'function') return;
+
+		try {
+			navigator.vibrate(pattern);
+		} catch (error) {
+			// Vibration is optional and must never interrupt the game loop.
+		}
+	}
+
 	window.playHextrisScoreSound = function (points, comboMultiplier) {
 		if (document.hidden) return;
+
+		var combo = Math.max(1, Math.min(Number(comboMultiplier) || 1, 6));
+		vibrateHextris(combo > 1 ? [32, 28, 46] : [28, 24, 36]);
 
 		var context = getAudioContext();
 		if (!context || !masterGain || !hasUnlocked || context.state !== 'running') return;
 
-		var combo = Math.max(1, Math.min(Number(comboMultiplier) || 1, 6));
 		var scoreLift = Math.min(Math.max(Number(points) || 0, 0), 400) / 400;
 		var baseFrequency = 440 + (combo - 1) * 55 + scoreLift * 70;
 		var now = context.currentTime + 0.008;
@@ -74,10 +86,12 @@
 	window.playHextrisStackSound = function (stackHeight) {
 		if (document.hidden) return;
 
+		var height = Math.max(1, Math.min(Number(stackHeight) || 1, 8));
+		vibrateHextris(12 + height * 2);
+
 		var context = getAudioContext();
 		if (!context || !masterGain || !hasUnlocked || context.state !== 'running') return;
 
-		var height = Math.max(1, Math.min(Number(stackHeight) || 1, 8));
 		var frequency = 185 + height * 7;
 		var now = context.currentTime + 0.006;
 
