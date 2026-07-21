@@ -80,7 +80,7 @@
 		var frequency = 185 + height * 7;
 		var now = context.currentTime + 0.006;
 
-		playTone(context, frequency, now, 0.075, 0.38, 'triangle', 0.76);
+		playTone(context, frequency, now, 0.075, 0.54, 'triangle', 0.76);
 	};
 
 	document.addEventListener('pointerdown', unlockAudio, { passive: true });

@@ -11,6 +11,7 @@ import { WelcomeScreenComponent } from '../welcome-screen/welcome-screen';
 import { BootScreenComponent } from '../boot-screen/boot-screen';
 
 type DesktopPhase = 'locked' | 'booting' | 'ready';
+const GAME_APP_IDS = ['2048', 'hextris', 'card-2048'] as const;
 
 @Component({
   selector: 'app-desktop',
@@ -27,6 +28,10 @@ export class DesktopComponent implements OnInit, OnDestroy {
   welcomeVisible = computed(() => this.desktopPhase() === 'locked');
   booting = computed(() => this.desktopPhase() === 'booting');
   desktopReady = computed(() => this.desktopPhase() === 'ready');
+  gameWindowOpen = computed(() => {
+    const windows = this.windowManager.getWindows();
+    return GAME_APP_IDS.some(id => windows.get(id)?.isOpen === true);
+  });
   externalMusicReady = signal(false);
   externalMusicCollapsed = signal(true);
   externalMusicDragging = signal(false);

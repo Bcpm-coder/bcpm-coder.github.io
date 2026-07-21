@@ -58,7 +58,7 @@
     </iframe>
   }
 
-  @if (externalMusicReady()) {
+  @if (externalMusicReady() && !gameWindowOpen()) {
     <aside
       class="external-music-widget"
       [class.is-visible]="desktopReady()"
