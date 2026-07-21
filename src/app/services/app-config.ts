@@ -72,7 +72,7 @@ export class AppConfigService {
       icon: '/assets/themes/Yaru/system/folder.png',
       disabled: false,
       favourite: false,
-      desktop_shortcut: true,
+      desktop_shortcut: false,
     },
     {
       id: 'skills',
@@ -130,7 +130,7 @@ export class AppConfigService {
       title: '浏览器',
       icon: '/assets/themes/Yaru/apps/chrome.png',
       disabled: false,
-      favourite: false,
+      favourite: true,
       desktop_shortcut: false,
     },
     {
@@ -157,7 +157,7 @@ export class AppConfigService {
   }
 
   getFavouriteApps(): App[] {
-    const dockOrder = ['blog', 'settings'];
+    const dockOrder = ['blog', 'chrome', 'settings'];
     return dockOrder
       .map(id => this.apps.find(app => app.id === id))
       .filter((app): app is App => Boolean(app?.favourite));
