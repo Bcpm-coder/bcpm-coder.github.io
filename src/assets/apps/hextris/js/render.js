@@ -72,15 +72,15 @@ function renderBeginningText() {
     var mob, fontSize;
     if(/mobile|Mobile|iOS|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
         mob = true;
-        input_text = 'Tap the screen\'s left and right'
-        action_text = 'sides to rotate the hexagon'
-        score_text = 'Match 3+ blocks to score'
+        input_text = '点击屏幕左右两侧'
+        action_text = '旋转六边形'
+        score_text = '连接 3 个同色方块即可得分'
         fontSize = 35
     } else {
         mob = false
-        input_text = 'Use the right and left arrow keys'
-        action_text = 'to rotate the hexagon'
-        score_text = 'Match 3+ blocks to score!'
+        input_text = '使用键盘左右方向键'
+        action_text = '旋转六边形'
+        score_text = '连接 3 个同色方块即可得分'
         fontSize = 27
     }
 	renderText((trueCanvas.width)/2 + 2 * settings.scale,upperheight-0*settings.scale, fontSize, '#2c3e50', input_text);
