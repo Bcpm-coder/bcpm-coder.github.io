@@ -6,11 +6,8 @@ import { AboutComponent } from '../apps/about/about';
 import { ProjectsComponent } from '../apps/projects/projects';
 import { SkillsComponent } from '../apps/skills/skills';
 import { ContactComponent } from '../apps/contact/contact';
-import { TerminalComponent } from '../apps/terminal/terminal';
 import { SettingsComponent } from '../apps/settings/settings';
 import { ChromeComponent } from '../apps/chrome/chrome';
-import { TrashComponent } from '../apps/trash/trash';
-import { VscodeComponent } from '../apps/vscode/vscode';
 import { BlogComponent } from '../apps/blog/blog';
 import { Game2048Component } from '../apps/game-2048/game-2048';
 import { HextrisComponent } from '../apps/hextris/hextris';
@@ -18,7 +15,7 @@ import { Card2048Component } from '../apps/card-2048/card-2048';
 
 @Component({
   selector: 'app-window',
-  imports: [CommonModule, AboutComponent, ProjectsComponent, SkillsComponent, ContactComponent, TerminalComponent, SettingsComponent, ChromeComponent, TrashComponent, VscodeComponent, BlogComponent, Game2048Component, HextrisComponent, Card2048Component],
+  imports: [CommonModule, AboutComponent, ProjectsComponent, SkillsComponent, ContactComponent, SettingsComponent, ChromeComponent, BlogComponent, Game2048Component, HextrisComponent, Card2048Component],
   templateUrl: './window.html',
   styleUrl: './window.css',
 })
@@ -103,16 +100,10 @@ export class WindowComponent implements OnInit {
         return Card2048Component;
       case 'blog':
         return BlogComponent;
-      case 'terminal':
-        return TerminalComponent;
       case 'settings':
         return SettingsComponent;
       case 'chrome':
         return ChromeComponent;
-      case 'trash':
-        return TrashComponent;
-      case 'vscode':
-        return VscodeComponent;
       default:
         return null;
     }

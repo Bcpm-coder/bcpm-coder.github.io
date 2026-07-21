@@ -1,13 +1,19 @@
-<div class="h-screen w-screen flex flex-col items-end justify-start content-start flex-wrap-reverse pt-8 bg-transparent relative overflow-hidden overscroll-none window-parent" id="monitor-screen" [ngStyle]="getBackgroundStyle()">
+<div
+  class="h-screen w-screen flex flex-col items-end justify-start content-start flex-wrap-reverse pt-8 bg-transparent relative overflow-hidden overscroll-none window-parent"
+  [class.desktop-ready]="desktopReady()"
+  [class.desktop-booting]="booting()"
+  id="monitor-screen"
+  [ngStyle]="getBackgroundStyle()">
   
   <!-- Top Navbar -->
   <app-navbar
+    class="desktop-stage desktop-stage-navbar"
     (lockScreen)="onLockScreen()"
     (shutDown)="onShutDown()">
   </app-navbar>
   
   <!-- Windows Area -->
-  <div class="absolute inset-0 h-full w-full bg-transparent" data-context="desktop-area">
+  <div class="desktop-stage desktop-stage-windows absolute inset-0 h-full w-full bg-transparent" data-context="desktop-area">
     @for (windowState of windowManager.getWindows() | keyvalue; track windowState.key) {
       @if (windowState.value.isOpen && !windowState.value.isMinimized) {
         <app-window [windowState]="windowState.value"></app-window>
@@ -16,13 +22,13 @@
   </div>
 
   <!-- Ubuntu Side Menu Bar -->
-  <app-sidebar (showAllApps)="showAllApps()"></app-sidebar>
+  <app-sidebar class="desktop-stage desktop-stage-sidebar" (showAllApps)="showAllApps()"></app-sidebar>
 
   <!-- Desktop Apps - Right Side -->
   @if (!allAppsView()) {
-    <div class="absolute h-full w-full flex flex-col items-end justify-start content-start flex-wrap-reverse pt-4 md:pt-8 pr-2 md:pr-4 z-30 pointer-events-none">
+    <div class="desktop-stage desktop-stage-icons absolute h-full w-full flex flex-col items-end justify-start content-start flex-wrap-reverse pt-4 md:pt-8 pr-2 md:pr-4 z-30 pointer-events-none">
       @for (app of desktopApps(); track app.id) {
-        <div class="pointer-events-auto">
+        <div class="desktop-icon-entry pointer-events-auto" [style.animation-delay.ms]="180 + $index * 55">
           <app-desktop-icon [app]="app" (openApp)="openApp($event)"></app-desktop-icon>
         </div>
       }
@@ -55,7 +61,7 @@
   @if (externalMusicReady()) {
     <aside
       class="external-music-widget"
-      [class.is-visible]="!welcomeVisible()"
+      [class.is-visible]="desktopReady()"
       [class.is-collapsed]="externalMusicCollapsed()"
       [class.is-dragging]="externalMusicDragging()"
       [class.is-snapping]="externalMusicSnapping()"
@@ -100,6 +106,10 @@
       (entryStarted)="startDesktopMusic()"
       (enterDesktop)="enterDesktop()">
     </app-welcome-screen>
+  }
+
+  @if (booting()) {
+    <app-boot-screen (bootComplete)="finishBoot()"></app-boot-screen>
   }
 
 </div>

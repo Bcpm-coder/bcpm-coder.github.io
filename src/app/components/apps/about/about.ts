@@ -26,8 +26,11 @@ export class AboutComponent implements OnInit {
 
   ngOnInit() {
     const lastScreen = localStorage.getItem('about-section');
-    if (lastScreen) {
+    const availableScreens = ['about', 'skills', 'projects', 'contact'];
+    if (lastScreen && availableScreens.includes(lastScreen)) {
       this.activeScreen = lastScreen;
+    } else {
+      localStorage.setItem('about-section', 'about');
     }
   }
 }

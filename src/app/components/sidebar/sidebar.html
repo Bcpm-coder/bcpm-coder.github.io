@@ -10,12 +10,11 @@
         <img [src]="app.icon" [alt]="app.title" [class.rounded-full]="app.id === 'about'" [class.object-cover]="app.id === 'about'" class="w-9 h-9 md:w-12 md:h-12">
       </div>
     }
-  </div>
-  
-  <div 
-    class="w-11 h-11 md:w-14 md:h-14 rounded m-0.5 md:m-1 hover:bg-white hover:bg-opacity-10 flex items-center justify-center cursor-pointer"
-    (click)="onShowAllApps()"
-    title="显示所有应用">
-    <img src="/assets/themes/Yaru/system/view-app-grid-symbolic.svg" alt="显示所有应用" class="w-9 h-9 md:w-12 md:h-12">
+    <div
+      class="w-11 h-11 md:w-14 md:h-14 rounded m-0.5 md:m-1 hover:bg-white hover:bg-opacity-10 flex items-center justify-center cursor-pointer"
+      (click)="onShowAllApps()"
+      title="显示所有应用">
+      <img src="/assets/themes/Yaru/system/view-app-grid-symbolic.svg" alt="显示所有应用" class="w-9 h-9 md:w-12 md:h-12">
+    </div>
   </div>
 </div>

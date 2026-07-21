@@ -13,12 +13,6 @@ export interface App {
   component?: any;
 }
 
-export interface Education {
-  school: string;
-  degree: string;
-  period: string;
-}
-
 export interface PortfolioProject {
   name: string;
   company?: string;
@@ -32,13 +26,6 @@ export const PORTFOLIO_PROFILE = {
   name: '不吃泡面',
   headline: 'M.S. Student in Software Engineering at BUPT',
   introduction: [] as string[],
-  education: [
-    {
-      school: '北京邮电大学（BUPT）',
-      degree: 'M.S. Student in Software Engineering',
-      period: '在读',
-    },
-  ] as Education[],
   email: '',
   github: 'github.com/bcpm-coder',
 };
@@ -76,7 +63,7 @@ export class AppConfigService {
       title: '关于我',
       icon: '/assets/images/logos/avatar.jpg',
       disabled: false,
-      favourite: true,
+      favourite: false,
       desktop_shortcut: true,
     },
     {
@@ -108,7 +95,7 @@ export class AppConfigService {
       title: '2048',
       icon: '/assets/apps/2048/meta/apple-touch-icon.png',
       disabled: false,
-      favourite: true,
+      favourite: false,
       desktop_shortcut: true,
       defaultMaximized: true,
     },
@@ -117,7 +104,7 @@ export class AppConfigService {
       title: 'Hextris',
       icon: '/assets/apps/hextris/images/icons/apple-touch-180.png',
       disabled: false,
-      favourite: true,
+      favourite: false,
       desktop_shortcut: true,
       defaultMaximized: true,
     },
@@ -126,17 +113,9 @@ export class AppConfigService {
       title: 'Card 2048',
       icon: '/assets/images/logos/card-2048.svg',
       disabled: false,
-      favourite: true,
+      favourite: false,
       desktop_shortcut: true,
       defaultMaximized: true,
-    },
-    {
-      id: 'terminal',
-      title: '终端',
-      icon: '/assets/themes/Yaru/apps/bash.png',
-      disabled: false,
-      favourite: true,
-      desktop_shortcut: false,
     },
     {
       id: 'settings',
@@ -151,23 +130,7 @@ export class AppConfigService {
       title: '浏览器',
       icon: '/assets/themes/Yaru/apps/chrome.png',
       disabled: false,
-      favourite: true,
-      desktop_shortcut: false,
-    },
-    {
-      id: 'trash',
-      title: '回收站',
-      icon: '/assets/themes/Yaru/system/user-trash-full.png',
-      disabled: false,
-      favourite: true,
-      desktop_shortcut: false,
-    },
-    {
-      id: 'vscode',
-      title: 'Visual Studio Code',
-      icon: '/assets/themes/Yaru/apps/vscode.png',
-      disabled: false,
-      favourite: true,
+      favourite: false,
       desktop_shortcut: false,
     },
     {
@@ -194,7 +157,10 @@ export class AppConfigService {
   }
 
   getFavouriteApps(): App[] {
-    return this.apps.filter(app => app.favourite);
+    const dockOrder = ['blog', 'settings'];
+    return dockOrder
+      .map(id => this.apps.find(app => app.id === id))
+      .filter((app): app is App => Boolean(app?.favourite));
   }
 
   getAllApps(): App[] {

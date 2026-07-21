@@ -1,0 +1,29 @@
+<section
+  class="boot-screen"
+  [class.is-finishing]="finishing()"
+  role="status"
+  aria-live="polite"
+  [attr.aria-label]="statusMessages[statusIndex()]">
+  <div class="boot-glow" aria-hidden="true"></div>
+
+  <main class="boot-content">
+    <div class="boot-mark" aria-hidden="true">
+      <span class="boot-ring boot-ring-outer"></span>
+      <span class="boot-ring boot-ring-inner"></span>
+      <img src="/assets/images/logos/avatar.jpg" alt="">
+    </div>
+
+    <h1>bcpm <strong>Blog</strong></h1>
+    <p class="boot-status">{{ statusMessages[statusIndex()] }}</p>
+
+    <div class="boot-progress" aria-hidden="true">
+      <span></span>
+    </div>
+
+    <div class="ubuntu-loader" aria-hidden="true">
+      <i></i><i></i><i></i><i></i><i></i>
+    </div>
+  </main>
+
+  <footer>EVEROOT PERSONAL SYSTEM</footer>
+</section>

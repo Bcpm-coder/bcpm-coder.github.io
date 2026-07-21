@@ -3,6 +3,59 @@
   user-select: none;
 }
 
+.desktop-stage {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.desktop-stage-navbar,
+.desktop-stage-sidebar {
+  display: block;
+}
+
+.desktop-stage-navbar {
+  transform: translateY(-18px);
+  transition: opacity .24s ease, transform .3s cubic-bezier(.2,.8,.2,1);
+}
+
+.desktop-stage-sidebar {
+  transform: translateX(-22px);
+  transition: opacity .26s .07s ease, transform .34s .07s cubic-bezier(.2,.8,.2,1);
+}
+
+.desktop-stage-icons {
+  transition: opacity .2s .12s ease;
+}
+
+.desktop-stage-windows {
+  transform: scale(.992);
+  transition: opacity .25s .3s ease, transform .3s .3s cubic-bezier(.2,.8,.2,1);
+}
+
+.desktop-ready .desktop-stage {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.desktop-ready .desktop-stage-navbar,
+.desktop-ready .desktop-stage-sidebar,
+.desktop-ready .desktop-stage-windows {
+  transform: none;
+}
+
+.desktop-icon-entry {
+  opacity: 0;
+  transform: translateY(10px) scale(.94);
+}
+
+.desktop-ready .desktop-icon-entry {
+  animation: desktop-icon-in .3s cubic-bezier(.2,.8,.2,1) both;
+}
+
+@keyframes desktop-icon-in {
+  to { opacity: 1; transform: none; }
+}
+
 .netease-player-preloader {
   position: fixed;
   left: 0;
@@ -135,6 +188,17 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .desktop-stage,
+  .desktop-icon-entry {
+    transition: none;
+    animation: none !important;
+    transform: none;
+  }
+
+  .desktop-ready .desktop-icon-entry {
+    opacity: 1;
+  }
+
   .external-music-widget,
   .netease-player-frame {
     transition: none;

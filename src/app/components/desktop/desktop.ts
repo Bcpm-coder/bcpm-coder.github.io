@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, signal } from '@angular/core';
+import { Component, OnInit, OnDestroy, computed, signal } from '@angular/core';
 import { CommonModule, KeyValuePipe } from '@angular/common';
 import { AppConfigService, App } from '../../services/app-config';
 import { WindowManagerService } from '../../services/window-manager';
@@ -8,10 +8,13 @@ import { WindowComponent } from '../window/window';
 import { NavbarComponent } from '../navbar/navbar';
 import { AllApplicationsComponent } from '../all-applications/all-applications';
 import { WelcomeScreenComponent } from '../welcome-screen/welcome-screen';
+import { BootScreenComponent } from '../boot-screen/boot-screen';
+
+type DesktopPhase = 'locked' | 'booting' | 'ready';
 
 @Component({
   selector: 'app-desktop',
-  imports: [CommonModule, KeyValuePipe, DesktopIconComponent, SidebarComponent, WindowComponent, NavbarComponent, AllApplicationsComponent, WelcomeScreenComponent],
+  imports: [CommonModule, KeyValuePipe, DesktopIconComponent, SidebarComponent, WindowComponent, NavbarComponent, AllApplicationsComponent, WelcomeScreenComponent, BootScreenComponent],
   templateUrl: './desktop.html',
   styleUrl: './desktop.css',
 })
@@ -20,7 +23,10 @@ export class DesktopComponent implements OnInit, OnDestroy {
   hideSidebar = signal(false);
   backgroundImage = signal('wall-1');
   allAppsView = signal(false);
-  welcomeVisible = signal(true);
+  desktopPhase = signal<DesktopPhase>('locked');
+  welcomeVisible = computed(() => this.desktopPhase() === 'locked');
+  booting = computed(() => this.desktopPhase() === 'booting');
+  desktopReady = computed(() => this.desktopPhase() === 'ready');
   externalMusicReady = signal(false);
   externalMusicCollapsed = signal(true);
   externalMusicDragging = signal(false);
@@ -94,7 +100,7 @@ export class DesktopComponent implements OnInit, OnDestroy {
     this.externalMusicPosition.set(null);
     this.musicDragPointerId = undefined;
     this.allAppsView.set(false);
-    this.welcomeVisible.set(true);
+    this.desktopPhase.set('locked');
   }
 
   startDesktopMusic() {
@@ -102,7 +108,11 @@ export class DesktopComponent implements OnInit, OnDestroy {
   }
 
   enterDesktop() {
-    this.welcomeVisible.set(false);
+    this.desktopPhase.set('booting');
+  }
+
+  finishBoot() {
+    this.desktopPhase.set('ready');
   }
 
   toggleExternalMusic() {
