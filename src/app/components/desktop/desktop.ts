@@ -22,7 +22,7 @@ export class DesktopComponent implements OnInit, OnDestroy {
   allAppsView = signal(false);
   welcomeVisible = signal(true);
   externalMusicReady = signal(false);
-  externalMusicCollapsed = signal(false);
+  externalMusicCollapsed = signal(true);
   externalMusicDragging = signal(false);
   externalMusicSnapping = signal(false);
   externalMusicPosition = signal<{ x: number; y: number } | null>(null);
@@ -88,7 +88,7 @@ export class DesktopComponent implements OnInit, OnDestroy {
       this.musicSnapTimer = undefined;
     }
     this.externalMusicReady.set(false);
-    this.externalMusicCollapsed.set(false);
+    this.externalMusicCollapsed.set(true);
     this.externalMusicDragging.set(false);
     this.externalMusicSnapping.set(false);
     this.externalMusicPosition.set(null);

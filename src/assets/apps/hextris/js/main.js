@@ -34,6 +34,10 @@ function scaleCanvas() {
 }
 
 function setBottomContainer() {
+    if (!$("#buttonCont").is(":visible")) {
+        $("#bottomContainer").css("margin-bottom", "0");
+        return;
+    }
     var buttonOffset = $("#buttonCont").offset().top;
     var playOffset = trueCanvas.height / 2 + 100 * settings.scale;
     var delta = buttonOffset - playOffset - 29;
@@ -43,6 +47,10 @@ function setBottomContainer() {
 }
 
 function set_score_pos() {
+    if (!$("#buttonCont").is(":visible")) {
+        $("#container").css("margin-top", "0");
+        return;
+    }
     $("#container").css('margin-top', '0');
     var middle_of_container = ($("#container").height()/2 + $("#container").offset().top);
     var top_of_bottom_container = $("#buttonCont").offset().top

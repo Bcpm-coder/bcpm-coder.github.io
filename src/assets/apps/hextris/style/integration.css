@@ -16,8 +16,117 @@ body {
   display: none !important;
 }
 
-#restart {
+#gameoverscreen {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 3200;
+  box-sizing: border-box;
+  padding: 0;
+  overflow: hidden;
+  color: #263544;
+  background: rgba(236, 240, 241, .84);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+}
+
+#container {
+  top: 50%;
   left: 50%;
+  z-index: 2;
+  box-sizing: border-box;
+  width: min(310px, calc(100vw - 44px));
+  min-width: 0;
+  margin: 0 !important;
+  padding: 25px 30px 88px;
+  border: 1px solid rgba(44, 62, 80, .1);
+  border-radius: 22px;
+  color: #2c3e50;
+  background: rgba(255, 255, 255, .94);
+  box-shadow: 0 22px 65px rgba(44, 62, 80, .18);
+  transform: translate(-50%, -50%);
+}
+
+#gameOverBox {
+  color: #8795a1;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: .16em;
+}
+
+#cScore {
+  margin: 7px 0 18px;
+  color: #2c3e50;
+  font-size: 56px;
+  font-weight: 300;
+  line-height: 1;
+}
+
+#cScore::before {
+  content: "本局得分";
+  display: block;
+  margin-bottom: 4px;
+  color: #a7b1b9;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .08em;
+}
+
+#highScoresTitle {
+  margin: 0 0 9px;
+  color: #596b78;
+  font-size: 13px;
+  letter-spacing: .08em;
+}
+
+#container .score {
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  width: 116px;
+  margin: 0 auto;
+  color: #71808b;
+  font-size: 15px;
+  line-height: 24px;
+  text-align: left;
+}
+
+#container .scoreNum {
+  color: #b0bac1;
+}
+
+#bottomContainer {
+  position: fixed;
+  left: 50%;
+  bottom: 50%;
+  z-index: 3;
+  width: 64px;
+  height: 64px;
+  margin: 0 0 -153px !important;
+  transform: translateX(-50%);
+}
+
+#restart {
+  position: static;
+  display: none;
+  box-sizing: border-box;
+  width: 64px;
+  height: 64px;
+  margin: 0;
+  padding: 4px;
+  border-radius: 50%;
+  background: #2c3e50;
+  box-shadow: 0 10px 28px rgba(44, 62, 80, .24);
+  transform: none;
+  transition: transform .16s ease, box-shadow .16s ease;
+}
+
+#restart:hover {
+  box-shadow: 0 12px 32px rgba(44, 62, 80, .3);
+  transform: translateY(-2px);
+}
+
+#restart:active {
+  transform: translateY(0) scale(.96);
 }
 
 @media (max-width: 640px), (max-height: 520px) {
@@ -31,5 +140,18 @@ body {
   #inst_main_body {
     width: min(82vw, 400px);
     font-size: 1em;
+  }
+
+  #container {
+    padding: 20px 24px 79px;
+  }
+
+  #cScore {
+    margin-bottom: 14px;
+    font-size: 48px;
+  }
+
+  #bottomContainer {
+    margin-bottom: -145px !important;
   }
 }
