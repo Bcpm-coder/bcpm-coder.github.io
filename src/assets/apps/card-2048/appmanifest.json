@@ -1,0 +1,75 @@
+{
+	"name": "Cards 2048 - Play Free Online Card Puzzle Game",
+	"short_name": "Cards 2048",
+	"description": "Play Cards 2048 - the ultimate card-based puzzle game! Match and merge numbered cards to reach 2048. Free online game with no download required. Challenge yourself with this addictive brain teaser and improve your strategic thinking.",
+	"start_url": "/card-2048/",
+	"display": "standalone",
+	"orientation": "portrait-primary",
+	"background_color": "#000000",
+	"theme_color": "#000000",
+	"categories": ["games", "puzzle", "education", "entertainment", "strategy"],
+	"lang": "en",
+	"dir": "ltr",
+	"scope": "/card-2048/",
+	"icons": [
+		{
+			"src": "icons/icon-16.png",
+			"sizes": "16x16",
+			"type": "image/png",
+			"purpose": "any"
+		},
+		{
+			"src": "icons/icon-32.png",
+			"sizes": "32x32",
+			"type": "image/png",
+			"purpose": "any"
+		},
+		{
+			"src": "icons/icon-64.png",
+			"sizes": "64x64",
+			"type": "image/png",
+			"purpose": "any"
+		},
+		{
+			"src": "icons/icon-128.png",
+			"sizes": "128x128",
+			"type": "image/png",
+			"purpose": "any"
+		},
+		{
+			"src": "icons/icon-256.png",
+			"sizes": "256x256",
+			"type": "image/png",
+			"purpose": "any"
+		},
+		{
+			"src": "icons/icon-512.png",
+			"sizes": "512x512",
+			"type": "image/png",
+			"purpose": "any maskable"
+		}
+	],
+	"screenshots": [
+		{
+			"src": "icons/icon-512.png",
+			"sizes": "512x512",
+			"type": "image/png",
+			"form_factor": "narrow",
+			"label": "Cards 2048 Game Screenshot"
+		}
+	],
+	"shortcuts": [
+		{
+			"name": "Play Cards 2048",
+			"short_name": "Play Game",
+			"description": "Start playing Cards 2048 puzzle game",
+			"url": "/card-2048/",
+			"icons": [
+				{
+					"src": "icons/icon-256.png",
+					"sizes": "256x256"
+				}
+			]
+		}
+	]
+}

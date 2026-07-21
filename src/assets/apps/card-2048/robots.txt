@@ -1,0 +1,16 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://2048hub.com/card-2048/sitemap.xml
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1
+
+# Allow all game assets
+Allow: /icons/
+Allow: /images/
+Allow: /scripts/
+Allow: /media/
+Allow: /style.css
+Allow: /appmanifest.json

@@ -52,6 +52,9 @@ function Hex(sideLength) {
 		lane = (lane + this.sides) % this.sides;
 		block.distFromHex = MainHex.sideLength / 2 * Math.sqrt(3) + block.height * this.blocks[lane].length;
 		this.blocks[lane].push(block);
+		if (typeof playHextrisStackSound === 'function') {
+			playHextrisStackSound(this.blocks[lane].length);
+		}
 		block.attachedLane = lane;
 		block.checked = 1;
 	};

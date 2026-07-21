@@ -10,14 +10,14 @@
     "file": "/assets/blog/posts/welcome.md"
   },
   {
-    "id": "portfolio-notes",
-    "title": "构建个人主页的一些记录",
-    "excerpt": "从桌面交互到内容组织，记录这次个人主页的设计思路。",
+    "id": "md",
+    "title": "md入门",
+    "excerpt": "",
     "date": "2026-07-19",
     "readTime": "4 分钟阅读",
     "category": "学习",
     "tags": ["前端", "Angular"],
-    "file": "/assets/blog/posts/portfolio-notes.md"
+    "file": "/assets/blog/posts/md入门.md"
   },
   {
     "id": "summer-evening",
