@@ -80,6 +80,14 @@
   min-width: 0;
 }
 
+:host ::ng-deep .aplayer .aplayer-info .aplayer-controller .aplayer-time {
+  display: flex;
+  flex: none;
+  align-items: center;
+  height: 18px;
+  white-space: nowrap;
+}
+
 :host ::ng-deep .aplayer .aplayer-info .aplayer-icon {
   position: relative;
   width: 15px;
@@ -105,18 +113,18 @@
   border-radius: 50%;
 }
 
-:host ::ng-deep .aplayer-host.is-compact .aplayer .aplayer-pic {
+:host ::ng-deep .aplayer-host.is-compact .aplayer-pic {
   width: 50px;
   height: 50px;
 }
 
-:host ::ng-deep .aplayer-host.is-compact .aplayer .aplayer-info {
+:host ::ng-deep .aplayer-host.is-compact .aplayer-info {
   height: 50px;
   margin-left: 50px;
   padding: 5px 7px 0;
 }
 
-:host ::ng-deep .aplayer-host.is-compact .aplayer .aplayer-info .aplayer-music {
+:host ::ng-deep .aplayer-host.is-compact .aplayer-info .aplayer-music {
   height: 18px;
   overflow: hidden;
   line-height: 18px;
@@ -177,17 +185,17 @@
   transform: scale(.9) !important;
 }
 
-:host ::ng-deep .aplayer-host.is-compact .aplayer .aplayer-info .aplayer-controller .aplayer-bar-wrap {
+:host ::ng-deep .aplayer-host.is-compact .aplayer-info .aplayer-controller .aplayer-bar-wrap {
   min-width: 42px;
   margin-left: 3px;
 }
 
-:host ::ng-deep .aplayer-host.is-compact .aplayer .aplayer-info .aplayer-controller .aplayer-time {
+:host ::ng-deep .aplayer-host.is-compact .aplayer-info .aplayer-controller .aplayer-time {
   padding-left: 3px;
 }
 
-:host ::ng-deep .aplayer-host.is-compact .aplayer .aplayer-icon-back,
-:host ::ng-deep .aplayer-host.is-compact .aplayer .aplayer-icon-forward {
+:host ::ng-deep .aplayer-host.is-compact .aplayer-icon-back,
+:host ::ng-deep .aplayer-host.is-compact .aplayer-icon-forward {
   margin-left: 3px;
 }
 
@@ -200,6 +208,49 @@
 }
 
 @media (max-width: 640px) {
+  :host ::ng-deep .aplayer:not(.is-compact) .aplayer-pic {
+    width: 64px;
+    height: 64px;
+  }
+
+  :host ::ng-deep .aplayer-host:not(.is-compact) .aplayer-info {
+    height: 64px;
+    margin-left: 64px;
+    padding: 7px 9px 0;
+  }
+
+  :host ::ng-deep .aplayer-host:not(.is-compact) .aplayer-info .aplayer-music {
+    height: 20px;
+    overflow: hidden;
+    line-height: 20px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  :host ::ng-deep .aplayer-host:not(.is-compact) .aplayer-title {
+    font-size: 12px;
+  }
+
+  :host ::ng-deep .aplayer-host:not(.is-compact) .aplayer-author {
+    font-size: 9px;
+  }
+
+  :host ::ng-deep .aplayer-host:not(.is-compact) .aplayer-time-inner,
+  :host ::ng-deep .aplayer-host:not(.is-compact) .aplayer-volume-wrap,
+  :host ::ng-deep .aplayer-host:not(.is-compact) .aplayer-icon-order,
+  :host ::ng-deep .aplayer-host:not(.is-compact) .aplayer-icon-loop {
+    display: none !important;
+  }
+
+  :host ::ng-deep .aplayer-host:not(.is-compact) .aplayer-info .aplayer-controller .aplayer-time {
+    padding-left: 4px;
+  }
+
+  :host ::ng-deep .aplayer-host:not(.is-compact) .aplayer-info .aplayer-controller .aplayer-bar-wrap {
+    min-width: 68px;
+    margin-left: 0;
+  }
+
   :host ::ng-deep .aplayer .aplayer-list {
     max-height: min(220px, 34vh) !important;
   }

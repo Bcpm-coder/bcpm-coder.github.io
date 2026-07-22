@@ -132,14 +132,30 @@
 }
 
 h1 {
-  margin: 13px 0 0;
+  margin: 0;
   color: rgba(249, 252, 255, .96);
-  font-family: ui-rounded, "SF Pro Rounded", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  font-size: 20px;
-  font-weight: 560;
-  line-height: 1.2;
-  letter-spacing: -.012em;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", "Segoe UI", sans-serif;
+  font-size: clamp(22px, 2vw, 28px);
+  font-weight: 600;
+  line-height: 1.28;
+  letter-spacing: -.025em;
   text-shadow: 0 2px 12px rgba(0, 5, 18, .34);
+}
+
+.welcome-copy {
+  max-width: min(560px, calc(100vw - 40px));
+  margin-top: 17px;
+  text-align: center;
+}
+
+.welcome-copy p {
+  margin: 9px 0 0;
+  color: rgba(231, 241, 252, .72);
+  font-size: clamp(13px, 1.1vw, 15px);
+  font-weight: 420;
+  line-height: 1.55;
+  letter-spacing: .015em;
+  text-shadow: 0 2px 12px rgba(0, 5, 18, .28);
 }
 
 .enter-button {
@@ -148,7 +164,7 @@ h1 {
   box-sizing: border-box;
   display: grid;
   place-items: center;
-  margin-top: 19px;
+  margin-top: 20px;
   padding: 0;
   border: 1px solid rgba(255, 255, 255, .42);
   border-radius: 50%;
@@ -254,8 +270,16 @@ h1 {
   }
 
   h1 {
-    margin-top: 10px;
-    font-size: 18px;
+    font-size: 20px;
+  }
+
+  .welcome-copy {
+    margin-top: 12px;
+  }
+
+  .welcome-copy p {
+    margin-top: 6px;
+    font-size: 13px;
   }
 
   .enter-button {
@@ -289,7 +313,17 @@ h1 {
   }
 
   h1 {
-    font-size: 19px;
+    font-size: 22px;
+  }
+
+  .welcome-copy {
+    margin-top: 15px;
+  }
+
+  .welcome-copy p {
+    max-width: 320px;
+    margin: 7px auto 0;
+    font-size: 13px;
   }
 }
 
@@ -299,7 +333,19 @@ h1 {
   }
 
   .login-card {
-    margin-top: 34px;
+    margin-top: 28px;
+  }
+
+  .welcome-copy {
+    margin-top: 10px;
+  }
+
+  .welcome-copy p {
+    margin-top: 4px;
+  }
+
+  .enter-button {
+    margin-top: 12px;
   }
 }
 
