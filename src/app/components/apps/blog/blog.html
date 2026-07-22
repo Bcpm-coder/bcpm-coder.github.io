@@ -112,17 +112,10 @@
     <main class="reading-pane">
       @if (activePost(); as post) {
         <header class="article-header">
-          <div class="article-kicker">
-            <span>{{ post.category }}</span>
-            <i></i>
-            <span>EVEROOT NOTES</span>
-          </div>
-          <h1>{{ post.title }}</h1>
-          <p>{{ post.excerpt }}</p>
           <div class="article-meta">
-            <span>{{ post.date }}</span>
-            <i></i>
             <span>不吃泡面</span>
+            <i></i>
+            <span>{{ post.date }}</span>
           </div>
           <div class="article-tags">
             @for (tag of post.tags; track tag) {

@@ -45,30 +45,17 @@
     </div>
   }
 
-  @if (welcomeVisible() && !externalMusicReady()) {
-    <iframe
-      class="netease-player-preloader"
-      width="1"
-      height="1"
-      tabindex="-1"
-      aria-hidden="true"
-      allow="autoplay 'src'; encrypted-media 'src'"
-      title=""
-      src="https://music.163.com/outchain/player?type=0&id=18171665484&auto=0&height=430">
-    </iframe>
-  }
-
-  @if (externalMusicReady() && !gameWindowOpen()) {
+  @if (externalMusicReady()) {
     <aside
       class="external-music-widget"
-      [class.is-visible]="desktopReady()"
-      [class.is-collapsed]="externalMusicCollapsed()"
+      [class.is-visible]="desktopReady() && !gameWindowOpen()"
+      [class.is-game-paused]="gameWindowOpen()"
       [class.is-dragging]="externalMusicDragging()"
       [class.is-snapping]="externalMusicSnapping()"
       [style.left.px]="externalMusicPosition()?.x ?? null"
       [style.top.px]="externalMusicPosition()?.y ?? null"
       [style.bottom]="externalMusicPosition() ? 'auto' : null"
-      aria-label="网易云音乐播放器">
+      aria-label="APlayer 音乐播放器">
       <header
         class="external-music-header"
         title="拖动播放器"
@@ -76,33 +63,16 @@
         (pointermove)="moveExternalMusic($event)"
         (pointerup)="finishExternalMusicDrag($event)"
         (pointercancel)="finishExternalMusicDrag($event)">
-        <span><i aria-hidden="true"></i> 网易云音乐</span>
-        <button
-          type="button"
-          (click)="toggleExternalMusic()"
-          [attr.aria-expanded]="!externalMusicCollapsed()"
-          [title]="externalMusicCollapsed() ? '展开完整歌单' : '切换为小号播放器'">
-          {{ externalMusicCollapsed() ? '展开歌单' : '小窗' }}
-        </button>
+        <span><i aria-hidden="true"></i> APLAYER · BCPM PLAYLIST</span>
+        <small>{{ gameWindowOpen() ? '游戏中已暂停' : '拖动移动' }}</small>
       </header>
-      <iframe
-        class="netease-player-frame"
-        frameborder="0"
-        marginwidth="0"
-        marginheight="0"
-        width="330"
-        height="450"
-        fetchpriority="high"
-        allow="autoplay 'src'; encrypted-media 'src'"
-        referrerpolicy="strict-origin-when-cross-origin"
-        title="网易云音乐歌单"
-        src="https://music.163.com/outchain/player?type=0&id=18171665484&auto=1&height=430">
-      </iframe>
+      <app-music-player [paused]="gameWindowOpen() || musicPausedForLock()"></app-music-player>
     </aside>
   }
 
   @if (welcomeVisible()) {
     <app-welcome-screen
+      [wallpaperUrl]="getBackgroundUrl()"
       (entryStarted)="startDesktopMusic()"
       (enterDesktop)="enterDesktop()">
     </app-welcome-screen>

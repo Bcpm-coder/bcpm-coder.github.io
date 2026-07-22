@@ -1,0 +1,107 @@
+:host {
+  display: block;
+  width: 100%;
+  color: #292126;
+}
+
+.aplayer-host {
+  width: 100%;
+}
+
+:host ::ng-deep .aplayer {
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  color: #30272c;
+  background: rgba(250, 248, 249, .98);
+  box-shadow: none;
+  font-family: inherit;
+}
+
+:host ::ng-deep .aplayer .aplayer-body {
+  background: linear-gradient(135deg, rgba(255, 255, 255, .98), rgba(246, 241, 244, .98));
+}
+
+:host ::ng-deep .aplayer .aplayer-pic {
+  width: 76px;
+  height: 76px;
+}
+
+:host ::ng-deep .aplayer .aplayer-info {
+  height: 76px;
+  margin-left: 76px;
+  padding: 12px 10px 0;
+}
+
+:host ::ng-deep .aplayer .aplayer-info .aplayer-music {
+  height: 21px;
+  line-height: 21px;
+}
+
+:host ::ng-deep .aplayer .aplayer-title {
+  color: #241c21;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+:host ::ng-deep .aplayer .aplayer-author {
+  color: #8c7e86;
+  font-size: 10px;
+}
+
+:host ::ng-deep .aplayer .aplayer-list {
+  border-top-color: rgba(60, 42, 51, .09);
+}
+
+:host ::ng-deep .aplayer .aplayer-list ol li {
+  height: 34px;
+  padding: 0 13px;
+  border-top-color: rgba(60, 42, 51, .07);
+  line-height: 34px;
+}
+
+:host ::ng-deep .aplayer .aplayer-list ol li:hover,
+:host ::ng-deep .aplayer .aplayer-list ol li.aplayer-list-light {
+  background: #eee6ea;
+}
+
+:host ::ng-deep .aplayer .aplayer-list-index,
+:host ::ng-deep .aplayer .aplayer-list-author {
+  color: #9b8d95;
+}
+
+:host ::ng-deep .aplayer .aplayer-icon:hover path {
+  fill: #e95420;
+}
+
+:host ::ng-deep .aplayer .aplayer-icon-back,
+:host ::ng-deep .aplayer .aplayer-icon-forward {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-left: 5px;
+  border-radius: 50%;
+}
+
+:host ::ng-deep .aplayer .aplayer-icon-back:hover,
+:host ::ng-deep .aplayer .aplayer-icon-forward:hover {
+  background: rgba(233, 84, 32, .1);
+}
+
+:host ::ng-deep .aplayer.aplayer-withlist .aplayer-icon-order {
+  display: none !important;
+}
+
+:host ::ng-deep .aplayer .aplayer-icon-loop {
+  margin-left: 3px;
+}
+
+@media (max-width: 640px) {
+  :host ::ng-deep .aplayer .aplayer-list {
+    max-height: min(220px, 34vh) !important;
+  }
+
+  :host ::ng-deep .aplayer .aplayer-list.aplayer-list-hide {
+    max-height: 0 !important;
+  }
+}

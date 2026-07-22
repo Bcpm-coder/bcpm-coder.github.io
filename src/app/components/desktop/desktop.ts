@@ -9,13 +9,14 @@ import { NavbarComponent } from '../navbar/navbar';
 import { AllApplicationsComponent } from '../all-applications/all-applications';
 import { WelcomeScreenComponent } from '../welcome-screen/welcome-screen';
 import { BootScreenComponent } from '../boot-screen/boot-screen';
+import { MusicPlayerComponent } from '../music-player/music-player';
 
 type DesktopPhase = 'locked' | 'booting' | 'ready';
 const GAME_APP_IDS = ['2048', 'hextris', 'card-2048'] as const;
 
 @Component({
   selector: 'app-desktop',
-  imports: [CommonModule, KeyValuePipe, DesktopIconComponent, SidebarComponent, WindowComponent, NavbarComponent, AllApplicationsComponent, WelcomeScreenComponent, BootScreenComponent],
+  imports: [CommonModule, KeyValuePipe, DesktopIconComponent, SidebarComponent, WindowComponent, NavbarComponent, AllApplicationsComponent, WelcomeScreenComponent, BootScreenComponent, MusicPlayerComponent],
   templateUrl: './desktop.html',
   styleUrl: './desktop.css',
 })
@@ -33,7 +34,7 @@ export class DesktopComponent implements OnInit, OnDestroy {
     return GAME_APP_IDS.some(id => windows.get(id)?.isOpen === true);
   });
   externalMusicReady = signal(false);
-  externalMusicCollapsed = signal(true);
+  musicPausedForLock = signal(false);
   externalMusicDragging = signal(false);
   externalMusicSnapping = signal(false);
   externalMusicPosition = signal<{ x: number; y: number } | null>(null);
@@ -52,7 +53,7 @@ export class DesktopComponent implements OnInit, OnDestroy {
     
     // Load background image from localStorage or use default
     const savedBg = localStorage.getItem('bg-image');
-    if (savedBg && savedBg !== 'wall-light') {
+    if (savedBg === 'wall-1' || savedBg === 'wall-2') {
       this.backgroundImage.set(savedBg);
     } else {
       this.backgroundImage.set('wall-1');
@@ -98,8 +99,7 @@ export class DesktopComponent implements OnInit, OnDestroy {
       window.clearTimeout(this.musicSnapTimer);
       this.musicSnapTimer = undefined;
     }
-    this.externalMusicReady.set(false);
-    this.externalMusicCollapsed.set(true);
+    this.musicPausedForLock.set(true);
     this.externalMusicDragging.set(false);
     this.externalMusicSnapping.set(false);
     this.externalMusicPosition.set(null);
@@ -110,6 +110,7 @@ export class DesktopComponent implements OnInit, OnDestroy {
 
   startDesktopMusic() {
     this.externalMusicReady.set(true);
+    this.musicPausedForLock.set(false);
   }
 
   enterDesktop() {
@@ -118,10 +119,6 @@ export class DesktopComponent implements OnInit, OnDestroy {
 
   finishBoot() {
     this.desktopPhase.set('ready');
-  }
-
-  toggleExternalMusic() {
-    this.externalMusicCollapsed.update(collapsed => !collapsed);
   }
 
   startExternalMusicDrag(event: PointerEvent) {
@@ -196,20 +193,23 @@ export class DesktopComponent implements OnInit, OnDestroy {
     console.log('Shut down');
   }
 
-  getBackgroundStyle() {
+  getBackgroundUrl() {
     const bgImages: { [key: string]: string } = {
       'wall-1': '/assets/images/wallpapers/wall-1.png',
       'wall-2': '/assets/images/wallpapers/wall-2.jpg',
-      'wall-3': '/assets/images/wallpapers/wall-3.jpg',
       'wall-4': '/assets/images/wallpapers/wall-4.webp',
       'wall-5': '/assets/images/wallpapers/wall-5.webp',
       'wall-6': '/assets/images/wallpapers/wall-6.webp',
       'wall-7': '/assets/images/wallpapers/wall-7.webp',
       'wall-8': '/assets/images/wallpapers/wall-8.webp',
     };
-    
-    const bgImage = bgImages[this.backgroundImage()] || bgImages['wall-1'];
-    
+
+    return bgImages[this.backgroundImage()] || bgImages['wall-1'];
+  }
+
+  getBackgroundStyle() {
+    const bgImage = this.getBackgroundUrl();
+
     return {
       'background-image': `url('${bgImage}')`,
       'background-size': 'cover',
