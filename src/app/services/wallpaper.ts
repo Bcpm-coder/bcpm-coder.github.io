@@ -1,13 +1,22 @@
-import { Injectable, OnDestroy, computed, signal } from '@angular/core';
+import { Injectable, OnDestroy, computed, inject, signal } from '@angular/core';
 import {
   GENERATED_DEFAULT_WALLPAPER_ID,
   GENERATED_STATIC_FALLBACK_WALLPAPER_ID,
   GENERATED_WALLPAPERS,
 } from '../generated/wallpaper-catalog';
 import { WallpaperDefinition } from '../models/wallpaper';
+import { ViewportService } from './viewport';
+
+const MOBILE_DEFAULT_WALLPAPER: WallpaperDefinition = {
+  id: 'mobile-default-furina-sea',
+  label: '芙宁娜 海面（手机）',
+  assetUrl: '/assets/images/wallpapers/mobile/furina-sea-mobile.mp4',
+  kind: 'video',
+};
 
 @Injectable({ providedIn: 'root' })
 export class WallpaperService implements OnDestroy {
+  private readonly viewport = inject(ViewportService);
   private readonly reducedMotionQuery = typeof window.matchMedia === 'function'
     ? window.matchMedia('(prefers-reduced-motion: reduce)')
     : null;
@@ -25,7 +34,12 @@ export class WallpaperService implements OnDestroy {
   readonly selectedWallpaper = computed(
     () => this.findWallpaper(this.selectedId()) ?? this.defaultWallpaper
   );
-  readonly effectiveWallpaper = computed(() => this.selectedWallpaper());
+  readonly effectiveWallpaper = computed(() => {
+    const selected = this.selectedWallpaper();
+    return this.viewport.isMobile() && selected.id === this.defaultWallpaper.id
+      ? MOBILE_DEFAULT_WALLPAPER
+      : selected;
+  });
 
   private readonly onReducedMotionChange = (event: MediaQueryListEvent) => {
     this.prefersReducedMotion.set(event.matches);
