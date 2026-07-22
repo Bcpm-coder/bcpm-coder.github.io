@@ -29,6 +29,7 @@ export class DesktopComponent implements OnInit, OnDestroy {
   hideSidebar = signal(false);
   allAppsView = signal(false);
   desktopPhase = signal<DesktopPhase>('locked');
+  bootShieldVisible = signal(false);
   welcomeVisible = computed(() => this.desktopPhase() === 'locked');
   booting = computed(() => this.desktopPhase() === 'booting');
   desktopReady = computed(() => this.desktopPhase() === 'ready');
@@ -100,7 +101,13 @@ export class DesktopComponent implements OnInit, OnDestroy {
     this.externalMusicPosition.set(null);
     this.musicDragPointerId = undefined;
     this.allAppsView.set(false);
+    this.bootShieldVisible.set(false);
     this.desktopPhase.set('locked');
+  }
+
+  beginDesktopEntry() {
+    this.bootShieldVisible.set(true);
+    this.startDesktopMusic();
   }
 
   startDesktopMusic() {
@@ -109,11 +116,13 @@ export class DesktopComponent implements OnInit, OnDestroy {
   }
 
   enterDesktop() {
+    this.bootShieldVisible.set(true);
     this.desktopPhase.set('booting');
   }
 
   finishBoot() {
     this.desktopPhase.set('ready');
+    this.bootShieldVisible.set(false);
   }
 
   startExternalMusicDrag(event: PointerEvent) {

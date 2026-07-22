@@ -40,12 +40,6 @@
       [attr.aria-modal]="overlay() === 'library' ? 'true' : null">
       <button type="button" class="panel-close" aria-label="关闭文章库" (click)="closeOverlay()">×</button>
 
-      <header class="library-header">
-        <span class="brand-kicker">NOTES & STORIES</span>
-        <h2>博客</h2>
-        <p>记录学习、生活与偶尔的碎碎念</p>
-      </header>
-
       <label class="search-box">
         <span aria-hidden="true">⌕</span>
         <input
@@ -90,8 +84,6 @@
               <span class="post-date">{{ post.date }}</span>
             </span>
             <strong>{{ post.title }}</strong>
-            <small>{{ post.excerpt }}</small>
-            <span class="post-meta">{{ post.tags.join(' / ') }}</span>
           </button>
         } @empty {
           <div class="empty-list">
@@ -102,26 +94,12 @@
         }
       </nav>
 
-      <footer class="library-footer">
-        <span class="status-dot" aria-hidden="true"></span>
-        {{ posts().length }} POSTS · MARKDOWN LIBRARY
-      </footer>
     </aside>
 
     <main class="reading-pane">
       @if (activePost(); as post) {
         <header class="article-header">
           <div class="article-meta">
-            <span>不吃泡面</span>
-            <i aria-hidden="true"></i>
-            <span>{{ post.date }}</span>
-          </div>
-          <div class="article-header-actions">
-            <div class="article-tags">
-              @for (tag of post.tags; track tag) {
-                <span># {{ tag }}</span>
-              }
-            </div>
             <button
               #desktopOutlineToggle
               type="button"
@@ -131,6 +109,15 @@
               (click)="toggleOverlay('outline')">
               本文目录
             </button>
+            <i aria-hidden="true"></i>
+            <span>{{ post.date }}</span>
+          </div>
+          <div class="article-header-actions">
+            <div class="article-tags">
+              @for (tag of post.tags; track tag) {
+                <span># {{ tag }}</span>
+              }
+            </div>
           </div>
           <span class="reading-progress" [style.transform]="'scaleX(' + readingProgress() + ')'" aria-hidden="true"></span>
         </header>

@@ -87,9 +87,9 @@ export class BlogComponent implements OnInit, OnDestroy {
       if (!response.ok) throw new Error('Unable to load the post list.');
 
       const rawPosts = await response.json() as Array<Partial<BlogPost>>;
-      const posts = rawPosts
-        .filter((post): post is BlogPost => this.isValidPost(post))
-        .sort((left, right) => left.order - right.order);
+      const catalogPosts = rawPosts
+        .filter((post): post is BlogPost => this.isValidPost(post));
+      const posts = await this.filterAvailablePosts(catalogPosts);
       this.posts.set(posts);
 
       if (!posts.length) {
@@ -200,8 +200,12 @@ export class BlogComponent implements OnInit, OnDestroy {
       this.renderedContent.set(this.domSanitizer.bypassSecurityTrustHtml(rendered.html));
       this.headings.set(rendered.headings);
       this.activeHeadingId.set(rendered.headings[0]?.id ?? '');
-    } catch {
+    } catch (error) {
       if (requestId !== this.loadRequestId) return;
+      if (error instanceof MissingBlogPostError) {
+        await this.removeMissingPost(post);
+        return;
+      }
       this.renderedContent.set('');
       this.headings.set([]);
       this.errorMessage.set('这篇文章暂时无法加载，请检查 Markdown 文件路径。');
@@ -385,15 +389,60 @@ export class BlogComponent implements OnInit, OnDestroy {
     for (let attempt = 0; attempt < 2; attempt++) {
       try {
         const response = await fetch(url, { cache: 'no-cache' });
+        if (response.status === 404 || response.status === 410) {
+          throw new MissingBlogPostError(file);
+        }
         if (!response.ok) throw new Error(`Unable to load Markdown: ${response.status}`);
         return await response.text();
       } catch (error) {
+        if (error instanceof MissingBlogPostError) throw error;
         lastError = error;
         if (attempt === 0) await new Promise(resolve => setTimeout(resolve, 150));
       }
     }
 
     throw lastError;
+  }
+
+  private async filterAvailablePosts(posts: BlogPost[]): Promise<BlogPost[]> {
+    const availability = await Promise.all(posts.map(async post => {
+      try {
+        const url = new URL(post.file, document.baseURI).toString();
+        const response = await fetch(url, { method: 'HEAD', cache: 'no-cache' });
+        return response.status !== 404 && response.status !== 410;
+      } catch {
+        // A temporary network failure should still allow the normal retry state.
+        return true;
+      }
+    }));
+    return posts.filter((_post, index) => availability[index]);
+  }
+
+  private async removeMissingPost(post: BlogPost): Promise<void> {
+    const currentPosts = this.posts();
+    const removedIndex = Math.max(0, currentPosts.findIndex(item => item.id === post.id));
+    const remaining = currentPosts.filter(item => item.id !== post.id);
+    this.posts.set(remaining);
+    this.renderCache.delete(post.id);
+    this.readerState.restore(remaining);
+    this.renderedContent.set('');
+    this.headings.set([]);
+
+    let candidates = this.filteredPosts();
+    if (!candidates.length && remaining.length) {
+      this.activeCategory.set('全部');
+      this.readerState.setCategory('全部');
+      candidates = remaining;
+    }
+
+    const fallback = candidates[Math.min(removedIndex, candidates.length - 1)] ?? candidates[0];
+    if (fallback) {
+      await this.selectPost(fallback);
+      return;
+    }
+
+    this.activePost.set(null);
+    this.isLoading.set(false);
   }
 
   private isValidPost(post: Partial<BlogPost>): post is BlogPost {
@@ -404,13 +453,18 @@ export class BlogComponent implements OnInit, OnDestroy {
       && isBlogCategory(post.category)
       && Array.isArray(post.tags)
       && post.tags.every(tag => typeof tag === 'string')
-      && Number.isInteger(post.order)
       && typeof post.file === 'string'
       && typeof post.searchText === 'string';
   }
 
   private prefersReducedMotion(): boolean {
     return typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+}
+
+class MissingBlogPostError extends Error {
+  constructor(file: string) {
+    super(`Markdown file no longer exists: ${file}`);
   }
 }
 

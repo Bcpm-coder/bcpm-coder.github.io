@@ -4,11 +4,11 @@ import { BlogComponent } from './blog';
 const POST_LIST = [
   {
     id: 'first', title: 'First post', excerpt: 'Alpha', date: '2026-01-02', category: '学习',
-    tags: ['Angular'], order: 1, file: '/assets/blog/posts/first.md', searchText: 'alpha body',
+    tags: ['Angular'], file: '/assets/blog/posts/first.md', searchText: 'alpha body',
   },
   {
     id: 'second', title: 'Second post', excerpt: 'Beta', date: '2026-01-01', category: 'Coding',
-    tags: ['C++'], order: 2, file: '/assets/blog/posts/second.md', searchText: 'weighted union find',
+    tags: ['C++'], file: '/assets/blog/posts/second.md', searchText: 'weighted union find',
   },
 ];
 
@@ -50,5 +50,28 @@ describe('BlogComponent', () => {
 
     await fixture.componentInstance.selectCategory('学习');
     expect(fixture.componentInstance.filteredPosts()).toEqual([]);
+  });
+
+  it('removes deleted Markdown files from a stale catalog without showing an error', async () => {
+    vi.mocked(fetch).mockImplementation(async (input, init) => {
+      const url = String(input);
+      if (url.includes('posts.json')) {
+        return new Response(JSON.stringify([
+          ...POST_LIST,
+          { ...POST_LIST[1], id: 'deleted', title: 'Deleted', file: '/assets/blog/posts/deleted.md' },
+        ]), { status: 200 });
+      }
+      if (init?.method === 'HEAD' && url.includes('deleted.md')) {
+        return new Response(null, { status: 404 });
+      }
+      return new Response('# Test article\n\n## Section\n\nBody', { status: 200 });
+    });
+
+    const fixture = TestBed.createComponent(BlogComponent);
+    fixture.detectChanges();
+    await vi.waitFor(() => expect(fixture.componentInstance.posts().length).toBe(2));
+
+    expect(fixture.componentInstance.posts().some(post => post.id === 'deleted')).toBe(false);
+    expect(fixture.componentInstance.errorMessage()).toBe('');
   });
 });

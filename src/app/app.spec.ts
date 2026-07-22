@@ -17,11 +17,12 @@ describe('App', () => {
     expect(app).toBeTruthy();
   });
 
-  it('should render the lock-screen welcome title', async () => {
+  it('should render the minimal lock-screen profile and entry control', async () => {
     const fixture = TestBed.createComponent(App);
     await fixture.whenStable();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('欢迎进入 bcpm 的 Blog');
+    expect(compiled.querySelector('h1')?.textContent).toContain('bcpm');
+    expect(compiled.querySelector<HTMLButtonElement>('button[aria-label="进入桌面"]')).toBeTruthy();
   });
 
   it('should expose only the active application set', () => {

@@ -5,6 +5,24 @@
   background: var(--system-bg);
 }
 
+.boot-transition-shield {
+  position: fixed;
+  inset: 0;
+  z-index: 8999;
+  opacity: 0;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(57, 130, 220, .24), transparent 34%),
+    linear-gradient(145deg, rgb(2, 9, 23) 0%, rgb(5, 21, 48) 52%, rgb(2, 10, 25) 100%);
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.boot-transition-shield.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+}
+
 .desktop-stage {
   opacity: 0;
   pointer-events: none;

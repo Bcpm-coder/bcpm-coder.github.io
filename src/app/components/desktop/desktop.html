@@ -5,6 +5,12 @@
   id="monitor-screen">
 
   <app-wallpaper-background></app-wallpaper-background>
+
+  <div
+    class="boot-transition-shield"
+    [class.is-visible]="bootShieldVisible()"
+    aria-hidden="true">
+  </div>
   
   <!-- Top Navbar -->
   <app-navbar
@@ -81,7 +87,7 @@
 
   @if (welcomeVisible()) {
     <app-welcome-screen
-      (entryStarted)="startDesktopMusic()"
+      (entryStarted)="beginDesktopEntry()"
       (enterDesktop)="enterDesktop()">
     </app-welcome-screen>
   }

@@ -5,11 +5,11 @@ import { BlogReaderStateService } from './blog-reader-state.service';
 const POSTS: BlogPost[] = [
   {
     id: 'one', title: 'One', excerpt: '', date: '2026-01-01', category: '学习', tags: [],
-    order: 1, file: '/one.md', searchText: 'one',
+    file: '/one.md', searchText: 'one',
   },
   {
     id: 'two', title: 'Two', excerpt: '', date: '2026-01-02', category: 'Coding', tags: [],
-    order: 2, file: '/two.md', searchText: 'two',
+    file: '/two.md', searchText: 'two',
   },
 ];
 

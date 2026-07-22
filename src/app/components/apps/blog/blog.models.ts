@@ -9,7 +9,6 @@ export interface BlogPost {
   date: string;
   category: BlogCategory;
   tags: string[];
-  order: number;
   file: string;
   searchText: string;
 }
