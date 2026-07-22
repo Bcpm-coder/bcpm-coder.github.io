@@ -12,6 +12,7 @@ const MOBILE_DEFAULT_WALLPAPER: WallpaperDefinition = {
   label: '芙宁娜 海面（手机）',
   assetUrl: '/assets/images/wallpapers/mobile/furina-sea-mobile.mp4',
   kind: 'video',
+  posterUrl: '/assets/images/wallpapers/mobile/furina-sea-mobile-poster.jpg',
 };
 
 @Injectable({ providedIn: 'root' })

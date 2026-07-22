@@ -1,6 +1,6 @@
 <div
   class="wallpaper-fallback"
-  [style.background-image]="'url(\'' + wallpaperService.staticFallbackWallpaper.assetUrl + '\')'">
+  [style.background-image]="'url(\'' + (wallpaperService.effectiveWallpaper().posterUrl || wallpaperService.staticFallbackWallpaper.assetUrl) + '\')'">
 </div>
 
 @if (wallpaperService.effectiveWallpaper().kind === 'image') {
@@ -12,12 +12,15 @@
   <video
     class="wallpaper-video"
     [src]="wallpaperService.effectiveWallpaper().assetUrl"
+    [poster]="wallpaperService.effectiveWallpaper().posterUrl || wallpaperService.staticFallbackWallpaper.assetUrl"
     [autoplay]="!wallpaperService.prefersReducedMotion()"
     [muted]="true"
     loop
     playsinline
     preload="auto"
     (loadeddata)="onVideoLoaded($event)"
+    (canplay)="onVideoCanPlay($event)"
+    (playing)="onVideoPlaying()"
     (error)="onVideoError()">
   </video>
 }

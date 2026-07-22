@@ -5,4 +5,5 @@ export interface WallpaperDefinition {
   label: string;
   assetUrl: string;
   kind: WallpaperKind;
+  posterUrl?: string;
 }
