@@ -1,8 +1,7 @@
 <div 
-  class="opened-window overflow-hidden min-w-1/4 min-h-1/4 main-window absolute window-shadow border-black border-opacity-40 border border-t-0 flex flex-col"
+  class="opened-window mac-window overflow-hidden min-w-1/4 min-h-1/4 main-window absolute flex flex-col"
   [ngClass]="{
-    'rounded-lg rounded-b-none': !windowState.isMaximized,
-    'rounded-none': windowState.isMaximized,
+    'is-maximized': windowState.isMaximized,
     'z-30': windowState.isFocused,
     'z-20 notFocused': !windowState.isFocused
   }"
@@ -12,57 +11,23 @@
   
   <!-- Window Header -->
   <div 
-    class="relative bg-ub-window-title border-t-2 border-white border-opacity-5 py-1 md:py-1.5 px-2 md:px-3 text-white w-full select-none rounded-b-none cursor-move"
-    (mousedown)="onHeaderMouseDown($event)">
-    <div class="flex justify-center text-xs md:text-sm font-bold truncate px-8">{{ windowState.app.title }}</div>
+    class="mac-titlebar relative w-full select-none cursor-move"
+    (mousedown)="onHeaderMouseDown($event)"
+    (dblclick)="maximize()">
+    <div class="mac-window-title truncate">{{ windowState.app.title }}</div>
     
     <!-- Window Control Buttons -->
-    <div class="absolute select-none right-0 top-0 mt-0.5 md:mt-1 mr-0.5 md:mr-1 flex justify-center items-center">
-      <span 
-        class="mx-0.5 md:mx-1.5 bg-white bg-opacity-0 hover:bg-opacity-10 rounded-full flex justify-center mt-0.5 md:mt-1 h-4 w-4 md:h-5 md:w-5 items-center cursor-pointer"
-        (click)="minimize()"
-        title="最小化">
-        <img
-          src="/assets/themes/Yaru/window/window-minimize-symbolic.svg"
-          alt="最小化"
-          class="h-4 w-4 md:h-5 md:w-5 inline"
-        />
-      </span>
-      @if (windowState.isMaximized) {
-        <span 
-          class="mx-1 md:mx-2 bg-white bg-opacity-0 hover:bg-opacity-10 rounded-full flex justify-center mt-0.5 md:mt-1 h-4 w-4 md:h-5 md:w-5 items-center cursor-pointer"
-          (click)="maximize()"
-          title="还原">
-          <img
-            src="/assets/themes/Yaru/window/window-restore-symbolic.svg"
-            alt="还原"
-            class="h-4 w-4 md:h-5 md:w-5 inline"
-          />
-        </span>
-      } @else {
-        <span 
-          class="mx-1 md:mx-2 bg-white bg-opacity-0 hover:bg-opacity-10 rounded-full flex justify-center mt-0.5 md:mt-1 h-4 w-4 md:h-5 md:w-5 items-center cursor-pointer"
-          (click)="maximize()"
-          title="最大化">
-          <img
-            src="/assets/themes/Yaru/window/window-maximize-symbolic.svg"
-            alt="最大化"
-            class="h-4 w-4 md:h-5 md:w-5 inline"
-          />
-        </span>
-      }
+    <div class="traffic-lights" (mousedown)="$event.stopPropagation()" (dblclick)="$event.stopPropagation()">
       <button 
         tabindex="-1"
         [id]="'close-' + windowState.id"
-        class="mx-0.5 md:mx-1.5 focus:outline-none cursor-default bg-ub-orange bg-opacity-90 hover:bg-opacity-100 rounded-full flex justify-center mt-0.5 md:mt-1 h-4 w-4 md:h-5 md:w-5 items-center"
+        class="traffic-light traffic-close"
         (click)="close()"
-        title="关闭">
-        <img
-          src="/assets/themes/Yaru/window/window-close-symbolic.svg"
-          alt="关闭"
-          class="h-4 w-4 md:h-5 md:w-5 inline"
-        />
+        title="关闭"
+        aria-label="关闭">
       </button>
+      <button tabindex="-1" class="traffic-light traffic-minimize" (click)="minimize()" title="最小化" aria-label="最小化"></button>
+      <button tabindex="-1" class="traffic-light traffic-maximize" (click)="maximize()" [title]="windowState.isMaximized ? '还原' : '最大化'" [attr.aria-label]="windowState.isMaximized ? '还原' : '最大化'"></button>
     </div>
   </div>
 
@@ -117,7 +82,7 @@
 
   <!-- Window Content -->
   <div
-    class="w-full flex-grow z-20 min-h-0 max-h-full windowMainScreen bg-ub-cool-grey"
+    class="w-full flex-grow z-20 min-h-0 max-h-full windowMainScreen mac-window-content"
     [class.overflow-hidden]="windowState.app.id === 'blog' || windowState.app.id === '2048' || windowState.app.id === 'hextris' || windowState.app.id === 'card-2048'"
     [class.overflow-y-auto]="windowState.app.id !== 'blog' && windowState.app.id !== '2048' && windowState.app.id !== 'hextris' && windowState.app.id !== 'card-2048'">
     @switch (windowState.app.id) {

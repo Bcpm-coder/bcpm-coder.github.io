@@ -1,0 +1,43 @@
+:host { display: block; width: 100%; height: 100%; }
+
+.chrome-shell {
+  color: var(--system-text);
+  background: var(--system-app-bg);
+}
+
+.chrome-toolbar {
+  min-height: 44px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--system-border);
+  background: var(--system-sidebar);
+}
+
+.browser-action {
+  width: 30px;
+  height: 30px;
+  transition: background .15s ease;
+}
+
+.browser-action:hover { background: var(--system-surface-hover); }
+
+.browser-action img { width: 18px; opacity: .82; }
+
+:host-context([data-system-theme='light']) .browser-action img {
+  filter: brightness(.3);
+}
+
+.chrome-address {
+  height: 30px;
+  color: var(--system-text);
+  border: 1px solid var(--system-border);
+  background: var(--system-input);
+  transition: border-color .16s ease, box-shadow .16s ease, background .16s ease;
+}
+
+.chrome-address:focus {
+  border-color: var(--system-accent);
+  background: var(--system-surface);
+  box-shadow: 0 0 0 3px var(--system-accent-soft);
+}
+
+#chrome-screen { background: #fff; }

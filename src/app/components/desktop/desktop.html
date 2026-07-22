@@ -2,8 +2,9 @@
   class="h-screen w-screen flex flex-col items-end justify-start content-start flex-wrap-reverse pt-8 bg-transparent relative overflow-hidden overscroll-none window-parent"
   [class.desktop-ready]="desktopReady()"
   [class.desktop-booting]="booting()"
-  id="monitor-screen"
-  [ngStyle]="getBackgroundStyle()">
+  id="monitor-screen">
+
+  <app-wallpaper-background></app-wallpaper-background>
   
   <!-- Top Navbar -->
   <app-navbar
@@ -72,7 +73,6 @@
 
   @if (welcomeVisible()) {
     <app-welcome-screen
-      [wallpaperUrl]="getBackgroundUrl()"
       (entryStarted)="startDesktopMusic()"
       (enterDesktop)="enterDesktop()">
     </app-welcome-screen>

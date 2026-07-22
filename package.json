@@ -3,9 +3,14 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
+    "wallpapers:generate": "node scripts/generate-wallpaper-catalog.mjs",
+    "predev": "npm run wallpapers:generate",
     "dev": "ng serve",
+    "prestart": "npm run wallpapers:generate",
     "start": "ng serve",
+    "prebuild": "npm run wallpapers:generate",
     "build": "ng build",
+    "prewatch": "npm run wallpapers:generate",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

@@ -1,0 +1,38 @@
+:host { display: block; }
+
+.mac-dock {
+  top: 38px;
+  padding: 5px 4px;
+  border: 1px solid var(--system-border-strong);
+  border-left: 0;
+  border-radius: 0 16px 16px 0;
+  background: var(--system-dock);
+  box-shadow: 0 14px 35px rgba(0, 0, 0, .2);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+}
+
+.dock-item {
+  position: relative;
+  border: 1px solid transparent;
+  transition: transform .18s ease, background .18s ease, border-color .18s ease;
+}
+
+.dock-item:hover {
+  z-index: 2;
+  border-color: var(--system-border);
+  background: var(--system-surface-hover);
+  transform: scale(1.08) translateX(2px);
+}
+
+.dock-item img {
+  filter: drop-shadow(0 5px 8px rgba(0, 0, 0, .24));
+}
+
+@media (max-width: 640px) {
+  .mac-dock { top: 34px; border-radius: 0 13px 13px 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dock-item { transition: none; }
+}

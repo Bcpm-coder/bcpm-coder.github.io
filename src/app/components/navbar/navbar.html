@@ -1,22 +1,42 @@
-<div class="main-navbar-vp absolute top-0 right-0 w-screen shadow-md flex flex-nowrap justify-between items-center bg-ub-grey text-ubt-grey text-xs md:text-sm select-none z-50">
+<div class="main-navbar-vp mac-menubar absolute top-0 right-0 w-screen flex flex-nowrap justify-between items-center text-xs md:text-sm select-none z-50">
   <div class="flex-1" aria-hidden="true"></div>
   
   <!-- Clock -->
   <div
     tabindex="0"
-    class="pl-1 md:pl-2 pr-1 md:pr-2 text-xs outline-none transition duration-100 ease-in-out border-b-2 border-transparent focus:border-ubb-orange py-0.5 md:py-1">
+    class="menubar-control pl-1 md:pl-2 pr-1 md:pr-2 text-xs outline-none py-0.5 md:py-1">
     <app-clock></app-clock>
   </div>
   
   <!-- Status Bar -->
-  <div class="flex-1 flex justify-end">
+  <div class="flex-1 flex justify-end items-center pr-1">
+    <div class="menubar-theme-switch" role="group" aria-label="系统主题">
+      <button
+        type="button"
+        title="浅色主题"
+        aria-label="浅色主题"
+        [class.active]="themeService.theme() === 'light'"
+        [attr.aria-pressed]="themeService.theme() === 'light'"
+        (click)="setTheme('light')">
+        <span aria-hidden="true">☀</span>
+      </button>
+      <button
+        type="button"
+        title="深色主题"
+        aria-label="深色主题"
+        [class.active]="themeService.theme() === 'dark'"
+        [attr.aria-pressed]="themeService.theme() === 'dark'"
+        (click)="setTheme('dark')">
+        <span aria-hidden="true">☾</span>
+      </button>
+    </div>
     <div
       id="status-bar"
       tabindex="0"
       (click)="onStatusBarClick()"
       (keydown.enter)="onStatusBarKeydown($event)"
       (keydown.space)="onStatusBarKeydown($event)"
-      class="relative pr-2 md:pr-3 pl-2 md:pl-3 outline-none transition duration-100 ease-in-out border-b-2 border-transparent focus:border-ubb-orange py-0.5 md:py-1 cursor-pointer">
+      class="menubar-control relative px-1.5 md:px-2 outline-none py-0.5 md:py-1 cursor-pointer">
       <app-status></app-status>
       <app-status-card
         [visible]="statusCardVisible()"

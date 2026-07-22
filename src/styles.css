@@ -1,15 +1,64 @@
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+:root,
+[data-system-theme='dark'] {
+  --system-accent: #0a84ff;
+  --system-accent-rgb: 10 132 255;
+  --system-accent-strong: #409cff;
+  --system-accent-soft: rgba(10, 132, 255, .15);
+  --system-bg: #0d131d;
+  --system-app-bg: #111925;
+  --system-sidebar: rgba(18, 27, 40, .9);
+  --system-surface: rgba(255, 255, 255, .075);
+  --system-surface-strong: rgba(34, 45, 61, .94);
+  --system-surface-hover: rgba(255, 255, 255, .12);
+  --system-titlebar: rgba(24, 33, 46, .9);
+  --system-menubar: rgba(12, 20, 32, .72);
+  --system-dock: rgba(15, 24, 37, .62);
+  --system-text: #f4f7fb;
+  --system-text-secondary: #aab6c6;
+  --system-text-tertiary: #758398;
+  --system-border: rgba(255, 255, 255, .13);
+  --system-border-strong: rgba(255, 255, 255, .2);
+  --system-shadow: rgba(0, 0, 0, .46);
+  --system-code: #08101b;
+  --system-input: rgba(0, 0, 0, .22);
+}
+
+[data-system-theme='light'] {
+  --system-accent: #007aff;
+  --system-accent-rgb: 0 122 255;
+  --system-accent-strong: #006ee6;
+  --system-accent-soft: rgba(0, 122, 255, .12);
+  --system-bg: #e8edf4;
+  --system-app-bg: #f3f6fa;
+  --system-sidebar: rgba(238, 243, 249, .92);
+  --system-surface: rgba(255, 255, 255, .7);
+  --system-surface-strong: rgba(247, 250, 253, .94);
+  --system-surface-hover: rgba(255, 255, 255, .95);
+  --system-titlebar: rgba(238, 243, 249, .9);
+  --system-menubar: rgba(240, 245, 251, .72);
+  --system-dock: rgba(238, 243, 249, .62);
+  --system-text: #172131;
+  --system-text-secondary: #526176;
+  --system-text-tertiary: #7b889a;
+  --system-border: rgba(29, 43, 63, .13);
+  --system-border-strong: rgba(29, 43, 63, .2);
+  --system-shadow: rgba(37, 49, 65, .25);
+  --system-code: #e6ebf2;
+  --system-input: rgba(32, 48, 69, .07);
+}
+
 body {
-  font-family: 'Ubuntu', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
   font-display: swap;
   margin: 0;
   padding: 0;
   overflow: hidden;
+  color: var(--system-text);
+  background: var(--system-bg);
 }
 
 * {
@@ -55,7 +104,7 @@ body {
 .top-arrow-up {
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
-  border-bottom: 5px solid #333333;
+  border-bottom: 5px solid var(--system-surface-strong);
 }
 
 .main-navbar-vp {
@@ -108,6 +157,42 @@ input[type=range].ubuntu-slider {
   background-repeat: no-repeat;
   height: 6px;
   border-radius: 50%;
+}
+
+input[type=range].ubuntu-slider {
+  accent-color: var(--system-accent);
+}
+
+::selection {
+  color: #fff;
+  background: rgb(var(--system-accent-rgb) / .72);
+}
+
+.app-themed {
+  color: var(--system-text) !important;
+  background: var(--system-app-bg) !important;
+}
+
+.app-themed .bg-ub-grey { background: var(--system-app-bg) !important; }
+.app-themed .bg-ub-cool-grey { background: var(--system-surface) !important; }
+.app-themed .bg-black.bg-opacity-20 { background: var(--system-input) !important; }
+.app-themed .bg-white.bg-opacity-10 { background: var(--system-surface) !important; }
+.app-themed .hover\:bg-opacity-15:hover { background: var(--system-surface-hover) !important; }
+.app-themed .border-black,
+.app-themed .border-white { border-color: var(--system-border) !important; }
+.app-themed .text-white,
+.app-themed .text-gray-50,
+.app-themed .text-gray-200 { color: var(--system-text) !important; }
+.app-themed .text-gray-300,
+.app-themed .text-gray-400 { color: var(--system-text-secondary) !important; }
+.app-themed .bg-sys-accent,
+.app-themed .bg-sys-accent.text-white { color: #fff !important; }
+.app-themed .project-card {
+  box-shadow: 0 16px 38px rgba(0, 0, 0, .14);
+}
+
+[data-system-theme='light'] .app-themed img[src*='/themes/Yaru/status/'] {
+  filter: brightness(.3);
 }
 
 input[type=range].ubuntu-slider::-webkit-slider-thumb {

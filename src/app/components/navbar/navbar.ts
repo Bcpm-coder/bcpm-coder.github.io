@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ClockComponent } from '../clock/clock';
 import { StatusComponent } from '../status/status';
 import { StatusCardComponent } from '../status-card/status-card';
+import { SystemTheme, ThemeService } from '../../services/theme';
 
 @Component({
   selector: 'app-navbar',
@@ -15,6 +16,12 @@ export class NavbarComponent {
   @Output() shutDown = new EventEmitter<void>();
   
   statusCardVisible = signal(false);
+
+  constructor(public readonly themeService: ThemeService) {}
+
+  setTheme(theme: SystemTheme): void {
+    this.themeService.setTheme(theme);
+  }
 
   onStatusBarClick() {
     this.statusCardVisible.update(v => !v);

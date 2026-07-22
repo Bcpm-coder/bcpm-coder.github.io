@@ -6,19 +6,22 @@
 }
 
 .boot-screen {
-  --orange: #f36f35;
+  --accent: #72b7ff;
+  --accent-bright: #d8ebff;
   position: relative;
   width: 100%;
   height: 100%;
   overflow: hidden;
-  color: #fff8f2;
+  color: #f2f8ff;
   background:
-    radial-gradient(circle at 50% 42%, rgba(104, 30, 75, .34), transparent 34%),
-    linear-gradient(145deg, #100912 0%, #24101f 52%, #0d0910 100%);
+    radial-gradient(circle at 50% 42%, rgba(57, 130, 220, .24), transparent 34%),
+    linear-gradient(145deg, rgba(2, 9, 23, .94) 0%, rgba(5, 21, 48, .9) 52%, rgba(2, 10, 25, .94) 100%);
   font-family: Inter, "Noto Sans SC", "PingFang SC", sans-serif;
   opacity: 1;
   transition: opacity .23s ease, filter .23s ease;
   isolation: isolate;
+  backdrop-filter: blur(15px) saturate(.72) brightness(.68);
+  -webkit-backdrop-filter: blur(15px) saturate(.72) brightness(.68);
 }
 
 .boot-screen.is-finishing {
@@ -33,7 +36,7 @@
   width: min(66vw, 720px);
   aspect-ratio: 1;
   border-radius: 50%;
-  background: rgba(243, 111, 53, .075);
+  background: rgba(66, 148, 242, .11);
   filter: blur(70px);
   transform: translate(-50%, -50%);
 }
@@ -61,10 +64,10 @@
   z-index: 2;
   width: 62%;
   aspect-ratio: 1;
-  border: 2px solid rgba(255, 231, 210, .86);
+  border: 2px solid rgba(220, 238, 255, .88);
   border-radius: 50%;
   object-fit: cover;
-  box-shadow: 0 0 0 6px rgba(255,255,255,.04), 0 0 34px rgba(243,111,53,.18);
+  box-shadow: 0 0 0 6px rgba(255,255,255,.04), 0 0 34px rgba(78,165,255,.2);
 }
 
 .boot-ring {
@@ -81,21 +84,21 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--orange);
-  box-shadow: 0 0 12px var(--orange);
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent);
 }
 
 .boot-ring-outer {
   inset: 0;
   border-top-color: rgba(255,255,255,.28);
-  border-right-color: rgba(243,111,53,.55);
+  border-right-color: rgba(114,183,255,.7);
   animation: boot-rotate 2.2s linear infinite;
 }
 
 .boot-ring-inner {
   inset: 16%;
   border-left-color: rgba(255,255,255,.24);
-  border-bottom-color: rgba(243,111,53,.4);
+  border-bottom-color: rgba(114,183,255,.52);
   animation: boot-rotate 1.45s linear infinite reverse;
 }
 
@@ -107,7 +110,7 @@ h1 {
 }
 
 h1 strong {
-  color: #ffe7d2;
+  color: var(--accent-bright);
   font-weight: 650;
 }
 
@@ -130,19 +133,19 @@ h1 strong {
   display: block;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, #8f294f, var(--orange), #ffd2b5);
-  box-shadow: 0 0 12px rgba(243,111,53,.6);
+  background: linear-gradient(90deg, #245b9f, var(--accent), #e5f2ff);
+  box-shadow: 0 0 12px rgba(91,171,255,.62);
   transform: translateX(-100%);
   animation: boot-progress 1s cubic-bezier(.2,.75,.2,1) forwards;
 }
 
-.ubuntu-loader {
+.boot-loader {
   display: flex;
   gap: 7px;
   margin-top: 16px;
 }
 
-.ubuntu-loader i {
+.boot-loader i {
   width: 5px;
   height: 5px;
   border-radius: 50%;
@@ -150,10 +153,10 @@ h1 strong {
   animation: boot-dot .75s ease-in-out infinite alternate;
 }
 
-.ubuntu-loader i:nth-child(2) { animation-delay: .1s; }
-.ubuntu-loader i:nth-child(3) { animation-delay: .2s; }
-.ubuntu-loader i:nth-child(4) { animation-delay: .3s; }
-.ubuntu-loader i:nth-child(5) { animation-delay: .4s; }
+.boot-loader i:nth-child(2) { animation-delay: .1s; }
+.boot-loader i:nth-child(3) { animation-delay: .2s; }
+.boot-loader i:nth-child(4) { animation-delay: .3s; }
+.boot-loader i:nth-child(5) { animation-delay: .4s; }
 
 footer {
   position: absolute;
@@ -169,7 +172,7 @@ footer {
 @keyframes boot-rotate { to { transform: rotate(360deg); } }
 @keyframes boot-progress { to { transform: translateX(0); } }
 @keyframes boot-dot {
-  to { background: var(--orange); box-shadow: 0 0 9px rgba(243,111,53,.7); transform: scale(1.3); }
+  to { background: var(--accent); box-shadow: 0 0 9px rgba(91,171,255,.72); transform: scale(1.3); }
 }
 
 @media (prefers-reduced-motion: reduce) {

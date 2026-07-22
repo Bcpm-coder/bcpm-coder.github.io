@@ -23,18 +23,6 @@
   animation: screen-in .62s cubic-bezier(.2, .8, .2, 1) both;
 }
 
-.wallpaper-image {
-  position: absolute;
-  inset: -18px;
-  z-index: -4;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  filter: blur(10px) saturate(.78) brightness(.68);
-  transform: scale(1.035);
-  transition: background-image .35s ease;
-}
-
 .welcome-screen::before {
   content: "";
   position: absolute;
@@ -43,6 +31,8 @@
   background:
     linear-gradient(115deg, transparent 18%, rgba(255,255,255,.025) 43%, transparent 64%),
     radial-gradient(ellipse at 50% 105%, rgba(105, 178, 255, .14), transparent 54%);
+  backdrop-filter: blur(10px) saturate(.8) brightness(.72);
+  -webkit-backdrop-filter: blur(10px) saturate(.8) brightness(.72);
   pointer-events: none;
 }
 
@@ -220,12 +210,9 @@
   flex-direction: column;
   align-items: center;
   padding: 24px 28px 22px;
-  border: 1px solid rgba(255,255,255,.12);
-  border-radius: 26px;
-  background: linear-gradient(145deg, rgba(255,255,255,.11), rgba(255,255,255,.055));
-  box-shadow: 0 24px 80px rgba(0, 5, 18, .34), inset 0 1px 0 rgba(255,255,255,.11);
-  backdrop-filter: blur(24px) saturate(130%);
-  -webkit-backdrop-filter: blur(24px) saturate(130%);
+  border: 0;
+  background: transparent;
+  box-shadow: none;
   animation: card-in .78s .3s cubic-bezier(.16, 1, .3, 1) both;
 }
 

@@ -1,0 +1,25 @@
+<div
+  class="wallpaper-fallback"
+  [style.background-image]="'url(\'' + wallpaperService.staticFallbackWallpaper.assetUrl + '\')'">
+</div>
+
+@if (wallpaperService.effectiveWallpaper().kind === 'image') {
+  <div
+    class="wallpaper-image"
+    [style.background-image]="'url(\'' + wallpaperService.effectiveWallpaper().assetUrl + '\')'">
+  </div>
+} @else if (!videoFailed()) {
+  <video
+    class="wallpaper-video"
+    [src]="wallpaperService.effectiveWallpaper().assetUrl"
+    [autoplay]="!wallpaperService.prefersReducedMotion()"
+    [muted]="true"
+    loop
+    playsinline
+    preload="auto"
+    (loadeddata)="onVideoLoaded($event)"
+    (error)="onVideoError()">
+  </video>
+}
+
+<div class="wallpaper-vignette" aria-hidden="true"></div>

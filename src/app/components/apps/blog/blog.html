@@ -1,46 +1,14 @@
-<div class="blog-reader" [class.light-theme]="theme() === 'light'">
-  <header class="blog-toolbar">
-    <div class="toolbar-brand">
-      <span class="brand-mark">E</span>
-      <div>
-        <strong>EVEROOT JOURNAL</strong>
-        <small>Markdown Reading Room</small>
-      </div>
-    </div>
-
-    <div class="toolbar-actions">
-      <button
-        type="button"
-        class="library-toggle"
-        [attr.aria-expanded]="libraryOpen()"
-        aria-label="打开文章目录"
-        (click)="toggleLibrary()">
-        <span aria-hidden="true">☰</span>
-        目录
-      </button>
-
-      <div class="theme-switch" role="group" aria-label="阅读主题">
-        <button
-          type="button"
-          [class.active]="theme() === 'light'"
-          [attr.aria-pressed]="theme() === 'light'"
-          (click)="setTheme('light')">
-          <span aria-hidden="true">☼</span>
-          Light
-        </button>
-        <button
-          type="button"
-          [class.active]="theme() === 'dark'"
-          [attr.aria-pressed]="theme() === 'dark'"
-          (click)="setTheme('dark')">
-          <span aria-hidden="true">☾</span>
-          Dark
-        </button>
-      </div>
-    </div>
-  </header>
-
+<div class="blog-reader">
   <div class="blog-content" [class.library-open]="libraryOpen()">
+    <button
+      type="button"
+      class="library-toggle"
+      [attr.aria-expanded]="libraryOpen()"
+      aria-label="打开文章目录"
+      (click)="toggleLibrary()">
+      <span aria-hidden="true">☰</span>
+      目录
+    </button>
     <button
       type="button"
       class="library-backdrop"

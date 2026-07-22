@@ -18,7 +18,7 @@ export class MusicPlayerComponent implements AfterViewInit, OnChanges, OnDestroy
       container: this.playerHost.nativeElement,
       audio: MUSIC_PLAYLIST,
       autoplay: false,
-      theme: '#e95420',
+      theme: '#0a84ff',
       loop: 'all',
       order: 'list',
       preload: 'metadata',

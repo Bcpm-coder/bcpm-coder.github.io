@@ -1,0 +1,11 @@
+:host { display: block; }
+
+.status-symbol { opacity: .88; }
+
+:host-context([data-system-theme='light']) img.status-symbol {
+  filter: brightness(.25);
+}
+
+:host-context([data-system-theme='light']) .arrow-custom-down {
+  border-top-color: var(--system-text);
+}

@@ -24,7 +24,7 @@ export interface PortfolioProject {
 // Personal details live here so future customization only needs one file.
 export const PORTFOLIO_PROFILE = {
   name: '不吃泡面',
-  headline: 'M.S. Student in Software Engineering at BUPT',
+  headline: 'Graduate Student at BUPT',
   introduction: [] as string[],
   email: '',
   github: 'github.com/bcpm-coder',
@@ -69,18 +69,10 @@ export class AppConfigService {
     {
       id: 'projects',
       title: '项目',
-      icon: '/assets/themes/Yaru/system/folder.png',
+      icon: '/assets/images/logos/app-projects.svg',
       disabled: false,
       favourite: false,
       desktop_shortcut: false,
-    },
-    {
-      id: 'skills',
-      title: '技能',
-      icon: '/assets/themes/Yaru/system/folder.png',
-      disabled: false,
-      favourite: false,
-      desktop_shortcut: true,
     },
     {
       id: 'contact',
@@ -136,7 +128,7 @@ export class AppConfigService {
     {
       id: 'blog',
       title: '博客',
-      icon: '/assets/themes/Yaru/system/user-home.png',
+      icon: '/assets/images/logos/app-blog.svg',
       disabled: false,
       favourite: true,
       desktop_shortcut: true,

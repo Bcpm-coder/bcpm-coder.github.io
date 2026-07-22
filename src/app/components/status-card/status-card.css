@@ -1,0 +1,37 @@
+:host { display: block; }
+
+.status-card {
+  overflow: hidden;
+  color: var(--system-text);
+  border: 1px solid var(--system-border-strong);
+  background: var(--system-surface-strong);
+  box-shadow: 0 22px 55px var(--system-shadow);
+  backdrop-filter: blur(28px) saturate(150%);
+  -webkit-backdrop-filter: blur(28px) saturate(150%);
+}
+
+.status-row {
+  margin: 0 8px;
+  border-radius: 7px;
+  transition: background .15s ease;
+}
+
+.status-row:hover {
+  background: var(--system-surface-hover);
+}
+
+.status-card .text-gray-400 {
+  color: var(--system-text-secondary) !important;
+}
+
+.status-card [class*="border-black"] {
+  border-color: var(--system-border) !important;
+}
+
+.status-card img {
+  opacity: .84;
+}
+
+:host-context([data-system-theme='light']) .status-card img {
+  filter: brightness(.32);
+}

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="skills-bg" x1="18" y1="10" x2="110" y2="119" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#56D6D1"/>
+      <stop offset=".5" stop-color="#178BD8"/>
+      <stop offset="1" stop-color="#5357D8"/>
+    </linearGradient>
+    <filter id="skills-shadow" x="-30%" y="-30%" width="160%" height="170%">
+      <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#183A88" flood-opacity=".4"/>
+    </filter>
+  </defs>
+  <rect x="6" y="6" width="116" height="116" rx="27" fill="url(#skills-bg)"/>
+  <circle cx="64" cy="64" r="35" fill="#F8FCFF" filter="url(#skills-shadow)"/>
+  <path d="M68 39h-8l-3 9-8 3-8-4-6 6 4 8-3 8-9 3v8l9 3 3 8-4 8 6 6 8-4 8 3 3 9h8l3-9 8-3 8 4 6-6-4-8 3-8 9-3v-8l-9-3-3-8 4-8-6-6-8 4-8-3-3-9Z" fill="#168BD8"/>
+  <circle cx="64" cy="76" r="12" fill="#F8FCFF"/>
+  <path d="m59 72-6 5 6 5M69 72l6 5-6 5" fill="none" stroke="#485BD8" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M24 28c22-15 57-15 81 3" fill="none" stroke="#fff" stroke-opacity=".28" stroke-width="3" stroke-linecap="round"/>
+</svg>

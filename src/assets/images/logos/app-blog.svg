@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="blog-bg" x1="15" y1="10" x2="114" y2="120" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#63B7FF"/>
+      <stop offset=".55" stop-color="#2578F4"/>
+      <stop offset="1" stop-color="#5558D9"/>
+    </linearGradient>
+    <linearGradient id="blog-paper" x1="43" y1="28" x2="90" y2="103" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff"/>
+      <stop offset="1" stop-color="#E8F2FF"/>
+    </linearGradient>
+    <filter id="blog-shadow" x="-30%" y="-20%" width="170%" height="160%">
+      <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#183A88" flood-opacity=".38"/>
+    </filter>
+  </defs>
+  <rect x="6" y="6" width="116" height="116" rx="27" fill="url(#blog-bg)"/>
+  <rect x="32" y="26" width="68" height="78" rx="12" fill="url(#blog-paper)" filter="url(#blog-shadow)"/>
+  <rect x="32" y="26" width="12" height="78" rx="6" fill="#C9E3FF"/>
+  <circle cx="38" cy="42" r="2" fill="#2A79EE"/>
+  <circle cx="38" cy="54" r="2" fill="#2A79EE"/>
+  <circle cx="38" cy="66" r="2" fill="#2A79EE"/>
+  <path d="M56 49h30M56 61h30M56 73h23M56 85h27" fill="none" stroke="#2879EE" stroke-width="5" stroke-linecap="round" opacity=".82"/>
+  <path d="M23 28c22-15 58-16 83 3" fill="none" stroke="#fff" stroke-opacity=".27" stroke-width="3" stroke-linecap="round"/>
+</svg>

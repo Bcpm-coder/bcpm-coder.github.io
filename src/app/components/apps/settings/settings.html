@@ -1,19 +1,69 @@
-<div class="w-full flex-col flex-grow z-20 max-h-full overflow-y-auto windowMainScreen select-none bg-ub-cool-grey">
-  <div 
-    class="md:w-2/5 w-2/3 h-1/3 m-auto my-4"
-    [ngStyle]="getWallpaperStyle(currentBg)">
+<section class="wallpaper-settings">
+  <header class="settings-header">
+    <div>
+      <p>外观</p>
+      <h1>桌面与锁屏壁纸</h1>
+    </div>
+    <span>{{ wallpaperService.wallpapers.length }} 个资源</span>
+  </header>
+
+  <div class="current-preview">
+    @if (wallpaperService.effectiveWallpaper().kind === 'video') {
+      <video
+        [src]="wallpaperService.effectiveWallpaper().assetUrl"
+        autoplay
+        [muted]="true"
+        loop
+        playsinline
+        preload="metadata">
+      </video>
+    } @else {
+      <img
+        [src]="wallpaperService.effectiveWallpaper().assetUrl"
+        [alt]="wallpaperService.selectedWallpaper().label"
+        decoding="async">
+    }
+    <div class="preview-caption">
+      <span>当前壁纸</span>
+      <strong>{{ wallpaperService.selectedWallpaper().label }}</strong>
+      @if (wallpaperService.selectedWallpaper().kind === 'video' && !wallpaperService.isDesktop()) {
+        <small>移动端正在显示静态回退壁纸</small>
+      }
+    </div>
   </div>
-  
-  <div class="flex flex-wrap justify-center items-center border-t border-gray-900 p-4">
-    @for (wallpaper of wallpaperKeys; track wallpaper) {
-      <div 
-        [class.border-yellow-700]="currentBg === wallpaper"
-        [class.border-transparent]="currentBg !== wallpaper"
-        class="md:px-28 md:py-20 md:m-4 m-2 px-14 py-10 outline-none border-4 border-opacity-80 cursor-pointer hover:border-yellow-600 transition-colors"
-        [ngStyle]="getWallpaperStyle(wallpaper)"
-        (click)="changeBackground(wallpaper)"
-        [title]="wallpaper">
-      </div>
+
+  <div class="wallpaper-grid" aria-label="可选壁纸">
+    @for (wallpaper of wallpaperService.wallpapers; track wallpaper.id) {
+      <button
+        type="button"
+        class="wallpaper-card"
+        [class.is-selected]="wallpaperService.selectedWallpaper().id === wallpaper.id"
+        [class.is-disabled]="!wallpaperService.isSelectable(wallpaper)"
+        [disabled]="!wallpaperService.isSelectable(wallpaper)"
+        [attr.aria-pressed]="wallpaperService.selectedWallpaper().id === wallpaper.id"
+        (click)="selectWallpaper(wallpaper)">
+        <span class="wallpaper-media">
+          @if (wallpaper.kind === 'video' && wallpaperService.isDesktop()) {
+            <video
+              [src]="wallpaper.assetUrl"
+              autoplay
+              [muted]="true"
+              loop
+              playsinline
+              preload="metadata">
+            </video>
+          } @else if (wallpaper.kind === 'video') {
+            <span class="video-placeholder">动态壁纸</span>
+          } @else {
+            <img [src]="wallpaper.assetUrl" [alt]="wallpaper.label" loading="lazy" decoding="async">
+          }
+          @if (wallpaper.kind === 'video') {
+            <span class="type-badge">{{ wallpaperService.isDesktop() ? '动态' : '仅桌面' }}</span>
+          }
+          <span class="selected-check" aria-hidden="true">✓</span>
+        </span>
+        <span class="wallpaper-name">{{ wallpaper.label }}</span>
+      </button>
     }
   </div>
-</div>
+</section>

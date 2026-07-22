@@ -1,4 +1,4 @@
-import { Component, OnDestroy, computed, input, output, signal } from '@angular/core';
+import { Component, OnDestroy, computed, output, signal } from '@angular/core';
 
 @Component({
   selector: 'app-welcome-screen',
@@ -7,7 +7,6 @@ import { Component, OnDestroy, computed, input, output, signal } from '@angular/
   styleUrl: './welcome-screen.css',
 })
 export class WelcomeScreenComponent implements OnDestroy {
-  readonly wallpaperUrl = input('/assets/images/wallpapers/wall-1.png');
   readonly enterDesktop = output<void>();
   readonly entryStarted = output<void>();
   readonly leaving = signal(false);

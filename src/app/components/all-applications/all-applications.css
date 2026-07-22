@@ -1,0 +1,24 @@
+:host { display: block; }
+
+.launchpad {
+  color: var(--system-text);
+  background: color-mix(in srgb, var(--system-bg) 66%, transparent);
+  backdrop-filter: blur(34px) saturate(130%);
+  -webkit-backdrop-filter: blur(34px) saturate(130%);
+}
+
+.launchpad-search {
+  color: var(--system-text);
+  border: 1px solid var(--system-border-strong);
+  background: var(--system-surface-strong);
+  box-shadow: 0 12px 34px rgba(0, 0, 0, .18);
+}
+
+.launchpad-search input {
+  color: var(--system-text);
+}
+
+.launchpad-search:focus-within {
+  border-color: rgb(var(--system-accent-rgb) / .75);
+  box-shadow: 0 0 0 3px var(--system-accent-soft), 0 12px 34px rgba(0, 0, 0, .18);
+}

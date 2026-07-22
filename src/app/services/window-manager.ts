@@ -21,26 +21,9 @@ export interface WindowState {
 export class WindowManagerService {
   private windows = signal<Map<string, WindowState>>(new Map());
   private nextZIndex = signal(1000);
-  private backgroundImage = signal('wall-1');
-
-  constructor() {
-    const savedBackground = localStorage.getItem('bg-image');
-    if (savedBackground) {
-      this.backgroundImage.set(savedBackground);
-    }
-  }
 
   getWindows() {
     return this.windows();
-  }
-
-  getBackgroundImage() {
-    return this.backgroundImage();
-  }
-
-  setBackgroundImage(image: string) {
-    this.backgroundImage.set(image);
-    localStorage.setItem('bg-image', image);
   }
 
   openWindow(app: App) {

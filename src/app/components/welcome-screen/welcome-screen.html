@@ -6,11 +6,6 @@
   aria-modal="true"
   aria-labelledby="welcome-title"
   (animationend)="onExitAnimationEnd($event)">
-  <div
-    class="wallpaper-image"
-    [style.background-image]="'url(\'' + wallpaperUrl() + '\')'"
-    aria-hidden="true">
-  </div>
   <div class="wallpaper-glow glow-one" aria-hidden="true"></div>
   <div class="wallpaper-glow glow-two" aria-hidden="true"></div>
   <div class="wallpaper-glow glow-three" aria-hidden="true"></div>

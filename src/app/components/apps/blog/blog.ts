@@ -5,7 +5,6 @@ import DOMPurify from 'dompurify';
 
 type BlogCategory = 'Coding' | '学习' | '生活' | '碎碎念';
 type CategoryFilter = '全部' | BlogCategory;
-type BlogTheme = 'light' | 'dark';
 
 interface BlogPost {
   id: string;
@@ -37,7 +36,6 @@ export class BlogComponent implements OnInit {
   readonly renderedContent = signal('');
   readonly query = signal('');
   readonly activeCategory = signal<CategoryFilter>('全部');
-  readonly theme = signal<BlogTheme>('dark');
   readonly libraryOpen = signal(false);
   readonly isLoading = signal(true);
   readonly errorMessage = signal('');
@@ -56,10 +54,6 @@ export class BlogComponent implements OnInit {
   });
 
   async ngOnInit() {
-    const savedTheme = localStorage.getItem('blog-theme');
-    if (savedTheme === 'light' || savedTheme === 'dark') {
-      this.theme.set(savedTheme);
-    }
 
     try {
       const response = await fetch('/assets/blog/posts.json');
@@ -105,11 +99,6 @@ export class BlogComponent implements OnInit {
   categoryCount(category: CategoryFilter): number {
     if (category === '全部') return this.posts().length;
     return this.posts().filter(post => post.category === category).length;
-  }
-
-  setTheme(theme: BlogTheme) {
-    this.theme.set(theme);
-    localStorage.setItem('blog-theme', theme);
   }
 
   toggleLibrary() {

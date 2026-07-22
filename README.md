@@ -33,12 +33,18 @@ npm install
 ### Development Mode
 
 ```bash
-npm start
+npm run dev
 # or
-ng serve
+npm start
 ```
 
 Visit http://localhost:4200 to view the development version
+
+### Add Wallpapers
+
+Place `.png`, `.jpg`, `.jpeg`, `.webp`, `.avif`, `.mp4`, or `.webm` files in
+`src/assets/images/wallpapers/`, then restart `npm run dev`. The wallpaper catalog is
+generated automatically before development and production builds.
 
 ### Build for Production
 

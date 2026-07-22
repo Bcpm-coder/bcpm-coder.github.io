@@ -1,7 +1,7 @@
 :host {
   display: block;
   width: 100%;
-  color: #292126;
+  color: var(--system-text);
 }
 
 .aplayer-host {
@@ -12,14 +12,14 @@
   margin: 0;
   border: 0;
   border-radius: 0;
-  color: #30272c;
-  background: rgba(250, 248, 249, .98);
+  color: var(--system-text);
+  background: var(--system-surface-strong);
   box-shadow: none;
   font-family: inherit;
 }
 
 :host ::ng-deep .aplayer .aplayer-body {
-  background: linear-gradient(135deg, rgba(255, 255, 255, .98), rgba(246, 241, 244, .98));
+  background: linear-gradient(135deg, var(--system-surface-strong), var(--system-app-bg));
 }
 
 :host ::ng-deep .aplayer .aplayer-pic {
@@ -39,39 +39,41 @@
 }
 
 :host ::ng-deep .aplayer .aplayer-title {
-  color: #241c21;
+  color: var(--system-text);
   font-size: 13px;
   font-weight: 700;
 }
 
 :host ::ng-deep .aplayer .aplayer-author {
-  color: #8c7e86;
+  color: var(--system-text-tertiary);
   font-size: 10px;
 }
 
 :host ::ng-deep .aplayer .aplayer-list {
-  border-top-color: rgba(60, 42, 51, .09);
+  border-top-color: var(--system-border);
+  background: var(--system-app-bg);
 }
 
 :host ::ng-deep .aplayer .aplayer-list ol li {
   height: 34px;
   padding: 0 13px;
-  border-top-color: rgba(60, 42, 51, .07);
+  color: var(--system-text-secondary);
+  border-top-color: var(--system-border);
   line-height: 34px;
 }
 
 :host ::ng-deep .aplayer .aplayer-list ol li:hover,
 :host ::ng-deep .aplayer .aplayer-list ol li.aplayer-list-light {
-  background: #eee6ea;
+  background: var(--system-accent-soft);
 }
 
 :host ::ng-deep .aplayer .aplayer-list-index,
 :host ::ng-deep .aplayer .aplayer-list-author {
-  color: #9b8d95;
+  color: var(--system-text-tertiary);
 }
 
 :host ::ng-deep .aplayer .aplayer-icon:hover path {
-  fill: #e95420;
+  fill: var(--system-accent);
 }
 
 :host ::ng-deep .aplayer .aplayer-icon-back,
@@ -85,7 +87,17 @@
 
 :host ::ng-deep .aplayer .aplayer-icon-back:hover,
 :host ::ng-deep .aplayer .aplayer-icon-forward:hover {
-  background: rgba(233, 84, 32, .1);
+  background: var(--system-accent-soft);
+}
+
+:host ::ng-deep .aplayer .aplayer-info .aplayer-controller .aplayer-time,
+:host ::ng-deep .aplayer .aplayer-info .aplayer-controller .aplayer-time .aplayer-icon path {
+  color: var(--system-text-tertiary);
+  fill: var(--system-text-tertiary);
+}
+
+:host ::ng-deep .aplayer .aplayer-bar-wrap .aplayer-bar {
+  background: var(--system-border-strong);
 }
 
 :host ::ng-deep .aplayer.aplayer-withlist .aplayer-icon-order {

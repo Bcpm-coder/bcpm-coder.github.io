@@ -10,20 +10,22 @@ import { AllApplicationsComponent } from '../all-applications/all-applications';
 import { WelcomeScreenComponent } from '../welcome-screen/welcome-screen';
 import { BootScreenComponent } from '../boot-screen/boot-screen';
 import { MusicPlayerComponent } from '../music-player/music-player';
+import { WallpaperBackgroundComponent } from '../wallpaper-background/wallpaper-background';
+import { WallpaperService } from '../../services/wallpaper';
+import { ThemeService } from '../../services/theme';
 
 type DesktopPhase = 'locked' | 'booting' | 'ready';
 const GAME_APP_IDS = ['2048', 'hextris', 'card-2048'] as const;
 
 @Component({
   selector: 'app-desktop',
-  imports: [CommonModule, KeyValuePipe, DesktopIconComponent, SidebarComponent, WindowComponent, NavbarComponent, AllApplicationsComponent, WelcomeScreenComponent, BootScreenComponent, MusicPlayerComponent],
+  imports: [CommonModule, KeyValuePipe, DesktopIconComponent, SidebarComponent, WindowComponent, NavbarComponent, AllApplicationsComponent, WelcomeScreenComponent, BootScreenComponent, MusicPlayerComponent, WallpaperBackgroundComponent],
   templateUrl: './desktop.html',
   styleUrl: './desktop.css',
 })
 export class DesktopComponent implements OnInit, OnDestroy {
   desktopApps = signal<App[]>([]);
   hideSidebar = signal(false);
-  backgroundImage = signal('wall-1');
   allAppsView = signal(false);
   desktopPhase = signal<DesktopPhase>('locked');
   welcomeVisible = computed(() => this.desktopPhase() === 'locked');
@@ -38,40 +40,22 @@ export class DesktopComponent implements OnInit, OnDestroy {
   externalMusicDragging = signal(false);
   externalMusicSnapping = signal(false);
   externalMusicPosition = signal<{ x: number; y: number } | null>(null);
-  private backgroundChangeHandler?: (event: any) => void;
   private musicDragPointerId?: number;
   private musicDragOffset = { x: 0, y: 0 };
   private musicSnapTimer?: number;
 
   constructor(
     public appConfig: AppConfigService,
-    public windowManager: WindowManagerService
+    public windowManager: WindowManagerService,
+    public wallpaperService: WallpaperService,
+    public themeService: ThemeService
   ) {}
 
   ngOnInit() {
     this.desktopApps.set(this.appConfig.getDesktopApps());
-    
-    // Load background image from localStorage or use default
-    const savedBg = localStorage.getItem('bg-image');
-    if (savedBg === 'wall-1' || savedBg === 'wall-2') {
-      this.backgroundImage.set(savedBg);
-    } else {
-      this.backgroundImage.set('wall-1');
-      localStorage.setItem('bg-image', 'wall-1');
-    }
-
-    // Listen for background changes
-    this.backgroundChangeHandler = (event: any) => {
-      this.backgroundImage.set(event.detail);
-    };
-    window.addEventListener('background-changed', this.backgroundChangeHandler);
-
   }
 
   ngOnDestroy() {
-    if (this.backgroundChangeHandler) {
-      window.removeEventListener('background-changed', this.backgroundChangeHandler);
-    }
     if (this.musicSnapTimer !== undefined) {
       window.clearTimeout(this.musicSnapTimer);
     }
@@ -193,29 +177,4 @@ export class DesktopComponent implements OnInit, OnDestroy {
     console.log('Shut down');
   }
 
-  getBackgroundUrl() {
-    const bgImages: { [key: string]: string } = {
-      'wall-1': '/assets/images/wallpapers/wall-1.png',
-      'wall-2': '/assets/images/wallpapers/wall-2.jpg',
-      'wall-4': '/assets/images/wallpapers/wall-4.webp',
-      'wall-5': '/assets/images/wallpapers/wall-5.webp',
-      'wall-6': '/assets/images/wallpapers/wall-6.webp',
-      'wall-7': '/assets/images/wallpapers/wall-7.webp',
-      'wall-8': '/assets/images/wallpapers/wall-8.webp',
-    };
-
-    return bgImages[this.backgroundImage()] || bgImages['wall-1'];
-  }
-
-  getBackgroundStyle() {
-    const bgImage = this.getBackgroundUrl();
-
-    return {
-      'background-image': `url('${bgImage}')`,
-      'background-size': 'cover',
-      'background-position': 'center',
-      'background-repeat': 'no-repeat',
-      'background-position-x': 'center'
-    };
-  }
 }

@@ -2,6 +2,24 @@
   display: block;
 }
 
+.desktop-app-icon {
+  color: #fff;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, .85);
+  transition: background .16s ease, border-color .16s ease, transform .16s ease;
+}
+
+.desktop-app-icon:hover {
+  border-color: rgba(255, 255, 255, .18);
+  background: rgba(255, 255, 255, .14);
+}
+
+.desktop-app-icon:focus-visible,
+.desktop-app-icon:focus {
+  border-color: rgb(var(--system-accent-rgb) / .72);
+  background: rgb(var(--system-accent-rgb) / .3);
+  box-shadow: 0 0 0 2px rgb(var(--system-accent-rgb) / .2);
+}
+
 /* Focus styles for keyboard navigation */
 :host:focus {
   outline: none;

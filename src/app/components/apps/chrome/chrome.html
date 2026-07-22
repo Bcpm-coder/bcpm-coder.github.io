@@ -1,14 +1,14 @@
-<div class="h-full w-full flex flex-col bg-ub-cool-grey">
+<div class="chrome-shell h-full w-full flex flex-col">
   <!-- URL Bar -->
-  <div class="w-full pt-0.5 pb-1 flex justify-start items-center text-white text-sm border-b border-gray-900">
+  <div class="chrome-toolbar w-full flex justify-start items-center text-sm">
     <div 
       (click)="refreshChrome()" 
-      class="ml-2 mr-1 flex justify-center items-center rounded-full bg-gray-50 bg-opacity-0 hover:bg-opacity-10 cursor-pointer">
+      class="browser-action ml-2 mr-1 flex justify-center items-center rounded-full cursor-pointer">
       <img class="w-5" src="/assets/themes/Yaru/status/chrome_refresh.svg" alt="刷新" />
     </div>
     <div 
       (click)="goToHome()" 
-      class="mr-2 ml-1 flex justify-center items-center rounded-full bg-gray-50 bg-opacity-0 hover:bg-opacity-10 cursor-pointer">
+      class="browser-action mr-2 ml-1 flex justify-center items-center rounded-full cursor-pointer">
       <img class="w-5" src="/assets/themes/Yaru/status/chrome_home.svg" alt="主页" />
     </div>
     <input 
@@ -16,7 +16,7 @@
       id="chrome-url-bar"
       [(ngModel)]="displayUrl"
       (keydown)="onUrlKeyDown($event)"
-      class="outline-none bg-ub-grey rounded-full pl-3 py-0.5 mr-3 w-5/6 text-gray-300 focus:text-white" 
+      class="chrome-address outline-none rounded-lg pl-3 mr-3 w-5/6"
       type="url" 
       spellcheck="false" 
       autocomplete="off" />

@@ -1,5 +1,5 @@
 <div
-  class="absolute bg-ub-cool-grey rounded-md py-4 top-9 right-3 shadow border-black border border-opacity-20 status-card"
+  class="absolute rounded-md py-3 top-9 right-3 status-card"
   (click)="$event.stopPropagation()"
   [class.visible]="visible"
   [class.invisible]="!visible"
@@ -9,7 +9,7 @@
   <div class="absolute w-0 h-0 -top-1 right-6 top-arrow-up"></div>
   
   <!-- Sound Control -->
-  <div class="w-64 py-1.5 flex items-center justify-center bg-ub-cool-grey hover:bg-ub-warm-grey hover:bg-opacity-20">
+  <div class="status-row w-64 py-1.5 flex items-center justify-center">
     <div class="w-8">
       <img width="16px" height="16px" src="/assets/themes/Yaru/status/audio-headphones-symbolic.svg" alt="ubuntu headphone">
     </div>
@@ -24,7 +24,7 @@
   </div>
   
   <!-- Brightness Control -->
-  <div class="w-64 py-1.5 flex items-center justify-center bg-ub-cool-grey hover:bg-ub-warm-grey hover:bg-opacity-20">
+  <div class="status-row w-64 py-1.5 flex items-center justify-center">
     <div class="w-8">
       <img width="16px" height="16px" src="/assets/themes/Yaru/status/display-brightness-symbolic.svg" alt="ubuntu brightness">
     </div>
@@ -44,7 +44,7 @@
   </div>
   
   <!-- WiFi -->
-  <div class="w-64 py-1.5 flex items-center justify-center bg-ub-cool-grey hover:bg-ub-warm-grey hover:bg-opacity-20">
+  <div class="status-row w-64 py-1.5 flex items-center justify-center">
     <div class="w-8">
       <img width="16px" height="16px" src="/assets/themes/Yaru/status/network-wireless-signal-good-symbolic.svg" alt="ubuntu wifi">
     </div>
@@ -55,7 +55,7 @@
   </div>
   
   <!-- Bluetooth -->
-  <div class="w-64 py-1.5 flex items-center justify-center bg-ub-cool-grey hover:bg-ub-warm-grey hover:bg-opacity-20">
+  <div class="status-row w-64 py-1.5 flex items-center justify-center">
     <div class="w-8">
       <img width="16px" height="16px" src="/assets/themes/Yaru/status/bluetooth-symbolic.svg" alt="ubuntu bluetooth">
     </div>
@@ -72,7 +72,7 @@
   
   <!-- Lock Screen -->
   <div 
-    class="w-64 py-1.5 flex items-center justify-center bg-ub-cool-grey hover:bg-ub-warm-grey hover:bg-opacity-20 cursor-pointer"
+    class="status-row w-64 py-1.5 flex items-center justify-center cursor-pointer"
     (click)="lockScreen && lockScreen()">
     <div class="w-8">
       <img width="16px" height="16px" src="/assets/themes/Yaru/status/system-shutdown-symbolic.svg" alt="ubuntu lock">
@@ -84,7 +84,7 @@
   
   <!-- Shut Down -->
   <div 
-    class="w-64 py-1.5 flex items-center justify-center bg-ub-cool-grey hover:bg-ub-warm-grey hover:bg-opacity-20 cursor-pointer"
+    class="status-row w-64 py-1.5 flex items-center justify-center cursor-pointer"
     (click)="shutDown && shutDown()">
     <div class="w-8">
       <img width="16px" height="16px" src="/assets/themes/Yaru/status/power-button.svg" alt="ubuntu power">
