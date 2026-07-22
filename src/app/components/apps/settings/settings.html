@@ -13,7 +13,7 @@
         [src]="wallpaperService.staticFallbackWallpaper.assetUrl"
         [alt]="wallpaperService.selectedWallpaper().label + ' 动态壁纸预览'"
         decoding="async">
-      <span class="current-video-badge">动态壁纸正在桌面播放</span>
+      <span class="current-video-badge">动态壁纸正在播放</span>
     } @else {
       <img
         [src]="wallpaperService.effectiveWallpaper().assetUrl"
@@ -23,9 +23,6 @@
     <div class="preview-caption">
       <span>当前壁纸</span>
       <strong>{{ wallpaperService.selectedWallpaper().label }}</strong>
-      @if (wallpaperService.selectedWallpaper().kind === 'video' && !wallpaperService.isDesktop()) {
-        <small>移动端正在显示静态回退壁纸</small>
-      }
     </div>
   </div>
 
@@ -51,7 +48,7 @@
             <img [src]="wallpaper.assetUrl" [alt]="wallpaper.label" loading="lazy" decoding="async">
           }
           @if (wallpaper.kind === 'video') {
-            <span class="type-badge">{{ wallpaperService.isDesktop() ? '动态' : '仅桌面' }}</span>
+            <span class="type-badge">动态</span>
           }
           <span class="selected-check" aria-hidden="true">✓</span>
         </span>

@@ -1,21 +1,18 @@
-import { Injectable, OnDestroy, computed, inject, signal } from '@angular/core';
+import { Injectable, OnDestroy, computed, signal } from '@angular/core';
 import {
   GENERATED_DEFAULT_WALLPAPER_ID,
   GENERATED_STATIC_FALLBACK_WALLPAPER_ID,
   GENERATED_WALLPAPERS,
 } from '../generated/wallpaper-catalog';
 import { WallpaperDefinition } from '../models/wallpaper';
-import { ViewportService } from './viewport';
 
 @Injectable({ providedIn: 'root' })
 export class WallpaperService implements OnDestroy {
-  private readonly viewport = inject(ViewportService);
   private readonly reducedMotionQuery = typeof window.matchMedia === 'function'
     ? window.matchMedia('(prefers-reduced-motion: reduce)')
     : null;
 
   readonly wallpapers = GENERATED_WALLPAPERS;
-  readonly isDesktop = computed(() => !this.viewport.isMobile());
   readonly prefersReducedMotion = signal(this.reducedMotionQuery?.matches ?? false);
 
   private readonly selectedId = signal(this.getInitialWallpaperId());
@@ -28,12 +25,7 @@ export class WallpaperService implements OnDestroy {
   readonly selectedWallpaper = computed(
     () => this.findWallpaper(this.selectedId()) ?? this.defaultWallpaper
   );
-  readonly effectiveWallpaper = computed(() => {
-    const selected = this.selectedWallpaper();
-    return selected.kind === 'video' && !this.isDesktop()
-      ? this.staticFallbackWallpaper
-      : selected;
-  });
+  readonly effectiveWallpaper = computed(() => this.selectedWallpaper());
 
   private readonly onReducedMotionChange = (event: MediaQueryListEvent) => {
     this.prefersReducedMotion.set(event.matches);
@@ -48,15 +40,13 @@ export class WallpaperService implements OnDestroy {
   }
 
   selectWallpaper(wallpaper: WallpaperDefinition): boolean {
-    if (wallpaper.kind === 'video' && !this.isDesktop()) return false;
-
     this.selectedId.set(wallpaper.id);
     localStorage.setItem('bg-image', wallpaper.id);
     return true;
   }
 
   isSelectable(wallpaper: WallpaperDefinition): boolean {
-    return wallpaper.kind !== 'video' || this.isDesktop();
+    return this.wallpapers.some(candidate => candidate.id === wallpaper.id);
   }
 
   ngOnDestroy(): void {

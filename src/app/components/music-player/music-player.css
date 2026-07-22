@@ -76,6 +76,26 @@
   fill: var(--system-accent);
 }
 
+:host ::ng-deep .aplayer .aplayer-info .aplayer-controller {
+  min-width: 0;
+}
+
+:host ::ng-deep .aplayer .aplayer-info .aplayer-icon {
+  position: relative;
+  width: 15px;
+  height: 15px;
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+}
+
+/* Keep controls easy to tap without letting their visual boxes consume the seek bar. */
+:host ::ng-deep .aplayer .aplayer-info .aplayer-icon::before {
+  position: absolute;
+  inset: -6px;
+  content: '';
+}
+
 :host ::ng-deep .aplayer .aplayer-icon-back,
 :host ::ng-deep .aplayer .aplayer-icon-forward {
   display: inline-block;
@@ -83,11 +103,6 @@
   height: 16px;
   margin-left: 5px;
   border-radius: 50%;
-}
-
-:host ::ng-deep .aplayer .aplayer-icon {
-  min-width: 24px;
-  min-height: 24px;
 }
 
 :host ::ng-deep .aplayer-host.is-compact .aplayer .aplayer-pic {
@@ -128,8 +143,52 @@
   fill: var(--system-text-tertiary);
 }
 
-:host ::ng-deep .aplayer .aplayer-bar-wrap .aplayer-bar {
+:host ::ng-deep .aplayer .aplayer-info .aplayer-controller .aplayer-bar-wrap {
+  min-width: 72px;
+  padding: 8px 0;
+  touch-action: none;
+}
+
+:host ::ng-deep .aplayer .aplayer-info .aplayer-controller .aplayer-bar-wrap .aplayer-bar {
+  height: 2px;
+  overflow: visible;
+  border-radius: 999px;
   background: var(--system-border-strong);
+}
+
+:host ::ng-deep .aplayer .aplayer-info .aplayer-controller .aplayer-bar-wrap .aplayer-bar .aplayer-loaded {
+  height: 2px;
+  border-radius: inherit;
+  background: rgb(var(--system-accent-rgb) / .28);
+}
+
+:host ::ng-deep .aplayer .aplayer-info .aplayer-controller .aplayer-bar-wrap .aplayer-bar .aplayer-played {
+  height: 2px;
+  border-radius: inherit;
+}
+
+:host ::ng-deep .aplayer .aplayer-info .aplayer-controller .aplayer-bar-wrap .aplayer-bar .aplayer-played .aplayer-thumb {
+  box-shadow:
+    0 0 0 2px var(--system-surface-strong),
+    0 2px 7px rgb(var(--system-accent-rgb) / .36);
+}
+
+:host ::ng-deep .aplayer .aplayer-bar-wrap:active .aplayer-thumb {
+  transform: scale(.9) !important;
+}
+
+:host ::ng-deep .aplayer-host.is-compact .aplayer .aplayer-info .aplayer-controller .aplayer-bar-wrap {
+  min-width: 42px;
+  margin-left: 3px;
+}
+
+:host ::ng-deep .aplayer-host.is-compact .aplayer .aplayer-info .aplayer-controller .aplayer-time {
+  padding-left: 3px;
+}
+
+:host ::ng-deep .aplayer-host.is-compact .aplayer .aplayer-icon-back,
+:host ::ng-deep .aplayer-host.is-compact .aplayer .aplayer-icon-forward {
+  margin-left: 3px;
 }
 
 :host ::ng-deep .aplayer.aplayer-withlist .aplayer-icon-order {
