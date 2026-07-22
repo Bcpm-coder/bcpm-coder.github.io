@@ -10,7 +10,6 @@ export interface App {
   defaultMaximized?: boolean;
   isExternalApp?: boolean;
   url?: string;
-  component?: any;
 }
 
 export interface PortfolioProject {
@@ -67,22 +66,6 @@ export class AppConfigService {
       desktop_shortcut: true,
     },
     {
-      id: 'projects',
-      title: '项目',
-      icon: '/assets/images/logos/app-projects.svg',
-      disabled: false,
-      favourite: false,
-      desktop_shortcut: false,
-    },
-    {
-      id: 'contact',
-      title: '联系方式',
-      icon: '/assets/themes/Yaru/apps/gedit.png',
-      disabled: false,
-      favourite: false,
-      desktop_shortcut: true,
-    },
-    {
       id: '2048',
       title: '2048',
       icon: '/assets/apps/2048/meta/apple-touch-icon.png',
@@ -112,15 +95,7 @@ export class AppConfigService {
     {
       id: 'settings',
       title: '设置',
-      icon: '/assets/themes/Yaru/apps/gnome-control-center.png',
-      disabled: false,
-      favourite: true,
-      desktop_shortcut: false,
-    },
-    {
-      id: 'chrome',
-      title: '浏览器',
-      icon: '/assets/themes/Yaru/apps/chrome.png',
+      icon: '/assets/images/logos/app-settings.svg',
       disabled: false,
       favourite: true,
       desktop_shortcut: false,
@@ -149,7 +124,7 @@ export class AppConfigService {
   }
 
   getFavouriteApps(): App[] {
-    const dockOrder = ['blog', 'chrome', 'settings'];
+    const dockOrder = ['blog', 'settings'];
     return dockOrder
       .map(id => this.apps.find(app => app.id === id))
       .filter((app): app is App => Boolean(app?.favourite));

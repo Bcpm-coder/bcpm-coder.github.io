@@ -38,7 +38,6 @@ export class WindowManagerService {
       this.nextZIndex.update(v => v + 1);
       windows.set(app.id, existingWindow);
       this.windows.set(windows);
-      this.trackFrequentApp(app.id);
       return;
     }
 
@@ -48,17 +47,12 @@ export class WindowManagerService {
       return;
     }
 
-    // Track frequent apps for new windows
-    this.trackFrequentApp(app.id);
-
     // Create new window - center it on screen with slight offset for multiple windows
     const openWindows = Array.from(windows.values()).filter(w => w.isOpen && !w.isMinimized);
     const windowCount = openWindows.length;
     
-    // Window dimensions (percentage) - responsive based on screen size
-    const isMobile = window.innerWidth < 640; // Tailwind's sm breakpoint
-    const windowWidthPercent = isMobile ? 85 : 60;
-    const windowHeightPercent = isMobile ? 60 : 70;
+    const windowWidthPercent = 60;
+    const windowHeightPercent = 70;
     
     // Calculate centered position
     const centerX = (100 - windowWidthPercent) / 2;
@@ -70,6 +64,10 @@ export class WindowManagerService {
     const finalY = Math.max(5, Math.min(centerY + (windowCount * offsetPercent), 100 - windowHeightPercent - 5));
     
     const opensMaximized = app.defaultMaximized === true;
+
+    windows.forEach(window => {
+      window.isFocused = false;
+    });
 
     const newWindow: WindowState = {
       id: app.id,
@@ -95,7 +93,9 @@ export class WindowManagerService {
     const window = windows.get(id);
     if (window) {
       window.isOpen = false;
+      window.isFocused = false;
       windows.set(id, window);
+      this.focusTopWindow(windows);
       this.windows.set(windows);
     }
   }
@@ -107,6 +107,7 @@ export class WindowManagerService {
       window.isMinimized = true;
       window.isFocused = false;
       windows.set(id, window);
+      this.focusTopWindow(windows);
       this.windows.set(windows);
     }
   }
@@ -124,7 +125,7 @@ export class WindowManagerService {
   focusWindow(id: string) {
     const windows = new Map(this.windows());
     windows.forEach((window, key) => {
-      window.isFocused = key === id;
+      window.isFocused = window.isOpen && !window.isMinimized && key === id;
       if (key === id) {
         window.zIndex = this.nextZIndex();
         this.nextZIndex.update(v => v + 1);
@@ -155,32 +156,16 @@ export class WindowManagerService {
     }
   }
 
-  private trackFrequentApp(appId: string) {
-    const frequentAppsStr = localStorage.getItem('frequentApps');
-    let frequentApps: { id: string; frequency: number }[] = frequentAppsStr 
-      ? JSON.parse(frequentAppsStr) 
-      : [];
-    
-    const currentApp = frequentApps.find(app => app.id === appId);
-    if (currentApp) {
-      // Increase frequency if app is found
-      frequentApps.forEach((app) => {
-        if (app.id === currentApp.id) {
-          app.frequency += 1;
-        }
-      });
-    } else {
-      // New app opened
-      frequentApps.push({ id: appId, frequency: 1 });
-    }
+  private focusTopWindow(windows: Map<string, WindowState>): void {
+    const nextWindow = Array.from(windows.values())
+      .filter(window => window.isOpen && !window.isMinimized)
+      .sort((a, b) => b.zIndex - a.zIndex)[0];
 
-    // Sort by frequency (descending)
-    frequentApps.sort((a, b) => {
-      if (a.frequency < b.frequency) return 1;
-      if (a.frequency > b.frequency) return -1;
-      return 0;
-    });
+    if (!nextWindow) return;
 
-    localStorage.setItem('frequentApps', JSON.stringify(frequentApps));
+    nextWindow.isFocused = true;
+    nextWindow.zIndex = this.nextZIndex();
+    this.nextZIndex.update(value => value + 1);
+    windows.set(nextWindow.id, nextWindow);
   }
 }

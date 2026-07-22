@@ -13,6 +13,7 @@ import { MusicPlayerComponent } from '../music-player/music-player';
 import { WallpaperBackgroundComponent } from '../wallpaper-background/wallpaper-background';
 import { WallpaperService } from '../../services/wallpaper';
 import { ThemeService } from '../../services/theme';
+import { ViewportService } from '../../services/viewport';
 
 type DesktopPhase = 'locked' | 'booting' | 'ready';
 const GAME_APP_IDS = ['2048', 'hextris', 'card-2048'] as const;
@@ -35,6 +36,15 @@ export class DesktopComponent implements OnInit, OnDestroy {
     const windows = this.windowManager.getWindows();
     return GAME_APP_IDS.some(id => windows.get(id)?.isOpen === true);
   });
+  visibleWindows = computed(() => Array.from(this.windowManager.getWindows().values())
+    .filter(window => window.isOpen && !window.isMinimized));
+  hasFullscreenWindow = computed(() => this.visibleWindows()
+    .some(window => window.isMaximized || this.viewport.isMobile()));
+  playerPresentation = computed<'full' | 'compact' | 'hidden'>(() => {
+    if (this.allAppsView() || this.hasFullscreenWindow()) return 'hidden';
+    if (this.visibleWindows().length) return 'compact';
+    return 'full';
+  });
   externalMusicReady = signal(false);
   musicPausedForLock = signal(false);
   externalMusicDragging = signal(false);
@@ -48,7 +58,8 @@ export class DesktopComponent implements OnInit, OnDestroy {
     public appConfig: AppConfigService,
     public windowManager: WindowManagerService,
     public wallpaperService: WallpaperService,
-    public themeService: ThemeService
+    public themeService: ThemeService,
+    public viewport: ViewportService
   ) {}
 
   ngOnInit() {
@@ -170,11 +181,6 @@ export class DesktopComponent implements OnInit, OnDestroy {
       this.externalMusicSnapping.set(false);
       this.musicSnapTimer = undefined;
     }, 460);
-  }
-
-  onShutDown() {
-    // TODO: Implement shutdown
-    console.log('Shut down');
   }
 
 }

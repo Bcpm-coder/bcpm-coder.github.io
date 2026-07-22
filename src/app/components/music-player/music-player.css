@@ -85,6 +85,38 @@
   border-radius: 50%;
 }
 
+:host ::ng-deep .aplayer .aplayer-icon {
+  min-width: 24px;
+  min-height: 24px;
+}
+
+:host ::ng-deep .aplayer-host.is-compact .aplayer .aplayer-pic {
+  width: 50px;
+  height: 50px;
+}
+
+:host ::ng-deep .aplayer-host.is-compact .aplayer .aplayer-info {
+  height: 50px;
+  margin-left: 50px;
+  padding: 5px 7px 0;
+}
+
+:host ::ng-deep .aplayer-host.is-compact .aplayer .aplayer-info .aplayer-music {
+  height: 18px;
+  overflow: hidden;
+  line-height: 18px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+:host ::ng-deep .aplayer-host.is-compact .aplayer-title { font-size: 11px; }
+:host ::ng-deep .aplayer-host.is-compact .aplayer-author { display: none; }
+:host ::ng-deep .aplayer-host.is-compact .aplayer-time-inner,
+:host ::ng-deep .aplayer-host.is-compact .aplayer-icon-volume-down,
+:host ::ng-deep .aplayer-host.is-compact .aplayer-icon-loop,
+:host ::ng-deep .aplayer-host.is-compact .aplayer-icon-menu { display: none !important; }
+:host ::ng-deep .aplayer-host.is-compact .aplayer-list { display: none !important; }
+
 :host ::ng-deep .aplayer .aplayer-icon-back:hover,
 :host ::ng-deep .aplayer .aplayer-icon-forward:hover {
   background: var(--system-accent-soft);

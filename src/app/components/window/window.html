@@ -1,7 +1,7 @@
 <div 
   class="opened-window mac-window overflow-hidden min-w-1/4 min-h-1/4 main-window absolute flex flex-col"
   [ngClass]="{
-    'is-maximized': windowState.isMaximized,
+    'is-maximized': isFullscreen(),
     'z-30': windowState.isFocused,
     'z-20 notFocused': !windowState.isFocused
   }"
@@ -18,21 +18,28 @@
     
     <!-- Window Control Buttons -->
     <div class="traffic-lights" (mousedown)="$event.stopPropagation()" (dblclick)="$event.stopPropagation()">
-      <button 
-        tabindex="-1"
+      <button
+        type="button"
         [id]="'close-' + windowState.id"
         class="traffic-light traffic-close"
         (click)="close()"
         title="关闭"
         aria-label="关闭">
       </button>
-      <button tabindex="-1" class="traffic-light traffic-minimize" (click)="minimize()" title="最小化" aria-label="最小化"></button>
-      <button tabindex="-1" class="traffic-light traffic-maximize" (click)="maximize()" [title]="windowState.isMaximized ? '还原' : '最大化'" [attr.aria-label]="windowState.isMaximized ? '还原' : '最大化'"></button>
+      <button type="button" class="traffic-light traffic-minimize" (click)="minimize()" title="最小化" aria-label="最小化"></button>
+      <button
+        type="button"
+        class="traffic-light traffic-maximize"
+        (click)="maximize()"
+        [disabled]="viewport.isMobile()"
+        [title]="isFullscreen() ? '还原' : '最大化'"
+        [attr.aria-label]="isFullscreen() ? '还原' : '最大化'">
+      </button>
     </div>
   </div>
 
   <!-- Resize Handles -->
-  @if (!windowState.isMaximized) {
+  @if (!isFullscreen()) {
     <!-- Top edge -->
     <div 
       class="absolute top-0 left-0 right-0 h-1 cursor-n-resize z-50"
@@ -83,38 +90,26 @@
   <!-- Window Content -->
   <div
     class="w-full flex-grow z-20 min-h-0 max-h-full windowMainScreen mac-window-content"
-    [class.overflow-hidden]="windowState.app.id === 'blog' || windowState.app.id === '2048' || windowState.app.id === 'hextris' || windowState.app.id === 'card-2048'"
-    [class.overflow-y-auto]="windowState.app.id !== 'blog' && windowState.app.id !== '2048' && windowState.app.id !== 'hextris' && windowState.app.id !== 'card-2048'">
+    [class.overflow-hidden]="windowState.app.id === 'about' || windowState.app.id === 'blog' || windowState.app.id === '2048' || windowState.app.id === 'hextris' || windowState.app.id === 'card-2048'"
+    [class.overflow-y-auto]="windowState.app.id === 'settings'">
     @switch (windowState.app.id) {
       @case ('about') {
-        <app-about></app-about>
-      }
-      @case ('projects') {
-        <app-projects></app-projects>
-      }
-      @case ('skills') {
-        <app-skills></app-skills>
-      }
-      @case ('contact') {
-        <app-contact></app-contact>
+        @defer (on immediate) { <app-about></app-about> } @placeholder { <div class="app-loading">正在打开…</div> }
       }
       @case ('2048') {
-        <app-game-2048></app-game-2048>
+        @defer (on immediate) { <app-game-2048></app-game-2048> } @placeholder { <div class="app-loading">正在载入游戏…</div> }
       }
       @case ('hextris') {
-        <app-hextris></app-hextris>
+        @defer (on immediate) { <app-hextris></app-hextris> } @placeholder { <div class="app-loading">正在载入游戏…</div> }
       }
       @case ('card-2048') {
-        <app-card-2048></app-card-2048>
+        @defer (on immediate) { <app-card-2048></app-card-2048> } @placeholder { <div class="app-loading">正在载入游戏…</div> }
       }
       @case ('blog') {
-        <app-blog></app-blog>
+        @defer (on immediate) { <app-blog></app-blog> } @placeholder { <div class="app-loading">正在载入博客…</div> }
       }
       @case ('settings') {
-        <app-settings></app-settings>
-      }
-      @case ('chrome') {
-        <app-chrome></app-chrome>
+        @defer (on immediate) { <app-settings></app-settings> } @placeholder { <div class="app-loading">正在载入设置…</div> }
       }
     }
   </div>

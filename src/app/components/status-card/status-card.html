@@ -1,5 +1,7 @@
 <div
-  class="absolute rounded-md py-3 top-9 right-3 status-card"
+  class="absolute rounded-md py-3 top-9 right-1 status-card"
+  role="dialog"
+  aria-label="控制中心"
   (click)="$event.stopPropagation()"
   [class.visible]="visible"
   [class.invisible]="!visible"
@@ -11,58 +13,35 @@
   <!-- Sound Control -->
   <div class="status-row w-64 py-1.5 flex items-center justify-center">
     <div class="w-8">
-      <img width="16px" height="16px" src="/assets/themes/Yaru/status/audio-headphones-symbolic.svg" alt="ubuntu headphone">
+      <span class="control-symbol" aria-hidden="true">♪</span>
     </div>
     <input
       type="range"
+      aria-label="音乐音量"
       class="ubuntu-slider w-2/3"
       [value]="soundLevel()"
       (input)="onSoundChange($event)"
       min="0"
       max="100"
       step="1">
+      <span class="sr-only">音量 {{ soundLevel() }}%</span>
   </div>
   
   <!-- Brightness Control -->
   <div class="status-row w-64 py-1.5 flex items-center justify-center">
     <div class="w-8">
-      <img width="16px" height="16px" src="/assets/themes/Yaru/status/display-brightness-symbolic.svg" alt="ubuntu brightness">
+      <span class="control-symbol" aria-hidden="true">☀</span>
     </div>
     <input
       type="range"
+      aria-label="页面亮度"
       class="ubuntu-slider w-2/3"
       [value]="brightnessLevel()"
       (input)="onBrightnessChange($event)"
       min="0"
       max="100"
       step="1">
-  </div>
-  
-  <!-- Divider -->
-  <div class="w-64 flex content-center justify-center">
-    <div class="w-2/4 border-black border-opacity-50 border-b my-2 border-solid"></div>
-  </div>
-  
-  <!-- WiFi -->
-  <div class="status-row w-64 py-1.5 flex items-center justify-center">
-    <div class="w-8">
-      <img width="16px" height="16px" src="/assets/themes/Yaru/status/network-wireless-signal-good-symbolic.svg" alt="ubuntu wifi">
-    </div>
-    <div class="w-2/3 flex items-center justify-between text-gray-400">
-      <span>Wi-Fi 网络</span>
-      <div class="arrow-custom-right"></div>
-    </div>
-  </div>
-  
-  <!-- Bluetooth -->
-  <div class="status-row w-64 py-1.5 flex items-center justify-center">
-    <div class="w-8">
-      <img width="16px" height="16px" src="/assets/themes/Yaru/status/bluetooth-symbolic.svg" alt="ubuntu bluetooth">
-    </div>
-    <div class="w-2/3 flex items-center justify-between text-gray-400">
-      <span>蓝牙</span>
-      <div class="arrow-custom-right"></div>
-    </div>
+      <span class="sr-only">亮度 {{ brightnessLevel() }}%</span>
   </div>
   
   <!-- Divider -->
@@ -71,26 +50,15 @@
   </div>
   
   <!-- Lock Screen -->
-  <div 
-    class="status-row w-64 py-1.5 flex items-center justify-center cursor-pointer"
+  <button
+    type="button"
+    class="status-row status-action w-64 py-2 flex items-center justify-center cursor-pointer"
     (click)="lockScreen && lockScreen()">
     <div class="w-8">
-      <img width="16px" height="16px" src="/assets/themes/Yaru/status/system-shutdown-symbolic.svg" alt="ubuntu lock">
+      <span class="control-symbol" aria-hidden="true">⌁</span>
     </div>
     <div class="w-2/3 text-gray-400">
       <span>锁定屏幕</span>
     </div>
-  </div>
-  
-  <!-- Shut Down -->
-  <div 
-    class="status-row w-64 py-1.5 flex items-center justify-center cursor-pointer"
-    (click)="shutDown && shutDown()">
-    <div class="w-8">
-      <img width="16px" height="16px" src="/assets/themes/Yaru/status/power-button.svg" alt="ubuntu power">
-    </div>
-    <div class="w-2/3 text-gray-400">
-      <span>关机</span>
-    </div>
-  </div>
+  </button>
 </div>

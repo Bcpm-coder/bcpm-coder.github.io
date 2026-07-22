@@ -1,23 +1,24 @@
-import { Injectable, OnDestroy, computed, signal } from '@angular/core';
+import { Injectable, OnDestroy, computed, inject, signal } from '@angular/core';
 import {
   GENERATED_DEFAULT_WALLPAPER_ID,
   GENERATED_STATIC_FALLBACK_WALLPAPER_ID,
   GENERATED_WALLPAPERS,
 } from '../generated/wallpaper-catalog';
 import { WallpaperDefinition } from '../models/wallpaper';
+import { ViewportService } from './viewport';
 
 @Injectable({ providedIn: 'root' })
 export class WallpaperService implements OnDestroy {
+  private readonly viewport = inject(ViewportService);
+  private readonly reducedMotionQuery = typeof window.matchMedia === 'function'
+    ? window.matchMedia('(prefers-reduced-motion: reduce)')
+    : null;
+
   readonly wallpapers = GENERATED_WALLPAPERS;
-  readonly isDesktop = signal(window.matchMedia('(min-width: 641px)').matches);
-  readonly prefersReducedMotion = signal(
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  );
+  readonly isDesktop = computed(() => !this.viewport.isMobile());
+  readonly prefersReducedMotion = signal(this.reducedMotionQuery?.matches ?? false);
 
   private readonly selectedId = signal(this.getInitialWallpaperId());
-  private readonly desktopQuery = window.matchMedia('(min-width: 641px)');
-  private readonly reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-
   readonly defaultWallpaper =
     this.findWallpaper(GENERATED_DEFAULT_WALLPAPER_ID) ?? this.wallpapers[0];
   readonly staticFallbackWallpaper =
@@ -34,17 +35,12 @@ export class WallpaperService implements OnDestroy {
       : selected;
   });
 
-  private readonly onDesktopChange = (event: MediaQueryListEvent) => {
-    this.isDesktop.set(event.matches);
-  };
-
   private readonly onReducedMotionChange = (event: MediaQueryListEvent) => {
     this.prefersReducedMotion.set(event.matches);
   };
 
   constructor() {
-    this.desktopQuery.addEventListener('change', this.onDesktopChange);
-    this.reducedMotionQuery.addEventListener('change', this.onReducedMotionChange);
+    this.reducedMotionQuery?.addEventListener('change', this.onReducedMotionChange);
 
     if (localStorage.getItem('bg-image') !== this.selectedId()) {
       localStorage.setItem('bg-image', this.selectedId());
@@ -64,8 +60,7 @@ export class WallpaperService implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.desktopQuery.removeEventListener('change', this.onDesktopChange);
-    this.reducedMotionQuery.removeEventListener('change', this.onReducedMotionChange);
+    this.reducedMotionQuery?.removeEventListener('change', this.onReducedMotionChange);
   }
 
   private getInitialWallpaperId(): string {

@@ -9,8 +9,7 @@
   <!-- Top Navbar -->
   <app-navbar
     class="desktop-stage desktop-stage-navbar"
-    (lockScreen)="onLockScreen()"
-    (shutDown)="onShutDown()">
+    (lockScreen)="onLockScreen()">
   </app-navbar>
   
   <!-- Windows Area -->
@@ -41,7 +40,8 @@
     <div class="absolute inset-0 z-10" (click)="showAllApps()">
       <app-all-applications 
         [apps]="appConfig.getApps()" 
-        [openApp]="openApp.bind(this)">
+        [openApp]="openApp.bind(this)"
+        (close)="allAppsView.set(false)">
       </app-all-applications>
     </div>
   }
@@ -49,7 +49,8 @@
   @if (externalMusicReady()) {
     <aside
       class="external-music-widget"
-      [class.is-visible]="desktopReady() && !gameWindowOpen()"
+      [class.is-visible]="desktopReady() && !gameWindowOpen() && playerPresentation() !== 'hidden'"
+      [class.is-compact]="playerPresentation() === 'compact'"
       [class.is-game-paused]="gameWindowOpen()"
       [class.is-dragging]="externalMusicDragging()"
       [class.is-snapping]="externalMusicSnapping()"
@@ -67,7 +68,14 @@
         <span><i aria-hidden="true"></i> APLAYER · BCPM PLAYLIST</span>
         <small>{{ gameWindowOpen() ? '游戏中已暂停' : '拖动移动' }}</small>
       </header>
-      <app-music-player [paused]="gameWindowOpen() || musicPausedForLock()"></app-music-player>
+      @defer (on immediate) {
+        <app-music-player
+          [paused]="gameWindowOpen() || musicPausedForLock()"
+          [compact]="playerPresentation() === 'compact'">
+        </app-music-player>
+      } @placeholder {
+        <div class="music-loading">正在准备音乐…</div>
+      }
     </aside>
   }
 

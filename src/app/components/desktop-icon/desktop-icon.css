@@ -4,7 +4,9 @@
 
 .desktop-app-icon {
   color: #fff;
+  font: inherit;
   text-shadow: 0 1px 4px rgba(0, 0, 0, .85);
+  background: transparent;
   transition: background .16s ease, border-color .16s ease, transform .16s ease;
 }
 
@@ -26,7 +28,7 @@
 }
 
 /* Ensure touch events work properly on mobile */
-:host ::ng-deep div {
+:host .desktop-app-icon {
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -35,7 +37,7 @@
 
 /* Improve touch target size on mobile */
 @media (max-width: 768px) {
-  :host ::ng-deep div {
+  :host .desktop-app-icon {
     min-width: 44px;
     min-height: 44px;
   }

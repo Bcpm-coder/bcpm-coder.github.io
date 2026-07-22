@@ -1,6 +1,7 @@
 <div class="blog-reader">
   <div class="blog-content" [class.library-open]="libraryOpen()">
     <button
+      #libraryToggle
       type="button"
       class="library-toggle"
       [attr.aria-expanded]="libraryOpen()"

@@ -1,11 +1,10 @@
-:host { display: block; }
+:host { display: grid; place-items: center; }
 
-.status-symbol { opacity: .88; }
-
-:host-context([data-system-theme='light']) img.status-symbol {
-  filter: brightness(.25);
-}
-
-:host-context([data-system-theme='light']) .arrow-custom-down {
-  border-top-color: var(--system-text);
+.control-center-icon {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-width: 1.7;
 }

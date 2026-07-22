@@ -85,6 +85,23 @@
   pointer-events: auto;
 }
 
+.external-music-widget.is-compact {
+  width: 220px;
+  border-radius: 11px;
+}
+
+.external-music-widget.is-compact .external-music-header {
+  display: none;
+}
+
+.music-loading {
+  display: grid;
+  height: 48px;
+  place-items: center;
+  color: var(--system-text-tertiary);
+  font-size: 10px;
+}
+
 .external-music-widget.is-dragging {
   transition: none;
 }
@@ -152,6 +169,8 @@
     width: calc(100vw - 72px);
     max-width: 350px;
   }
+
+  .external-music-widget.is-compact { width: min(220px, calc(100vw - 72px)); }
 }
 
 @media (prefers-reduced-motion: reduce) {

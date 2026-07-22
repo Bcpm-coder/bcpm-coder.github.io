@@ -1,4 +1,4 @@
-import { Component, OnInit, computed, signal } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { marked } from 'marked';
 import DOMPurify from 'dompurify';
@@ -28,6 +28,7 @@ function isBlogCategory(value: unknown): value is BlogCategory {
   styleUrl: './blog.css',
 })
 export class BlogComponent implements OnInit {
+  @ViewChild('libraryToggle') private libraryToggle?: ElementRef<HTMLButtonElement>;
   private loadRequestId = 0;
 
   readonly categories: readonly CategoryFilter[] = ['全部', 'Coding', '学习', '生活', '碎碎念'];
@@ -105,8 +106,16 @@ export class BlogComponent implements OnInit {
     this.libraryOpen.update(open => !open);
   }
 
-  closeLibrary() {
+  closeLibrary(restoreFocus = true) {
     this.libraryOpen.set(false);
+    if (restoreFocus) {
+      queueMicrotask(() => this.libraryToggle?.nativeElement.focus());
+    }
+  }
+
+  @HostListener('document:keydown.escape')
+  closeLibraryOnEscape(): void {
+    if (this.libraryOpen()) this.closeLibrary();
   }
 
   async selectPost(post: BlogPost) {

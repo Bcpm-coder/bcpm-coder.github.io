@@ -1,26 +1,24 @@
-import { Component, Input, OnInit, HostListener, ElementRef } from '@angular/core';
+import { Component, Input, HostListener, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { WindowState } from '../../services/window-manager';
 import { WindowManagerService } from '../../services/window-manager';
 import { AboutComponent } from '../apps/about/about';
-import { ProjectsComponent } from '../apps/projects/projects';
-import { SkillsComponent } from '../apps/skills/skills';
-import { ContactComponent } from '../apps/contact/contact';
 import { SettingsComponent } from '../apps/settings/settings';
-import { ChromeComponent } from '../apps/chrome/chrome';
 import { BlogComponent } from '../apps/blog/blog';
 import { Game2048Component } from '../apps/game-2048/game-2048';
 import { HextrisComponent } from '../apps/hextris/hextris';
 import { Card2048Component } from '../apps/card-2048/card-2048';
+import { ViewportService } from '../../services/viewport';
 
 @Component({
   selector: 'app-window',
-  imports: [CommonModule, AboutComponent, ProjectsComponent, SkillsComponent, ContactComponent, SettingsComponent, ChromeComponent, BlogComponent, Game2048Component, HextrisComponent, Card2048Component],
+  imports: [CommonModule, AboutComponent, SettingsComponent, BlogComponent, Game2048Component, HextrisComponent, Card2048Component],
   templateUrl: './window.html',
   styleUrl: './window.css',
 })
-export class WindowComponent implements OnInit {
+export class WindowComponent {
   @Input() windowState!: WindowState;
+  readonly viewport = inject(ViewportService);
   
   private isDragging = false;
   private dragStartX = 0;
@@ -37,14 +35,7 @@ export class WindowComponent implements OnInit {
   private resizeStartWindowX = 0;
   private resizeStartWindowY = 0;
   
-  constructor(
-    private windowManager: WindowManagerService,
-    private elementRef: ElementRef
-  ) {}
-
-  ngOnInit() {
-    // Initialize window position and size
-  }
+  constructor(private windowManager: WindowManagerService) {}
 
   close() {
     this.windowManager.closeWindow(this.windowState.id);
@@ -55,6 +46,7 @@ export class WindowComponent implements OnInit {
   }
 
   maximize() {
+    if (this.viewport.isMobile()) return;
     this.windowManager.maximizeWindow(this.windowState.id);
   }
 
@@ -63,54 +55,24 @@ export class WindowComponent implements OnInit {
   }
 
   getWindowStyle() {
-    const isMobile = window.innerWidth < 640;
+    const isFullscreen = this.isFullscreen();
     const style: any = {
       position: 'absolute',
-      left: this.windowState.isMaximized ? '0' : `${this.windowState.x}%`,
-      top: this.windowState.isMaximized ? '0' : `${this.windowState.y}%`,
-      width: this.windowState.isMaximized ? '100%' : `${this.windowState.width}%`,
-      height: this.windowState.isMaximized ? '100%' : `${this.windowState.height}%`,
+      left: isFullscreen ? '0' : `${this.windowState.x}%`,
+      top: isFullscreen ? '0' : `${this.windowState.y}%`,
+      width: isFullscreen ? '100%' : `${this.windowState.width}%`,
+      height: isFullscreen ? '100%' : `${this.windowState.height}%`,
       zIndex: this.windowState.zIndex,
     };
-    
-    // On mobile, ensure windows don't go off screen
-    if (isMobile && !this.windowState.isMaximized) {
-      style.maxWidth = '95%';
-      style.maxHeight = '95%';
-    }
-    
     return style;
   }
 
-  getComponent() {
-    switch (this.windowState.app.id) {
-      case 'about':
-        return AboutComponent;
-      case 'projects':
-        return ProjectsComponent;
-      case 'skills':
-        return SkillsComponent;
-      case 'contact':
-        return ContactComponent;
-      case '2048':
-        return Game2048Component;
-      case 'hextris':
-        return HextrisComponent;
-      case 'card-2048':
-        return Card2048Component;
-      case 'blog':
-        return BlogComponent;
-      case 'settings':
-        return SettingsComponent;
-      case 'chrome':
-        return ChromeComponent;
-      default:
-        return null;
-    }
+  isFullscreen(): boolean {
+    return this.viewport.isMobile() || this.windowState.isMaximized;
   }
 
   onHeaderMouseDown(event: MouseEvent) {
-    if (this.windowState.isMaximized) {
+    if (this.isFullscreen()) {
       return;
     }
     
@@ -127,13 +89,13 @@ export class WindowComponent implements OnInit {
   @HostListener('document:mousemove', ['$event'])
   onMouseMove(event: MouseEvent) {
     // Handle resizing first
-    if (this.isResizing && !this.windowState.isMaximized) {
+    if (this.isResizing && !this.isFullscreen()) {
       this.handleResize(event);
       return;
     }
     
     // Handle dragging
-    if (this.isDragging && !this.windowState.isMaximized) {
+    if (this.isDragging && !this.isFullscreen()) {
       const deltaX = event.clientX - this.dragStartX;
       const deltaY = event.clientY - this.dragStartY;
 
@@ -167,7 +129,7 @@ export class WindowComponent implements OnInit {
   }
 
   onResizeMouseDown(event: MouseEvent, direction: string) {
-    if (this.windowState.isMaximized) {
+    if (this.isFullscreen()) {
       return;
     }
     
@@ -246,7 +208,7 @@ export class WindowComponent implements OnInit {
   }
 
   getResizeCursor(direction: string): string {
-    if (this.windowState.isMaximized) {
+    if (this.isFullscreen()) {
       return 'default';
     }
     

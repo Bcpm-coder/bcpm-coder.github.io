@@ -52,26 +52,41 @@
 
 .traffic-light {
   position: relative;
+  width: 24px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  cursor: default;
+}
+
+.traffic-light::before {
+  position: absolute;
+  top: 8px;
+  left: 6px;
   width: 12px;
   height: 12px;
-  padding: 0;
   border: .5px solid rgba(0, 0, 0, .18);
   border-radius: 50%;
-  outline: none;
-  cursor: default;
+  content: '';
 }
 
 .traffic-light:focus-visible {
   box-shadow: 0 0 0 2px rgb(var(--system-accent-rgb) / .4);
 }
 
-.traffic-close { background: #ff5f57; }
-.traffic-minimize { background: #febc2e; }
-.traffic-maximize { background: #28c840; }
+.traffic-close::before { background: #ff5f57; }
+.traffic-minimize::before { background: #febc2e; }
+.traffic-maximize::before { background: #28c840; }
+.traffic-light:disabled { opacity: .62; }
 
 .traffic-lights:hover .traffic-light::after {
   position: absolute;
-  inset: 0;
+  top: 8px;
+  left: 6px;
+  width: 12px;
+  height: 12px;
   display: grid;
   place-items: center;
   color: rgba(38, 28, 24, .72);
@@ -88,6 +103,17 @@
 .mac-window-content {
   color: var(--system-text);
   background: var(--system-app-bg);
+}
+
+.app-loading {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  min-height: 180px;
+  place-items: center;
+  color: var(--system-text-tertiary);
+  background: var(--system-app-bg);
+  font-size: 12px;
 }
 
 .notFocused {
@@ -126,8 +152,10 @@
   .mac-window { border-radius: 10px; }
   .mac-window.is-maximized { border-radius: 0; }
   .mac-titlebar { height: 32px; flex-basis: 32px; }
-  .traffic-lights { left: 10px; gap: 7px; }
-  .traffic-light { width: 11px; height: 11px; }
+  .traffic-lights { left: 4px; gap: 0; }
+  .traffic-light { width: 32px; height: 32px; }
+  .traffic-light::before,
+  .traffic-lights:hover .traffic-light::after { top: 10px; left: 10px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

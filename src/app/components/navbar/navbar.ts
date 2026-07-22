@@ -13,7 +13,6 @@ import { SystemTheme, ThemeService } from '../../services/theme';
 })
 export class NavbarComponent {
   @Output() lockScreen = new EventEmitter<void>();
-  @Output() shutDown = new EventEmitter<void>();
   
   statusCardVisible = signal(false);
 
@@ -27,11 +26,6 @@ export class NavbarComponent {
     this.statusCardVisible.update(v => !v);
   }
 
-  onStatusBarKeydown(event: Event) {
-    event.preventDefault();
-    this.onStatusBarClick();
-  }
-
   onStatusCardClose() {
     this.statusCardVisible.set(false);
   }
@@ -41,8 +35,4 @@ export class NavbarComponent {
     this.statusCardVisible.set(false);
   }
 
-  onShutDown() {
-    this.shutDown.emit();
-    this.statusCardVisible.set(false);
-  }
 }

@@ -355,7 +355,7 @@
 
 .profile-facts {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
   overflow: hidden;
   border: 1px solid var(--system-border);
   border-radius: 16px;
@@ -373,7 +373,7 @@
 
 .profile-facts > div:last-child { border-right: 0; }
 .profile-facts small { color: var(--system-text-tertiary); font-size: 8px; letter-spacing: .1em; text-transform: uppercase; }
-.profile-facts strong { overflow: hidden; color: var(--system-text); font-size: 11px; font-weight: 650; text-overflow: ellipsis; white-space: nowrap; }
+.profile-facts strong { color: var(--system-text); font-size: 11px; font-weight: 650; line-height: 1.35; overflow-wrap: anywhere; }
 
 .content-header {
   display: flex;

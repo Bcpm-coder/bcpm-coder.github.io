@@ -30,10 +30,8 @@ export class DesktopIconComponent {
     }
   }
 
-  onTouchEnd(event: TouchEvent) {
-    // Handle touch events for mobile
+  onKeyboardOpen(event: Event) {
     event.preventDefault();
-    event.stopPropagation();
     this.openApp.emit(this.app);
   }
 }

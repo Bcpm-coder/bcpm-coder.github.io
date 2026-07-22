@@ -14,7 +14,6 @@ export class StatusCardComponent implements OnInit {
 
   @Input() visible = false;
   @Input() lockScreen?: () => void;
-  @Input() shutDown?: () => void;
   @Output() close = new EventEmitter<void>();
   
   readonly soundLevel = computed(() => Math.round(this.audioSettings.volume() * 100));
@@ -48,6 +47,11 @@ export class StatusCardComponent implements OnInit {
     if (monitorScreen) {
       monitorScreen.style.filter = `brightness(${brightness})`;
     }
+  }
+
+  @HostListener('document:keydown.escape')
+  closeOnEscape(): void {
+    if (this.visible) this.close.emit();
   }
 
   @HostListener('document:click', ['$event'])

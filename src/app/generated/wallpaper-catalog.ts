@@ -15,25 +15,25 @@ export const GENERATED_WALLPAPERS: readonly WallpaperDefinition[] = [
   {
     "id": "【哲风壁纸】傍晚路灯-山脉-水面",
     "label": "傍晚路灯 山脉 水面",
-    "assetUrl": "/assets/images/wallpapers/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E5%82%8D%E6%99%9A%E8%B7%AF%E7%81%AF-%E5%B1%B1%E8%84%89-%E6%B0%B4%E9%9D%A2.png",
+    "assetUrl": "/assets/images/wallpapers/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E5%82%8D%E6%99%9A%E8%B7%AF%E7%81%AF-%E5%B1%B1%E8%84%89-%E6%B0%B4%E9%9D%A2.jpg",
     "kind": "image"
   },
   {
     "id": "【哲风壁纸】卡通插画-可爱小狗",
     "label": "卡通插画 可爱小狗",
-    "assetUrl": "/assets/images/wallpapers/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E5%8D%A1%E9%80%9A%E6%8F%92%E7%94%BB-%E5%8F%AF%E7%88%B1%E5%B0%8F%E7%8B%97.png",
+    "assetUrl": "/assets/images/wallpapers/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E5%8D%A1%E9%80%9A%E6%8F%92%E7%94%BB-%E5%8F%AF%E7%88%B1%E5%B0%8F%E7%8B%97.jpg",
     "kind": "image"
   },
   {
     "id": "【哲风壁纸】佩剑-侠客-剪影",
     "label": "佩剑 侠客 剪影",
-    "assetUrl": "/assets/images/wallpapers/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E4%BD%A9%E5%89%91-%E4%BE%A0%E5%AE%A2-%E5%89%AA%E5%BD%B1.png",
+    "assetUrl": "/assets/images/wallpapers/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E4%BD%A9%E5%89%91-%E4%BE%A0%E5%AE%A2-%E5%89%AA%E5%BD%B1.jpg",
     "kind": "image"
   },
   {
     "id": "【哲风壁纸】偷看-卡通-搞怪",
     "label": "偷看 卡通 搞怪",
-    "assetUrl": "/assets/images/wallpapers/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E5%81%B7%E7%9C%8B-%E5%8D%A1%E9%80%9A-%E6%90%9E%E6%80%AA.png",
+    "assetUrl": "/assets/images/wallpapers/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E5%81%B7%E7%9C%8B-%E5%8D%A1%E9%80%9A-%E6%90%9E%E6%80%AA.jpg",
     "kind": "image"
   }
 ];

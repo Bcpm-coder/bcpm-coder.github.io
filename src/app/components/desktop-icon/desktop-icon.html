@@ -1,9 +1,11 @@
-<div 
+<button
+  type="button"
+  [attr.aria-label]="'打开' + app.title"
   class="desktop-app-icon p-1 m-px z-30 border border-transparent outline-none rounded select-none w-20 h-16 md:w-24 md:h-20 flex flex-col justify-start items-center text-center text-xs font-normal relative cursor-pointer touch-manipulation"
   (dblclick)="onDoubleClick()"
   (click)="onClick()"
-  (touchend)="onTouchEnd($event)"
-  tabindex="0">
+  (keydown.enter)="onKeyboardOpen($event)"
+  (keydown.space)="onKeyboardOpen($event)">
   <div class="relative pointer-events-none">
     <img [src]="app.icon" [alt]="app.title" [class.rounded-full]="app.id === 'about'" [class.object-cover]="app.id === 'about'" class="mb-1 w-9 h-9 md:w-12 md:h-12 pointer-events-none">
     @if (app.isExternalApp) {
@@ -14,4 +16,4 @@
     }
   </div>
   <span class="text-xs text-[10px] md:text-xs pointer-events-none">{{ app.title }}</span>
-</div>
+</button>

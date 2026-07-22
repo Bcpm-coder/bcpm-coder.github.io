@@ -1,6 +1,7 @@
-import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnDestroy, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnDestroy, SimpleChanges, ViewChild, effect, inject } from '@angular/core';
 import APlayer from 'aplayer';
 import { MUSIC_PLAYLIST } from '../../services/music-config';
+import { AudioSettingsService } from '../../services/audio-settings';
 
 @Component({
   selector: 'app-music-player',
@@ -9,9 +10,14 @@ import { MUSIC_PLAYLIST } from '../../services/music-config';
 })
 export class MusicPlayerComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input() paused = false;
+  @Input() compact = false;
   @ViewChild('playerHost', { static: true }) private playerHost!: ElementRef<HTMLElement>;
 
   private player?: APlayer;
+  private readonly audioSettings = inject(AudioSettingsService);
+  private readonly syncVolume = effect(() => {
+    if (this.player) this.player.audio.volume = this.audioSettings.volume();
+  });
 
   ngAfterViewInit() {
     this.player = new APlayer({
@@ -22,7 +28,7 @@ export class MusicPlayerComponent implements AfterViewInit, OnChanges, OnDestroy
       loop: 'all',
       order: 'list',
       preload: 'metadata',
-      volume: 0.65,
+      volume: this.audioSettings.volume(),
       mutex: true,
       listFolded: true,
       listMaxHeight: '220px',

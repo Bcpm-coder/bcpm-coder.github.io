@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, signal, computed } from '@angular/core';
+import { Component, HostListener, Input, OnInit, signal, computed, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AppConfigService, App } from '../../services/app-config';
 import { WindowManagerService } from '../../services/window-manager';
@@ -13,6 +13,7 @@ import { DesktopIconComponent } from '../desktop-icon/desktop-icon';
 export class AllApplicationsComponent implements OnInit {
   @Input() apps: App[] = [];
   @Input() openApp?: (app: App) => void;
+  readonly close = output<void>();
   
   query = signal('');
   allApps = signal<App[]>([]);
@@ -55,7 +56,11 @@ export class AllApplicationsComponent implements OnInit {
         this.windowManager.openWindow(app);
       }
     }
-    // Close the all applications view after opening an app
-    // This will be handled by the parent component
+    this.close.emit();
+  }
+
+  @HostListener('document:keydown.escape')
+  closeOnEscape(): void {
+    this.close.emit();
   }
 }

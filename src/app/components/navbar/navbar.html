@@ -30,18 +30,19 @@
         <span aria-hidden="true">☾</span>
       </button>
     </div>
-    <div
-      id="status-bar"
-      tabindex="0"
-      (click)="onStatusBarClick()"
-      (keydown.enter)="onStatusBarKeydown($event)"
-      (keydown.space)="onStatusBarKeydown($event)"
-      class="menubar-control relative px-1.5 md:px-2 outline-none py-0.5 md:py-1 cursor-pointer">
-      <app-status></app-status>
+    <div class="status-area relative">
+      <button
+        type="button"
+        id="status-bar"
+        aria-label="打开控制中心"
+        [attr.aria-expanded]="statusCardVisible()"
+        (click)="onStatusBarClick()"
+        class="menubar-control status-trigger outline-none cursor-pointer">
+        <app-status></app-status>
+      </button>
       <app-status-card
         [visible]="statusCardVisible()"
         [lockScreen]="onLockScreen.bind(this)"
-        [shutDown]="onShutDown.bind(this)"
         (close)="onStatusCardClose()">
       </app-status-card>
     </div>
