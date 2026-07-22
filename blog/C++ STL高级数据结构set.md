@@ -1,3 +1,13 @@
+---
+id: cpp-stl-set
+title: "C++ STL：set 高级数据结构"
+excerpt: "整理 set 的常用方法、红黑树特性与两种自定义排序方式。"
+date: "往期题解"
+category: Coding
+tags: ["C++", "STL", "set"]
+order: 4
+---
+
 # 【set】增删查改时间复杂度O(logN)
 
 ## 描述

@@ -1,0 +1,54 @@
+.blog-reader .markdown-body { width:100%; min-width:0; color:var(--text); font-size:17px; line-height:1.88; overflow-wrap:anywhere; word-break:normal; }
+.blog-reader .markdown-body>*:first-child { margin-top:0; }
+.blog-reader .markdown-body>* { max-width:100%; }
+.blog-reader .markdown-body h1,.blog-reader .markdown-body h2,.blog-reader .markdown-body h3,.blog-reader .markdown-body h4 { position:relative; color:var(--heading); font-weight:650; line-height:1.35; scroll-margin-top:18px; }
+.blog-reader .markdown-body h1 { margin:0 0 22px; font-size:clamp(30px,3vw,40px); letter-spacing:-.025em; }
+.blog-reader .markdown-body h2 { margin:38px 0 15px; padding-bottom:8px; border-bottom:1px solid var(--border); font-size:25px; }
+.blog-reader .markdown-body h3 { margin:30px 0 12px; font-size:20px; }
+.blog-reader .markdown-body h4 { margin:24px 0 10px; font-size:17px; }
+.blog-reader .markdown-body .heading-anchor { position:absolute; left:-20px; opacity:0; color:var(--accent); font-size:.75em; text-decoration:none; transition:opacity .15s ease; }
+.blog-reader .markdown-body h2:hover .heading-anchor,.blog-reader .markdown-body h3:hover .heading-anchor,.blog-reader .markdown-body h4:hover .heading-anchor,.blog-reader .markdown-body .heading-anchor:focus { opacity:1; }
+.blog-reader .markdown-body p { margin:13px 0; }
+.blog-reader .markdown-body a { color:var(--accent); text-decoration-color:rgb(var(--system-accent-rgb)/.38); text-underline-offset:3px; overflow-wrap:anywhere; }
+.blog-reader .markdown-body a:hover { text-decoration-color:currentColor; }
+.blog-reader .markdown-body strong { color:var(--heading); font-weight:650; }
+.blog-reader .markdown-body ul,.blog-reader .markdown-body ol { padding-left:1.45em; }
+.blog-reader .markdown-body li { margin:5px 0; padding-left:3px; }
+.blog-reader .markdown-body li::marker { color:var(--accent); }
+.blog-reader .markdown-body li>p { margin:5px 0; }
+.blog-reader .markdown-body input[type='checkbox'] { margin-right:7px; accent-color:var(--accent); }
+.blog-reader .markdown-body blockquote { margin:22px 0; padding:9px 16px; border-left:3px solid var(--accent); border-radius:0 9px 9px 0; color:var(--muted); background:var(--accent-soft); }
+.blog-reader .markdown-body blockquote p { margin:5px 0; }
+.blog-reader .markdown-body code:not(pre code) { padding:2px 5px; border:1px solid var(--border); border-radius:5px; color:var(--accent-text); background:var(--surface); font-size:.88em; overflow-wrap:anywhere; word-break:break-word; }
+.blog-reader .markdown-body .code-frame { overflow:hidden; margin:22px 0; border:1px solid var(--border); border-radius:11px; background:var(--code); box-shadow:0 9px 28px rgba(0,0,0,.08); }
+.blog-reader .markdown-body .code-toolbar { display:flex; height:32px; box-sizing:border-box; align-items:center; justify-content:space-between; padding:0 10px 0 12px; border-bottom:1px solid var(--border); color:var(--faint); background:var(--surface); font-size:9px; letter-spacing:.06em; }
+.blog-reader .markdown-body .code-toolbar button { padding:4px 8px; border:1px solid var(--border); border-radius:6px; color:var(--muted); background:var(--surface); cursor:pointer; }
+.blog-reader .markdown-body .code-toolbar button:hover,.blog-reader .markdown-body .code-toolbar button.copy-success { color:var(--accent-text); border-color:rgb(var(--system-accent-rgb)/.35); background:var(--accent-soft); }
+.blog-reader .markdown-body pre { max-width:none; margin:0; overflow:auto; padding:16px; border:0; border-radius:0; background:transparent; scrollbar-width:thin; }
+.blog-reader .markdown-body pre code { display:block; min-width:max-content; padding:0; color:var(--text); background:transparent; font:12px/1.68 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace; white-space:pre; overflow-wrap:normal; word-break:normal; }
+.blog-reader .markdown-body table { display:block; width:100%; margin:20px 0; overflow-x:auto; border-spacing:0; border-collapse:separate; font-size:13px; scrollbar-width:thin; }
+.blog-reader .markdown-body th,.blog-reader .markdown-body td { min-width:90px; padding:9px 11px; border-right:1px solid var(--border); border-bottom:1px solid var(--border); text-align:left; }
+.blog-reader .markdown-body th { color:var(--heading); background:var(--surface); }
+.blog-reader .markdown-body tr:first-child th,.blog-reader .markdown-body tr:first-child td { border-top:1px solid var(--border); }
+.blog-reader .markdown-body th:first-child,.blog-reader .markdown-body td:first-child { border-left:1px solid var(--border); }
+.blog-reader .markdown-body img { display:block; max-width:100%; height:auto; margin:24px auto; border:1px solid var(--border); border-radius:11px; box-shadow:0 12px 30px rgba(0,0,0,.12); }
+.blog-reader .markdown-body hr { margin:30px 0; border:0; border-top:1px solid var(--border); }
+.blog-reader .markdown-body .katex-display { max-width:100%; overflow-x:auto; overflow-y:hidden; padding:4px 0; }
+.blog-reader .hljs-comment,.blog-reader .hljs-quote { color:#7c899b; font-style:italic; }
+.blog-reader .hljs-keyword,.blog-reader .hljs-selector-tag,.blog-reader .hljs-literal { color:#c792ea; }
+.blog-reader .hljs-string,.blog-reader .hljs-regexp,.blog-reader .hljs-addition { color:#8fcf78; }
+.blog-reader .hljs-number,.blog-reader .hljs-built_in,.blog-reader .hljs-type { color:#f0a66e; }
+.blog-reader .hljs-title,.blog-reader .hljs-function,.blog-reader .hljs-section { color:#62b8ff; }
+.blog-reader .hljs-variable,.blog-reader .hljs-attr,.blog-reader .hljs-attribute { color:#ef7f94; }
+.blog-reader .hljs-meta,.blog-reader .hljs-symbol,.blog-reader .hljs-bullet { color:#e2c36f; }
+
+@media (max-width:700px) {
+  .blog-reader .markdown-body { font-size:16px; line-height:1.82; }
+  .blog-reader .markdown-body h1 { font-size:29px; }
+  .blog-reader .markdown-body h2 { margin-top:32px; font-size:23px; }
+  .blog-reader .markdown-body h3 { font-size:19px; }
+  .blog-reader .markdown-body .heading-anchor { display:none; }
+  .blog-reader .markdown-body pre { padding:14px; }
+  .blog-reader .markdown-body pre code { font-size:11px; }
+  .blog-reader .markdown-body table { font-size:12px; }
+}

@@ -4,79 +4,119 @@
     "title": "欢迎来到我的博客",
     "excerpt": "关于这个 Markdown 博客阅读器，以及如何添加新文章。",
     "date": "2026-07-20",
-    "readTime": "3 分钟阅读",
     "category": "碎碎念",
-    "tags": ["随笔", "指南"],
-    "file": "/assets/blog/posts/welcome.md"
+    "tags": [
+      "随笔",
+      "指南"
+    ],
+    "order": 1,
+    "file": "/assets/blog/posts/welcome.md",
+    "searchText": "欢迎来到我的博客 这里用于记录学习过程、项目实践和偶尔冒出的想法。文章使用 Markdown 编写，页面会自动将文档转换成适合阅读的内容。 如何添加新文章 将新的 .md 文件放入根目录的 blog/ 。 在文档顶部添加标题、日期、分类、标签和排序等 Frontmatter。 分类可填写 Coding 、 学习 、 生活 或 碎碎念 。 重新启动开发服务或构建网站，文章会自动出现在文章库中。 --- id: my-new-post title: \"我的新文章\" excerpt: \"一句简短的文章摘要。\" date: \"2026-07-20\" category: 学习 tags: [\"学习笔记\"] order: 9 --- Markdown 内容会经过安全清理后再显示，可以放心使用常见的标题、列表、引用、链接、图片、代码块和数学公式。 接下来 后续可以把课程笔记、项目复盘和技术文章逐步整理到这里，让它成为长期维护的个人知识库。"
   },
   {
     "id": "md",
     "title": "md入门",
-    "excerpt": "",
+    "excerpt": "下面是一些简单的 Markdown 标记语法示例，更多示例请查看 markdownguide.org/basic-syntax/",
     "date": "2026-07-19",
-    "readTime": "4 分钟阅读",
     "category": "学习",
-    "tags": ["前端", "Angular"],
-    "file": "/assets/blog/posts/md入门.md"
+    "tags": [
+      "Markdown",
+      "写作"
+    ],
+    "order": 2,
+    "file": "/assets/blog/posts/md%E5%85%A5%E9%97%A8.md",
+    "searchText": "Markdown 入门 下面是一些简单的 Markdown 标记语法示例，更多示例请查看 markdownguide.org/basic-syntax/ 标题 最多六级标题，一般建议在文章中 由二级标题开始，最好不超过四级标题 [^1] 一级标题 二级标题 三级标题 四级标题 五级标题 六级标题 格式化 这是 加粗 文本 这是 斜体 文本 这是 粗体斜体 文本 单段引用 结尾使用两个以上的空格可以换行（大部分 Markdown 渲染器直接回车也可以） 有序列表 你好 再见 谢谢 无序列表 桥豆麻袋 阿里噶多 死阔以内 对于多段引用： 鲁迅说过，对于多段引用 可以这样写 对吧？ 对于嵌套引用： 鲁迅说过，对于嵌套引用，可以这样写 但是我们要尽量避免嵌套引用 注意是 Markdown ，而不是 MarkDown 短代码 代码片段 水平分割线 --- 插入图片 图片描述 插入超链接 超链接文本 插入带超链接的图片 Cat 直接渲染 URL 直接渲染电子邮件地址 脚注 脚注并不是标准的 Markdown 标记语法，它是 Markdown 的扩展语法，但是 Hugo 默认支持它 [^2] Hugo 默认支持它 [^2] [^2]: 这是一条脚注 [^1]: 一级标题是文章的标题（title） [^2]: 这是一条脚注"
   },
   {
     "id": "summer-evening",
     "title": "夏日晚风与散步",
     "excerpt": "离开屏幕后的一小段生活记录。",
     "date": "2026-07-18",
-    "readTime": "2 分钟阅读",
     "category": "生活",
-    "tags": ["日常", "散步"],
-    "file": "/assets/blog/posts/summer-evening.md"
+    "tags": [
+      "日常",
+      "散步"
+    ],
+    "order": 3,
+    "file": "/assets/blog/posts/summer-evening.md",
+    "searchText": "夏日晚风与散步 傍晚写完一段代码，我决定暂时离开屏幕，去附近走一走。 把注意力还给生活 没有明确的目的地，也没有需要完成的打卡。只是沿着熟悉的街道慢慢走，看树影、路灯和匆匆经过的人。很多白天想不通的问题，反而在不刻意思考时变得清晰。 休息不是停止前进，而是为下一段路重新找到节奏。 回到住处后，桌上的代码仍在那里，但心情已经不一样了。这篇短文留作一个提醒：学习和项目很重要，认真生活也同样重要。"
   },
   {
     "id": "cpp-stl-set",
     "title": "C++ STL：set 高级数据结构",
     "excerpt": "整理 set 的常用方法、红黑树特性与两种自定义排序方式。",
     "date": "往期题解",
-    "readTime": "5 分钟阅读",
     "category": "Coding",
-    "tags": ["C++", "STL", "set"],
-    "file": "/assets/blog/posts/C++ STL高级数据结构set.md"
+    "tags": [
+      "C++",
+      "STL",
+      "set"
+    ],
+    "order": 4,
+    "file": "/assets/blog/posts/C%2B%2B%20STL%E9%AB%98%E7%BA%A7%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84set.md",
+    "searchText": "【set】增删查改时间复杂度O(logN) 描述 c++高级数据结构 特点 有序 不重复 基于红黑树 常用方法 funcN function ------------------- ------------------------------------------------------------ insert(value) 返回pair:first是指向value的迭代器，second是否插入成功（插入不成功因为已经存在该元素） begin() 返回第一个元素的迭代器 end() 返回最后一个元素的下一个位置的迭代器 clear() 清空set empty() 判断是否为空 max size() 返回set容器可能包含的元素最大个数 size() 返回容器的当前容量 rbegin() 返回最后一个元素的反向迭代器 rend() 返回第一个元素的前一个反向迭代器 erase(iterator) 删除iterator指向的值 erase(first,second) 删除迭代器first和second之间的值 erase(value) 删除值为value的元素 find(value) 返回值为value的迭代器，没找到则返回end() lower bound(value) 返回第一个大于等于value的迭代器 upper bound(value) 返回第一个大于value的迭代器 定义set排序顺序 1 重载() include include include include include using namespace std; struct cmp { bool operator()(const int &a, const int &b) const { return a b; } }; int n; set s; int main() { s.insert(1); s.insert(2); s.insert(5); for(auto i = s.begin(); i != s.end(); i ++) cout include include include include using namespace std; struct Node { int age, height; Node(int age, int height):age(age), height(height){} bool operator a.height; else return age a.age; } // 这种情况下 只考虑了height，所以只要height相同，只会保留一个元素，和age无关 // bool operator a.height; // } }; int n; set s; int main() { s.insert(Node(18, 166)); s.insert(Node(16, 180)); s.insert(Node(20, 170)); s.insert(Node(19, 170)); for(auto i = s.begin(); i != s.end(); i ++) cout height << \" \"; return 0; } 例题 set基本应用木材仓库"
   },
   {
     "id": "cpp-stl-map",
     "title": "C++ STL：map 高级数据结构",
     "excerpt": "快速查阅 map 的增删查改、迭代器与 O(logN) 时间复杂度。",
     "date": "往期题解",
-    "readTime": "3 分钟阅读",
     "category": "Coding",
-    "tags": ["C++", "STL", "map"],
-    "file": "/assets/blog/posts/C++ STL高级数据结构map.md"
+    "tags": [
+      "C++",
+      "STL",
+      "map"
+    ],
+    "order": 5,
+    "file": "/assets/blog/posts/C%2B%2B%20STL%E9%AB%98%E7%BA%A7%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84map.md",
+    "searchText": "【map】增删查改时间复杂度O(logN) 描述 c++高级数据结构 特点 有序 不重复 基于红黑树 常用方法 funcN function ------------------ -------------------------------------------- insert(pair(k, v)) 将key:value插入容器，若之前存在key:??,则忽略 map[key] = value 创建key:value插入容器中，若之前存在则覆盖 count(key) 返回1或0：是否存在键值对key:?? erase(key) 删除值为key:??的元素 begin() 返回第一个元素的迭代器 end() 返回最后一个元素的下一个位置的迭代器 clear() 清空map empty() 判断是否为空 size() 返回容器的当前容量 rbegin() 返回最后一个元素的反向迭代器 rend() 返回第一个元素的前一个反向迭代器 erase(iterator) 删除iterator指向的键值对 find(key) 返回值key:??的迭代器，没找到则返回end() 内部按照key从小到大排序 例题 map基本应用学籍管理"
   },
   {
     "id": "parity-game-solution",
     "title": "奇偶游戏题解",
     "excerpt": "使用前缀和思想与带权并查集判断区间奇偶约束何时产生矛盾。",
     "date": "往期题解",
-    "readTime": "6 分钟阅读",
     "category": "Coding",
-    "tags": ["AcWing", "并查集", "前缀和"],
-    "file": "/assets/blog/posts/奇偶游戏题解.md"
+    "tags": [
+      "AcWing",
+      "并查集",
+      "前缀和"
+    ],
+    "order": 6,
+    "file": "/assets/blog/posts/%E5%A5%87%E5%81%B6%E6%B8%B8%E6%88%8F%E9%A2%98%E8%A7%A3.md",
+    "searchText": "奇偶游戏题解：带权并查集与离散化 AcWing 239 · 奇偶游戏 题目描述 给你多个区间，每个区间中有奇或偶数个1 请你给出从哪个地方开始出现矛盾 样例 10 5 1 2 even 3 4 odd 5 6 even 1 6 even 7 10 odd 1 2 偶数个1 3 4 奇数个1 5 6 偶数个1 1 6 偶数个1 显然前三条说明了1 6中有奇数个1，第四条与之矛盾 ---------- 算法 (并查集) 利用前缀和的思想，给你区间l r这一段数字和的奇偶性 等价于s[r] - s[l - 1]的奇偶性 （s表示前x个数中有多少个1） 等价于s[r]和s[l - 1]这两个数是否为同一类数，奇性则两数为异类，偶性两数为同类 利用并查集方便实现，同时维护一个d[x]数组，保存!:x到p[x]的关系，为0表示与p[x]同类，为1表示与p[x]异类 具体细节 先求出两点的祖宗节点 若不同，则进行合并： 两祖宗节点的合并，要保证合并后x到y的距离根据给定的奇偶性做出奇性或偶性的赋值 若相同，则要判断两者关系和给定奇偶性是否冲突 不冲突则进行合并 C++ 代码 include include include include using namespace std; const int N = 10010; int n, m, res; int p[N], d[N]; int idx; unordered map mp; int get(int x) // 哈希表映射大数 { if(mp.count(x) == 0) mp[x] = idx ++; return mp[x]; } int findp(int x) { if(p[x] != x) { int r = findp(p[x]); d[x] += d[p[x]]; // 维护这个距离，长度无所谓，主要是奇偶性 p[x] = r; } return p[x]; } int main() { cin n m; for(int i = 1; i a b op; int x = get(a - 1), y = get(b); int px = findp(x), py = findp(y); int t = 1; if( op == 'e') t = 0; else if( op == 'o') t = 1; // cout << px << \" \" << py << \" \" << d[x] << \" \" << d[y] << \" \" << t << endl; res = m; if(px == py && (d[x] + d[y]) % 2 != t) // 要判断两者关系和给定奇偶性是否冲突 { res = i; break; } else // 祖宗不同 或 不冲突则进行合并 { d[px] = (d[x] + d[y] + t) % 2; p[px] = py; } } cout << res; return 0; } ----------"
   },
   {
     "id": "basic-math-1",
     "title": "基础数学知识（一）",
     "excerpt": "整理质数判定、质因数分解、线性筛与埃氏筛的原理和 C++ 实现。",
     "date": "往期笔记",
-    "readTime": "7 分钟阅读",
     "category": "Coding",
-    "tags": ["C++", "算法", "数论", "质数"],
-    "file": "/assets/blog/posts/基础数学知识1.md"
+    "tags": [
+      "C++",
+      "算法",
+      "数论",
+      "质数"
+    ],
+    "order": 7,
+    "file": "/assets/blog/posts/%E5%9F%BA%E7%A1%80%E6%95%B0%E5%AD%A6%E7%9F%A5%E8%AF%861.md",
+    "searchText": "基础数学知识（一） 一、质数判定 快速判定数字是否为质数 质数和合数的定义是 从2开始，只能被1和它自身整除的数为质数，否则为合数 样例 2最小的质数，4最小的合数 ---------- 算法 试除法 数x有若干个质因子相乘得到，若d可以整除x，则x/d也可以整除x，这样的一对因子成对出现，因此我们只需要试除2 sqrt(x)之间的数字即可 $O(sqrt(n))$ C++ 代码 include include using namespace std; bool isprime(int x) { if(x n; while(n --) { int x; cin x; if(isprime(x)) cout using namespace std; int n; void decompose(int x) { for(int i = 2; i 1) //x就是大于sqrt(原x数)的唯一因子 cout n; while(n --) { int x; cin x; decompose(x); cout using namespace std; const int N = 1e6 + 10; int n; int primes[N], idx; bool st[N]; void choose(int x) { for(int i = 2; i n; choose(n); cout include using namespace std; const int N = 1e6 + 10; int n; int primes[N], idx; bool st[N]; void choose(int x) { for(int i = 2; i n; choose(n); cout << idx; return 0; } ----------"
   },
   {
     "id": "basic-math-2",
     "title": "基础数学知识（二）",
     "excerpt": "整理约数、约数个数与约数之和，以及欧几里得算法求最大公约数。",
     "date": "往期笔记",
-    "readTime": "8 分钟阅读",
     "category": "Coding",
-    "tags": ["C++", "算法", "数论", "约数", "GCD"],
-    "file": "/assets/blog/posts/基础数学知识2.md"
+    "tags": [
+      "C++",
+      "算法",
+      "数论",
+      "约数",
+      "GCD"
+    ],
+    "order": 8,
+    "file": "/assets/blog/posts/%E5%9F%BA%E7%A1%80%E6%95%B0%E5%AD%A6%E7%9F%A5%E8%AF%862.md",
+    "searchText": "基础数学知识（二） 一、试除法求约数 求出x的所有约数 样例 6：1，2，3，6 ---------- 算法 试除法 数x由一对因子相乘得到，若d可以整除x，则x/d也可以整除x，较小的因子枚举，较大的因子计算得到，因此我们只需要试除1 sqrt(x)之间的数字即可，注意判重 $O(sqrt(n))$ C++ 代码 include include include include using namespace std; int n; int main() { cin n; while(n --) { int x; cin x; vector res; for(int i = 1; i include include include using namespace std; const int mod = 1e9 + 7; int n; unordered map mp; int main() { cin n; while(n --) { int x; cin x; for(int i = 2; i 1) mp[x] ++; } long long res = 1; for(auto t : mp) res = t.second + 1, res %= mod; cout include include include include using namespace std; const int mod = 1e9 + 7; int n; unordered map mp; int main() { cin n; while(n --) { int x; cin x; for(int i = 2; i 1) mp[x] ++; } long long res = 1; for(auto t : mp) { int p = t.first, cnt = t.second; long long ans = 1; while(cnt --) ans = ans p + 1, ans %= mod; res = ans, res %= mod; } cout include using namespace std; int n; int gcd(int a, int b) { return b ? gcd(b, a % b) : a; } int main() { cin n; while(n --) { int a, b; cin a b; cout << gcd(a, b) << endl; } return 0; } ----------"
   }
 ]

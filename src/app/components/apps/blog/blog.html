@@ -1,22 +1,45 @@
 <div class="blog-reader">
-  <div class="blog-content" [class.library-open]="libraryOpen()">
-    <button
-      #libraryToggle
-      type="button"
-      class="library-toggle"
-      [attr.aria-expanded]="libraryOpen()"
-      aria-label="打开文章目录"
-      (click)="toggleLibrary()">
-      <span aria-hidden="true">☰</span>
-      目录
-    </button>
-    <button
-      type="button"
-      class="library-backdrop"
-      aria-label="关闭文章目录"
-      (click)="closeLibrary()">
-    </button>
-    <aside class="library">
+  <div
+    class="blog-content"
+    [class.library-open]="overlay() === 'library'"
+    [class.outline-open]="overlay() === 'outline'">
+
+    <div class="mobile-tools" aria-label="博客导航">
+      <button
+        #libraryToggle
+        type="button"
+        [attr.aria-expanded]="overlay() === 'library'"
+        aria-label="打开文章库"
+        (click)="toggleOverlay('library')">
+        <span aria-hidden="true">☰</span> 文章库
+      </button>
+      <button
+        #mobileOutlineToggle
+        type="button"
+        [disabled]="!headings().length"
+        [attr.aria-expanded]="overlay() === 'outline'"
+        aria-label="打开本文目录"
+        (click)="toggleOverlay('outline')">
+        <span aria-hidden="true">≡</span> 本文目录
+      </button>
+    </div>
+
+    @if (overlay()) {
+      <button
+        type="button"
+        class="reader-backdrop"
+        aria-label="关闭博客导航"
+        (click)="closeOverlay()">
+      </button>
+    }
+
+    <aside
+      class="library"
+      aria-label="文章库"
+      [attr.role]="overlay() === 'library' ? 'dialog' : null"
+      [attr.aria-modal]="overlay() === 'library' ? 'true' : null">
+      <button type="button" class="panel-close" aria-label="关闭文章库" (click)="closeOverlay()">×</button>
+
       <header class="library-header">
         <span class="brand-kicker">NOTES & STORIES</span>
         <h2>博客</h2>
@@ -27,10 +50,13 @@
         <span aria-hidden="true">⌕</span>
         <input
           type="search"
-          placeholder="搜索文章或标签"
+          placeholder="搜索标题、正文或标签"
           [value]="query()"
           (input)="onSearch($event)"
           aria-label="搜索博客文章">
+        @if (query()) {
+          <button type="button" aria-label="清空搜索" (click)="clearSearch()">×</button>
+        }
       </label>
 
       <nav class="category-list" aria-label="文章分类">
@@ -68,13 +94,17 @@
             <span class="post-meta">{{ post.tags.join(' / ') }}</span>
           </button>
         } @empty {
-          <p class="empty-list">没有匹配的文章。</p>
+          <div class="empty-list">
+            <strong>没有匹配的文章</strong>
+            <span>试试其他关键词或分类。</span>
+            <button type="button" (click)="clearFilters()">清除筛选</button>
+          </div>
         }
       </nav>
 
       <footer class="library-footer">
-        <span class="status-dot"></span>
-        Markdown Library
+        <span class="status-dot" aria-hidden="true"></span>
+        {{ posts().length }} POSTS · MARKDOWN LIBRARY
       </footer>
     </aside>
 
@@ -83,33 +113,108 @@
         <header class="article-header">
           <div class="article-meta">
             <span>不吃泡面</span>
-            <i></i>
+            <i aria-hidden="true"></i>
             <span>{{ post.date }}</span>
           </div>
-          <div class="article-tags">
-            @for (tag of post.tags; track tag) {
-              <span># {{ tag }}</span>
-            }
+          <div class="article-header-actions">
+            <div class="article-tags">
+              @for (tag of post.tags; track tag) {
+                <span># {{ tag }}</span>
+              }
+            </div>
+            <button
+              #desktopOutlineToggle
+              type="button"
+              class="outline-toggle"
+              [disabled]="!headings().length"
+              [attr.aria-expanded]="overlay() === 'outline'"
+              (click)="toggleOverlay('outline')">
+              本文目录
+            </button>
           </div>
+          <span class="reading-progress" [style.transform]="'scaleX(' + readingProgress() + ')'" aria-hidden="true"></span>
         </header>
 
-        <article class="article-scroll">
+        <article #articleScroll class="article-scroll" (scroll)="onArticleScroll()">
           @if (isLoading()) {
-            <div class="loading-state">
-              <span></span><span></span><span></span>
-              <p>正在读取 Markdown…</p>
+            <div class="loading-state" aria-label="正在读取 Markdown">
+              <span class="skeleton skeleton-title"></span>
+              <span class="skeleton"></span>
+              <span class="skeleton skeleton-short"></span>
+              <span class="skeleton skeleton-heading"></span>
+              <span class="skeleton"></span>
+              <span class="skeleton"></span>
             </div>
           } @else if (errorMessage()) {
-            <div class="reader-message">{{ errorMessage() }}</div>
+            <div class="reader-message">
+              <strong>文章加载失败</strong>
+              <span>{{ errorMessage() }}</span>
+              <button type="button" (click)="retryActivePost()">重新加载</button>
+            </div>
           } @else {
-            <div class="markdown-body" [innerHTML]="renderedContent()"></div>
+            <div class="article-inner">
+              <div class="markdown-body" [innerHTML]="renderedContent()" (click)="onArticleClick($event)"></div>
+
+              <nav class="article-pagination" aria-label="相邻文章">
+                @if (previousPost(); as previous) {
+                  <button type="button" class="previous" (click)="selectPost(previous)">
+                    <span>上一篇</span>
+                    <strong>{{ previous.title }}</strong>
+                  </button>
+                } @else {
+                  <span></span>
+                }
+                @if (nextPost(); as next) {
+                  <button type="button" class="next" (click)="selectPost(next)">
+                    <span>下一篇</span>
+                    <strong>{{ next.title }}</strong>
+                  </button>
+                }
+              </nav>
+            </div>
           }
         </article>
+
+        @if (showBackToTop()) {
+          <button type="button" class="back-to-top" aria-label="返回文章顶部" (click)="scrollToTop()">↑</button>
+        }
       } @else if (isLoading()) {
         <div class="reader-message centered">正在加载博客…</div>
       } @else {
-        <div class="reader-message centered">当前分类还没有文章。</div>
+        <div class="reader-message centered">
+          <strong>当前筛选没有文章</strong>
+          <button type="button" (click)="clearFilters()">查看全部文章</button>
+        </div>
       }
     </main>
+
+    <aside
+      class="outline-rail"
+      aria-label="本文目录"
+      [attr.role]="overlay() === 'outline' ? 'dialog' : null"
+      [attr.aria-modal]="overlay() === 'outline' ? 'true' : null">
+      <header>
+        <span>ON THIS PAGE</span>
+        <strong>本文目录</strong>
+        <button type="button" class="panel-close" aria-label="关闭本文目录" (click)="closeOverlay()">×</button>
+      </header>
+      @if (headings().length) {
+        <nav>
+          @for (heading of headings(); track heading.id) {
+            <button
+              type="button"
+              [class.active]="activeHeadingId() === heading.id"
+              [class.level-3]="heading.level === 3"
+              [class.level-4]="heading.level === 4"
+              [attr.aria-current]="activeHeadingId() === heading.id ? 'location' : null"
+              (click)="scrollToHeading(heading.id)">
+              {{ heading.text }}
+            </button>
+          }
+        </nav>
+      } @else {
+        <p>这篇文章暂时没有分节标题。</p>
+      }
+    </aside>
   </div>
 </div>

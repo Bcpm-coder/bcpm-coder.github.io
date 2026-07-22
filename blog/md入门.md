@@ -1,13 +1,25 @@
+---
+id: md
+title: "md入门"
+excerpt: ""
+date: "2026-07-19"
+category: 学习
+tags: ["Markdown", "写作"]
+order: 2
+---
+
+# Markdown 入门
+
 下面是一些简单的 Markdown 标记语法示例，更多示例请查看 [markdownguide.org/basic-syntax/](https://www.markdownguide.org/basic-syntax/)
 
 ## 标题
 
 最多六级标题，一般建议在文章中 **由二级标题开始，最好不超过四级标题** [^1]
 
-```
+```markdown
 # 一级标题
 ## 二级标题
-### 三极标题
+### 三级标题
 #### 四级标题
 ##### 五级标题
 ###### 六级标题
@@ -53,11 +65,11 @@
 
 **注意是 Markdown**，而不是 ~~MarkDown~~
 
-**短代码**  `<hello></hello>`
+**短代码** `<hello></hello>`
 
 **代码片段**
 
-```
+```html
 <html>
   <head>
   </head>
@@ -70,45 +82,43 @@
 
 **插入图片**
 
-```
+```markdown
 ![图片描述](图片 URL)
 ```
 
 **插入超链接**
 
-```
+```markdown
 [超链接文本](跳转 URL)
 ```
 
 **插入带超链接的图片**
 
-```
+```markdown
 [![Cat](cat.webp)](https://unsplash.com/photos/4ncBerwN-kA)
 ```
 
 **直接渲染 URL**
 
-```
+```markdown
 <https://github.com/DejavuMoe/hugo-start>
 ```
 
 **直接渲染电子邮件地址**
 
-```
+```markdown
 <i@gmail.com>
 ```
 
 **脚注**
 
-脚注并不是标准的 Markdown 标记语法，它是 Markdown 的拓展语法，但是 Hugo 默认支持它 [^2]
+脚注并不是标准的 Markdown 标记语法，它是 Markdown 的扩展语法，但是 Hugo 默认支持它 [^2]
 
-```
+```markdown
 Hugo 默认支持它 [^2]
 
 [^2]: 这是一条脚注
 ```
-
-
 
 [^1]: 一级标题是文章的标题（title）
 [^2]: 这是一条脚注

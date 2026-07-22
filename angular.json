@@ -37,6 +37,8 @@
             ],
             "styles": [
               "node_modules/aplayer/dist/APlayer.min.css",
+              "node_modules/katex/dist/katex.min.css",
+              "src/blog-markdown.css",
               "src/styles.css"
             ]
           },

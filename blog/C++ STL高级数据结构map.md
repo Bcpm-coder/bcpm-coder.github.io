@@ -1,3 +1,13 @@
+---
+id: cpp-stl-map
+title: "C++ STL：map 高级数据结构"
+excerpt: "快速查阅 map 的增删查改、迭代器与 O(logN) 时间复杂度。"
+date: "往期题解"
+category: Coding
+tags: ["C++", "STL", "map"]
+order: 5
+---
+
 # 【map】增删查改时间复杂度O(logN)
 
 ## 描述
