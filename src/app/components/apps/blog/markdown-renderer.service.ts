@@ -126,6 +126,11 @@ export class MarkdownRendererService {
 
       const languageClass = [...code.classList].find(className => className.startsWith('language-'));
       const language = languageClass?.slice('language-'.length).toLowerCase() || 'plaintext';
+      if (language === 'mermaid') {
+        this.createMermaidFrame(pre, code);
+        return;
+      }
+
       const frame = document.createElement('section');
       frame.className = 'code-frame';
 
@@ -143,6 +148,24 @@ export class MarkdownRendererService {
       pre.replaceWith(frame);
       frame.append(toolbar, pre);
     });
+  }
+
+  private createMermaidFrame(pre: HTMLPreElement, code: HTMLElement): void {
+    const frame = document.createElement('figure');
+    frame.className = 'mermaid-frame mermaid-pending';
+
+    const caption = document.createElement('figcaption');
+    caption.textContent = 'Mermaid 图表';
+    const status = document.createElement('span');
+    status.className = 'mermaid-status';
+    status.textContent = '正在绘制…';
+    caption.append(status);
+
+    pre.className = 'mermaid-source';
+    code.className = '';
+    pre.replaceWith(frame);
+    frame.append(pre);
+    frame.prepend(caption);
   }
 
   private enhanceLinks(root: HTMLElement): void {

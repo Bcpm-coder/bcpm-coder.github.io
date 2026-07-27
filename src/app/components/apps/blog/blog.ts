@@ -6,6 +6,8 @@ import {
   OnInit,
   ViewChild,
   computed,
+  effect,
+  inject,
   signal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -20,11 +22,13 @@ import {
 } from './blog.models';
 import { BlogReaderStateService } from './blog-reader-state.service';
 import { MarkdownRendererService } from './markdown-renderer.service';
+import { MermaidRendererService } from './mermaid-renderer.service';
+import { SystemTheme, ThemeService } from '../../../services/theme';
 
 @Component({
   selector: 'app-blog',
   imports: [CommonModule],
-  providers: [BlogReaderStateService, MarkdownRendererService],
+  providers: [BlogReaderStateService, MarkdownRendererService, MermaidRendererService],
   templateUrl: './blog.html',
   styleUrl: './blog.css',
 })
@@ -38,7 +42,10 @@ export class BlogComponent implements OnInit, OnDestroy {
   private scrollSaveTimer?: number;
   private copyResetTimer?: number;
   private restoreAnimationFrame?: number;
+  private mermaidRenderFrame?: number;
   private readonly renderCache = new Map<string, RenderedMarkdown>();
+  private readonly themeService = inject(ThemeService);
+  private readonly mermaidRenderer = inject(MermaidRendererService);
 
   readonly categories = BLOG_CATEGORIES;
   readonly posts = signal<BlogPost[]>([]);
@@ -53,6 +60,13 @@ export class BlogComponent implements OnInit, OnDestroy {
   readonly errorMessage = signal('');
   readonly readingProgress = signal(0);
   readonly showBackToTop = signal(false);
+  private readonly mermaidRenderEffect = effect(() => {
+    const theme = this.themeService.theme();
+    const content = this.renderedContent();
+    const loading = this.isLoading();
+    if (!content || loading) return;
+    this.queueMermaidRender(theme);
+  });
 
   readonly filteredPosts = computed(() => {
     const keyword = normalizeSearch(this.query());
@@ -113,6 +127,7 @@ export class BlogComponent implements OnInit, OnDestroy {
     if (this.scrollSaveTimer !== undefined) window.clearTimeout(this.scrollSaveTimer);
     if (this.copyResetTimer !== undefined) window.clearTimeout(this.copyResetTimer);
     if (this.restoreAnimationFrame !== undefined) cancelAnimationFrame(this.restoreAnimationFrame);
+    if (this.mermaidRenderFrame !== undefined) cancelAnimationFrame(this.mermaidRenderFrame);
   }
 
   onSearch(event: Event): void {
@@ -367,6 +382,15 @@ export class BlogComponent implements OnInit, OnDestroy {
     };
 
     this.restoreAnimationFrame = requestAnimationFrame(restore);
+  }
+
+  private queueMermaidRender(theme: SystemTheme): void {
+    if (this.mermaidRenderFrame !== undefined) cancelAnimationFrame(this.mermaidRenderFrame);
+    this.mermaidRenderFrame = requestAnimationFrame(() => {
+      this.mermaidRenderFrame = undefined;
+      const container = this.articleScroll?.nativeElement.querySelector<HTMLElement>('.markdown-body');
+      if (container) void this.mermaidRenderer.renderAll(container, theme);
+    });
   }
 
   private updateActiveHeading(container: HTMLElement): void {

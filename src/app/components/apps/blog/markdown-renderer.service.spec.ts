@@ -47,4 +47,18 @@ int main() { return 0; }
     expect(result.html).toContain('target="_blank"');
     expect(result.html).toContain('rel="noopener noreferrer"');
   });
+
+  it('keeps Mermaid source in a renderable diagram frame', async () => {
+    const result = await service.render(`
+\`\`\`mermaid
+sequenceDiagram
+  Client->>Server: Request
+\`\`\`
+`);
+
+    expect(result.html).toContain('class="mermaid-frame mermaid-pending"');
+    expect(result.html).toContain('class="mermaid-source"');
+    expect(result.html).toContain('sequenceDiagram');
+    expect(result.html).not.toContain('data-code-copy');
+  });
 });
