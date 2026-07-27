@@ -1,5 +1,70 @@
 [
   {
+    "id": "sovd-http2-reverse-channel",
+    "title": "方案二：HTTP/2 反向诊断通道",
+    "excerpt": "由 T-Box 主动建立 TLS 1.3 与 HTTP/2 反向诊断通道，介绍连接认证、心跳维护、断线重连和任务恢复流程。",
+    "date": "2026-07-27",
+    "category": "学习",
+    "tags": [
+      "SOVD",
+      "HTTP/2",
+      "TLS 1.3",
+      "T-Box",
+      "反向通道"
+    ],
+    "file": "/assets/blog/posts/%E6%96%B9%E6%A1%88%E4%BA%8C%EF%BC%9AHTTP2%E5%8F%8D%E5%90%91%E8%AF%8A%E6%96%AD%E9%80%9A%E9%81%93.md",
+    "searchText": "方案：HTTP/2 反向诊断通道 方案说明 T-Box 通过 4G/5G 网络主动与云端建立 TLS 1.3＋HTTP/2 双向诊断通道。云端通过该通道转发给车端 T-Box； T-Box 再访问车内 SOVD Server，并通过原通道返回响应。 T-Box 中设置 SOVD Gateway 模块，连接、转发 sequenceDiagram participant C as 云端连接管理服务 participant T as 车端 T-Box Note over C,T: 一、建立车云安全连接 T- C: TLS 1.3握手（提交设备证书） T- C: 建立HTTP/2反向通道（vehicleId、Token、能力信息） C- C: 校验证书、车辆身份、Token和访问权限 alt 认证失败 C-- T: 拒绝连接并返回失败原因 else 认证成功 C- C: 创建sessionId并绑定车辆与通道路由 C-- T: 通道建立成功（sessionId、心跳周期） end sequenceDiagram participant C as 云端连接管理服务 participant T as 车端 T-Box Note over C,T: 二、连接保持与状态维护 loop 连接有效期间 T- C: 心跳/PING（sessionId、车辆状态） C-- T: 心跳确认 C- C: 更新车辆在线状态和最后心跳 end Note over C,T: 三、连接中断检测 C-xT: 4G/5G网络中断或连接异常 C- C: 连续多个心跳周期未收到响应 C- C: 将当前session标记为心跳超时 C- C: 暂停通过旧通道发送新请求 sequenceDiagram participant C as 云端连接管理服务 participant T as 车端 T-Box Note over C,T: 四、T-Box退避重连 T- T: 等待5秒后尝试重连 T-xC: 第一次重连失败 T- T: 按10秒、30秒上限继续退避 T- C: TLS 1.3重新握手成功 T- C: 建立新HTTP/2反向通道并提交恢复信息 C- C: 重新校验车辆身份和证书，关闭旧通道路由 C- C: 将车辆绑定到新通道 C- C: 核对云端与车端任务状态 C-- T: 返回新sessionId和任务恢复指令 Note over C,T: 五、连接与任务状态恢复 alt 存在已完成但未上传的结果 T-- C: 通过新通道补传结果 C- C: 保存结果并更新任务状态 else 存在正在执行的任务 T-- C: 上报当前任务状态 C- C: 恢复任务进度跟踪 else 存在未确认的待执行任务 C- C: 重新校验任务有效期和权限 C- T: 重新发送未确认任务 T- T: 根据taskId进行幂等检查 else 控制任务状态不明确 C- T: 查询原任务执行状态 T-- C: 返回未执行/执行中/已完成 C- C: 标记为待确认，不自动重复执行 end C- C: 将车辆状态更新为已恢复连接"
+  },
+  {
+    "id": "sovd-mqtt-https",
+    "title": "方案三：MQTT＋HTTPS",
+    "excerpt": "使用 MQTT 承载车辆连接、任务通知与进度消息，使用 HTTPS 获取任务详情并上传完整诊断结果。",
+    "date": "2026-07-27",
+    "category": "学习",
+    "tags": [
+      "SOVD",
+      "MQTT",
+      "HTTPS",
+      "弱网",
+      "车云连接"
+    ],
+    "file": "/assets/blog/posts/%E6%96%B9%E6%A1%88%E4%B8%89%EF%BC%9AMQTT%2BHTTPS.md",
+    "searchText": "方案：MQTT＋HTTPS 方案说明 T-Box主动与云MQTT Broker建立长连接。 MQTT负责车辆上线、连接保持、诊断任务通知、业务确认、执行进度和完成通知。 HTTPS负责获取完整任务计划，以及上传完整诊断结果、日志和大型文件。 MQTT Broker部署在云端，负责车辆连接、Topic路由、QoS投递和会话管理。 T-Box中设置SOVD Gateway模块，负责MQTT连接、任务解析、SOVD请求转换、结果上传和断线恢复。 sequenceDiagram participant C as 云端连接管理服务（含MQTT Broker） participant T as 车端 T-Box Note over C,T: 一、建立车云安全连接 T- C: MQTT/TLS连接（设备证书、vehicleId、Token） C- C: 校验车辆身份、证书和Topic权限 alt 认证失败 C-- T: 拒绝连接并返回失败原因 else 认证成功 C-- T: 返回连接成功 T- C: 订阅车辆任务Topic C- C: 创建sessionId并标记车辆在线 end Note over C,T: 二、连接保持 loop 连接有效期间 T- C: MQTT Keep Alive及车辆状态 C- C: 更新最后心跳和在线状态 end sequenceDiagram participant C as 云端连接管理服务（含MQTT Broker） participant T as 车端 T-Box Note over C,T: 三、连接中断 C-xT: 4G/5G网络中断或连接异常 C- C: Keep Alive超时 C- C: 将车辆标记为离线 C- C: 保存未发送的诊断任务 Note over C,T: 四、退避重连 T- T: 按5秒、10秒、30秒间隔重试 T- C: 重新建立MQTT/TLS连接 C- C: 重新校验车辆身份并恢复会话 C-- T: 返回连接恢复成功 T- C: 上报当前taskId和任务状态 C- C: 核对未完成任务和待上传结果 C-- T: 返回继续执行、补传结果或取消任务 C- C: 将车辆状态更新为已连接 sequenceDiagram participant C as 云端连接管理服务（含MQTT Broker） participant T as 车端 T-Box C- C: 创建诊断任务并生成taskId C- T: MQTT QoS 1下发任务通知（taskId、taskUrl、expiresAt） T- T: 校验taskId和任务有效期 T-- C: MQTT返回任务通知已收到 T- C: HTTPS获取完整任务计划（taskUrl） C-- T: 返回SOVD请求方法、URL和参数 T- T: 校验执行权限和任务内容 T-- C: MQTT返回任务已接受 T- T: 调用车内SOVD Server执行诊断 T-- C: MQTT上报执行进度 T- C: HTTPS上传完整诊断结果 C- C: 保存结果并将任务标记为完成 C-- T: 返回结果保存成功 优点 保留MQTT在弱网、心跳和长连接方面的优势。 大规模和弱网能力最好 HTTPS上传成功后直接完成任务，减少重复完成通知。 后续仍可扩展为更完整的Topic和任务恢复机制。 强调弱网、离线消息和规模扩展 不足 需在云端部署MQTT Broker。 需要同时开发MQTT任务消息和HTTPS结果接口。 SOVD请求需要封装成MQTT任务。 诊断任务参数过大时，仍需改为通过HTTPS获取。"
+  },
+  {
+    "id": "sovd-websocket-https",
+    "title": "方案一：WebSocket＋HTTPS",
+    "excerpt": "使用 WSS 长连接承载车云双向诊断消息，并通过认证、心跳、退避重连和任务恢复保障连接可靠性。",
+    "date": "2026-07-27",
+    "category": "学习",
+    "tags": [
+      "SOVD",
+      "WebSocket",
+      "HTTPS",
+      "T-Box",
+      "车云连接"
+    ],
+    "file": "/assets/blog/posts/%E6%96%B9%E6%A1%88%E4%B8%80%EF%BC%9AWebSocket%2BHTTPS.md",
+    "searchText": "方案：WebSocket＋HTTPS 方案说明 T-Box主动建立WSS长连接，云端和T-Box通过同一连接双向发送消息。 云端请求封装成WebSocket消息 T-Box解析任务，将返回结果封装成WebSocket消息返回云 sequenceDiagram participant C as 云端连接管理服务 participant T as 车端 T-Box Note over C,T: 一、建立车云安全连接 T- C: TLS 1.3握手（提交设备证书） T- C: 建立WSS连接（vehicleId、Token、能力信息） C- C: 校验证书、车辆身份、Token和访问权限 alt 认证失败 C-- T: 关闭连接并返回认证失败原因 else 认证成功 C- C: 创建sessionId并绑定车辆与WebSocket连接 C-- T: 返回连接成功消息（sessionId、心跳周期） end sequenceDiagram participant C as 云端连接管理服务 participant T as 车端 T-Box Note over C,T: 二、连接保持与状态维护 loop 连接有效期间 C- T: WebSocket Ping T-- C: WebSocket Pong T- C: 上报业务心跳（sessionId、车辆状态） C- C: 更新车辆在线状态和最后心跳 end Note over C,T: 三、连接中断检测 C-xT: 4G/5G网络中断或WebSocket连接异常 C- C: 连续多个心跳周期未收到响应，标记为心跳超时 C- C: 暂停旧连接，将未发送任务保存在云端任务队列 sequenceDiagram participant C as 云端连接管理服务 participant T as 车端 T-Box Note over C,T: 四、T-Box退避重连 T- T: 等待5秒后尝试重连 T-xC: 第一次重连失败 T- T: 按10秒、30秒上限继续退避 T- C: TLS 1.3重新握手成功 T- C: 建立新WSS连接并提交恢复信息 C- C: 重新校验车辆身份和证书、关闭旧连接 C- C: 绑定到新连接、核对云车任务状态 C-- T: 返回新sessionId和任务恢复指令 Note over C,T: 五、连接与任务状态恢复 alt 存在已完成但未上传的结果 T- C: 通过HTTPS补传完整结果 C-- T: 返回结果保存成功 T-- C: WebSocket通知任务完成 C- C: 更新任务状态 else 存在正在执行的任务 T-- C: WebSocket上报当前任务状态 C- C: 恢复任务进度跟踪 else 存在未确认的待执行任务 C- C: 重新校验任务有效期和权限 C- T: WebSocket重新发送未确认任务 T- T: 根据taskId进行幂等检查 T-- C: 返回任务确认或已有任务状态 else 控制任务状态不明确 C- T: WebSocket查询原任务执行状态 T-- C: 返回未执行/执行中/已完成 C- C: 标记为待确认，不自动重复执行 end C- C: 将车辆状态更新为已恢复连接 优点 WebSocket原生双向通信，云端实时下发诊断、控制任务 任务、确认、进度和小型结果可以通过同一连接传输 不需要单独部署MQTT Broker 缺点 无MQTT原生的QoS、持久会话和离线消息能力 消息确认、重试、超时、幂等和任务补偿需要应用层自行实现 车辆数量增加后需要建设WebSocket连接集群、会话路由和负载均衡 服务节点故障后，车辆需要重新连接并恢复会话"
+  },
+  {
+    "id": "sovd-vehicle-cloud-connection-comparison",
+    "title": "SOVD 车云连接方案对比",
+    "excerpt": "对比 WebSocket＋HTTPS、HTTP/2 反向诊断通道与 MQTT＋HTTPS 三种 SOVD 车云连接方案的交互方式、适用规模、优势与限制。",
+    "date": "2026-07-27",
+    "category": "学习",
+    "tags": [
+      "SOVD",
+      "车云诊断",
+      "架构设计",
+      "WebSocket",
+      "HTTP/2",
+      "MQTT"
+    ],
+    "file": "/assets/blog/posts/%E8%BD%A6%E4%BA%91%E8%AF%8A%E6%96%AD%E8%BF%9E%E6%8E%A5%E6%96%B9%E6%A1%88%E5%AF%B9%E6%AF%94.md",
+    "searchText": "SOVD 车云连接方案 角色 角色 主要职责 --- --- 云端诊断页面 选择车辆、获取拓扑、配置诊断、下发任务、展示进度与结果 云端连接管理服务 车辆认证、在线会话、请求路由、任务管理、结果存储和状态推送 车端 T-Box 主动连云、维护连接、接收请求、执行安全校验、访问车内 SOVD Server SOVD Server 提供拓扑、资源能力和诊断接口，将请求转换为车内诊断操作 车辆控制器 执行实际的数据读取、故障读取和操作控制 方案1：websocket＋HTTPS 1 方案说明 T-Box主动建立WSS长连接，云端和T-Box通过同一连接双向发送消息。 云端请求封装成WebSocket消息 T-Box解析后调用车内SOVD Server 收到返回结果封装成WebSocket消息返回云 2 交互 sequenceDiagram participant C as 云端连接管理服务 participant T as 车端 T-Box participant S as SOVD Server participant E as 车辆控制器 T- C: 建立WSS连接 T- C: 发送车辆标识、证书或Token C- C: 校验车辆身份和权限 C-- T: 返回认证成功、sessionId和心跳周期 loop 连接保持 C- T: WebSocket Ping T-- C: WebSocket Pong end sequenceDiagram participant C as 云端连接管理服务 participant T as 车端 T-Box participant S as SOVD Server participant E as 车辆控制器 C- T: WebSocket发送SOVD请求消息 T-- C: 返回任务已接收 T- S: GET /components、/apps、/areas、/functions S- E: 获取控制器和能力信息 E-- S: 返回控制器信息 S-- T: 返回SOVD拓扑 T-- C: WebSocket返回SOVD响应 C- T: WebSocket发送诊断请求 T-- C: 返回执行中 T- S: 执行faults、data-list或operation S- E: 执行车辆诊断 E-- S: 返回诊断数据 S-- T: 返回SOVD响应 T-- C: 返回诊断结果 方案2：HTTP/2 反向诊断通道 1 方案说明 T-Box 通过 4G/5G 网络主动与云端建立 TLS 1.3＋HTTP/2 双向诊断通道。云端通过该通道转发给车端 T-Box； T-Box 再访问车内 SOVD Server，并通过原通道返回响应。 T-Box 中设置 SOVD Gateway 模块，连接、转发 2 连接与保持 sequenceDiagram participant C as 云端连接管理服务 participant T as 车端 T-Box participant S as SOVD Server participant E as 车辆控制器 T- C: 建立TLS 1.3连接 T- C: HTTP/2 CONNECT建立反向隧道 T- C: 提交vehicleId、设备证书、能力信息 C- C: 校验证书、车辆身份和权限 C-- T: 返回sessionId、心跳周期和隧道配置 loop 连接保持 T- C: 心跳/PING C-- T: 心跳确认 end 3 诊断 诊断必须先发现车辆当前 SOVD 拓扑，再确定诊断范围。 sequenceDiagram participant C as 云端连接管理服务 participant T as 车端 T-Box participant S as SOVD Server participant E as 车辆控制器 C- T: 隧道转发 GET /components T- S: GET /components S- E: 获取控制器信息 E-- S: 返回拓扑信息 S-- T: SOVD JSON响应 T-- C: 隧道回传响应 C- T: 转发/apps、/areas、/functions T- S: 调用对应SOVD接口 S-- T: 返回实体及资源能力 T-- C: 回传拓扑和能力 4 优点 保留 HTTP 方法、SOVD URL、请求体和响应状态，符合 SOVD 的 REST 接口形式。 HTTP/2 多路复用支持在一条车云连接上并发处理多个逻辑请求。 5 不足 需要实现 HTTP/2 反向通道的会话路由、访问控制和运行监控。 心跳、断线重连、会话恢复、离线任务和请求幂等需要业务层设计。 大型升级包和 Bulk Data 不宜长期占用诊断隧道，需要独立 HTTPS 上传或下载。 方案3：MQTT＋HTTPS 1 方案说明 MQTT：连接状态、心跳、任务通知、确认、进度、完成通知 HTTPS：任务详情、拓扑、完整 SOVD 响应、日志和文件 2 交互 sequenceDiagram participant C as 云端连接管理服务 participant T as 车端 T-Box participant S as SOVD Server participant E as 车辆控制器 T- C: MQTT/TLS 主动连接并认证 T- C: MQTT 心跳和车辆状态 C- T: MQTT QoS 1 下发任务通知 T-- C: MQTT 返回业务确认 T- C: HTTPS 获取完整任务计划 T- S: HTTP 调用 SOVD 接口 S- E: 执行车辆诊断 E-- S: 返回控制器结果 S-- T: 返回 SOVD 响应 T- C: HTTPS 上传完整结果 T-- C: MQTT 通知完成或失败 3 优点 MQTT 适合车辆长期在线和 4G/5G 弱网环境。 任务通知与大型数据分离，适合大量车辆在线和后续规模扩大。 容易扩展远程控制、升级通知和其他异步车云消息。 4 不足 需要同时 建设 MQTT Broker、消息接口和 HTTPS 数据接口。 SOVD HTTP 请求需要封装成诊断任务，不能直接透明转发 URL 。 需要T-Box 支持 MQTT 协议。 方案对比 HTTP/2反向诊断通道 WebSocket＋HTTPS MQTT＋HTTPS -------------------- ------------------------------ ------------------------------------- ----------------------------------- 云端主动发起诊断 通过隧道转发HTTP/SOVD请求 通过WebSocket下发诊断消息 通过MQTT下发任务通知 SOVD接口适配 原生HTTP语义，适配好 需要封装成消息 需要封装为任务模型 早期原型开发 需实现反向通道 三种方案中相对容易 需要同时开发MQTT和HTTP 车辆规模 适合中小规模 适合中小规模 适合更大规模 开发复杂度 中 中 中高 主要优势 SOVD请求透明调试直观 双向交互直观、实现相对简单 弱网可靠性和规模扩展较好 主要不足 通道、重连和安全代理需自行建设 无原生QoS和离线消息，可靠性机制需自建 需要在云端部署和运维 MQTT Broker 综合判断 SOVD适配最好 实现难度与双向能力最均衡 大规模和弱网能力最好 只有SSE场景明确需要保持连接 SOVD对以下场景使用Server-Sent Events： cyclic-subscriptions 周期数据； triggers 触发事件； 持续返回增量诊断数据。 断连后恢复 大规模车辆连接问题 车云连接受影响业务背景 连接保持场景 什么情况连接断线 连接建立 远程诊断 数据上报"
+  },
+  {
     "id": "welcome",
     "title": "欢迎来到我的博客",
     "excerpt": "关于这个 Markdown 博客阅读器，以及如何添加新文章。",
