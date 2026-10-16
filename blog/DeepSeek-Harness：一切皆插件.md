@@ -2,7 +2,7 @@
 id: deepseek-harness-everything-is-a-plugin
 title: "DeepSeek Harness：当 Agent 开始相信『一切皆插件』"
 excerpt: "DeepSeek Harness 最近很火。比起又一个 AI 编程工具，我更想聊聊它为什么把模型、工具、会话、沙箱，甚至 Agent Loop 都做成插件，以及这种设计真正解决了什么问题。"
-date: "2026-10-16"
+date: "2026-10-09"
 category: "Coding"
 tags: ["DeepSeek", "AI Agent", "Harness", "Plugin", "Cordis"]
 ---
