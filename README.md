@@ -1,92 +1,88 @@
-# Ubuntu Portfolio - Eve Liang
+# bcpm Blog
 
-A personal portfolio website with Ubuntu theme built with Angular, deployed at [https://bcpm-coder.github.io/](https://bcpm-coder.github.io/).
+一个以 macOS 桌面为设计灵感的个人主页与 Markdown 博客，记录学习笔记、项目实践与生活片段。
 
-A modern desktop environment simulator built with Angular 19, providing a complete Ubuntu desktop experience.
+🌐 在线访问：[https://bcpm-coder.github.io/](https://bcpm-coder.github.io/)
 
-## Tech Stack
+## 项目简介
 
-- **Angular 19** - Frontend framework with component-based architecture and reactive data binding
-- **TypeScript** - Type-safe JavaScript superset
-- **Tailwind CSS** - Utility-first CSS framework for rapid UI development
-- **Angular Signals** - Reactive state management for efficient data flow
-- **Angular CDK** - Component development kit providing accessibility and interaction features
+项目使用 Angular 构建，将个人主页设计成可交互的桌面系统。访客可以从锁屏进入桌面，在窗口中阅读博客、浏览个人项目、切换主题与壁纸，也可以体验内置小游戏和音乐播放器。页面同时适配桌面端与移动端，并通过 GitHub Actions 自动部署到 GitHub Pages。
 
-## Features
+## 主要功能
 
-- Ubuntu desktop environment simulation
-- Window management system (drag, resize, minimize/maximize)
-- Sidebar application launcher
-- Multiple application windows (About, Projects, Skills, Contact, Terminal, VS Code, Chrome, Settings)
-- Background image switching
-- Desktop icon shortcuts
-- Responsive design (mobile and desktop support)
+- macOS 风格锁屏、启动过渡、桌面、Dock 与窗口管理
+- Light / Dark 全局主题及静态、动态壁纸
+- Markdown 博客阅读器，支持全文搜索、分类、目录和阅读进度
+- 代码高亮、KaTeX 公式、Mermaid 图表与代码复制
+- 个人简介、项目经历与技术栈展示
+- APlayer 本地音乐播放器
+- 2048、Card 2048 与 Hextris 小游戏
+- 桌面端和移动端响应式适配
+- GitHub Actions 自动构建与部署
 
-## Getting Started
+## 技术栈
 
-### Install Dependencies
+- Angular 21、TypeScript、Angular Signals
+- Tailwind CSS、CSS
+- Marked、Highlight.js、KaTeX、Mermaid、DOMPurify
+- APlayer
+- GitHub Actions、GitHub Pages
+
+## 本地运行
 
 ```bash
 npm install
-```
-
-### Development Mode
-
-```bash
 npm run dev
-# or
-npm start
 ```
 
-Visit http://localhost:4200 to view the development version
+打开 [http://localhost:4200](http://localhost:4200) 即可预览。
 
-### Add Wallpapers
-
-Place `.png`, `.jpg`, `.jpeg`, `.webp`, `.avif`, `.mp4`, or `.webm` files in
-`src/assets/images/wallpapers/`, then restart `npm run dev`. The wallpaper catalog is
-generated automatically before development and production builds.
-
-### Build for Production
+生产构建：
 
 ```bash
 npm run build
 ```
 
-Built files will be in the `dist/ubuntu-portfolio/browser/` directory.
+构建产物位于 `dist/ubuntu-portfolio/browser/`。
 
-## Project Structure
+## 添加博客文章
 
+将 Markdown 文件直接放入 `blog/` 目录。开发或构建前，脚本会自动扫描文章并生成目录；文章按照日期从新到旧排列。
+
+推荐在文件顶部添加 Frontmatter：
+
+```yaml
+---
+id: unique-post-id
+title: 文章标题
+excerpt: 一句话摘要
+date: 2026-10-16
+category: Coding
+tags:
+  - Angular
+  - TypeScript
+---
 ```
-src/
-├── app/
-│   ├── components/          # Components directory
-│   │   ├── desktop/        # Desktop main component
-│   │   ├── window/         # Window component
-│   │   ├── sidebar/        # Sidebar component
-│   │   ├── navbar/         # Top navigation bar
-│   │   └── apps/           # Application components
-│   └── services/           # Services directory
-│       ├── app-config.ts   # Application configuration service
-│       └── window-manager.ts # Window management service
-├── assets/                 # Static assets
-│   ├── images/            # Image resources
-│   └── themes/            # Theme resources
-└── styles.css             # Global styles
+
+支持的分类为 `Coding`、`学习`、`生活` 和 `碎碎念`。未填写部分元数据时，生成脚本会尝试从文件名和正文中自动提取。
+
+## 添加壁纸
+
+将 `.png`、`.jpg`、`.jpeg`、`.webp`、`.avif`、`.mp4` 或 `.webm` 文件放入 `src/assets/images/wallpapers/`，重新运行开发服务或生产构建后即可在设置中选择。
+
+## 目录结构
+
+```text
+blog/                         Markdown 文章源文件
+scripts/                      博客与壁纸清单生成脚本
+src/app/components/           桌面、窗口及应用组件
+src/app/services/             主题、壁纸与窗口管理服务
+src/assets/                   图片、音乐、游戏等静态资源
+.github/workflows/deploy.yml  GitHub Pages 部署流程
 ```
 
-## Customization
+## 作者
 
-### Modify Personal Information
+**不吃泡面** · Graduate Student at BUPT
 
-Edit the configuration in `src/app/services/app-config.ts`:
-- Application list and icons
-- Desktop shortcuts
-- Sidebar favorite applications
-
-### Modify Application Content
-
-Edit the corresponding application components:
-- `src/app/components/apps/about/` - About page
-- `src/app/components/apps/projects/` - Projects showcase
-- `src/app/components/apps/skills/` - Skills list
-- `src/app/components/apps/contact/` - Contact information
+[GitHub @bcpm-coder](https://github.com/bcpm-coder)
