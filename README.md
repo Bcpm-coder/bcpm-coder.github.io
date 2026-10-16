@@ -1,6 +1,6 @@
 # bcpm Blog
 
-一个以 macOS 桌面为设计灵感的个人主页与 Markdown 博客，记录学习笔记、项目实践与生活片段。
+一个以 Ubuntu 桌面为设计灵感的个人主页与 Markdown 博客，记录学习笔记、项目实践与生活片段。
 
 🌐 在线访问：[https://bcpm-coder.github.io/](https://bcpm-coder.github.io/)
 
@@ -10,7 +10,7 @@
 
 ## 主要功能
 
-- macOS 风格锁屏、启动过渡、桌面、Dock 与窗口管理
+- Ubuntu 风格锁屏、启动过渡、桌面、侧边栏与窗口管理
 - Light / Dark 全局主题及静态、动态壁纸
 - Markdown 博客阅读器，支持全文搜索、分类、目录和阅读进度
 - 代码高亮、KaTeX 公式、Mermaid 图表与代码复制

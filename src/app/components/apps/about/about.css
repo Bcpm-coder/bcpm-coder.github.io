@@ -474,6 +474,40 @@
   line-height: 1.25;
 }
 
+.portfolio-project-card h2 a {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.portfolio-project-card h2 a:hover {
+  color: var(--system-accent);
+}
+
+.portfolio-project-card h2 a:focus-visible {
+  border-radius: 5px;
+  outline: 2px solid var(--system-accent);
+  outline-offset: 3px;
+}
+
+.portfolio-project-card h2 svg {
+  width: .78em;
+  height: .78em;
+  flex: 0 0 auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+  transition: transform .18s ease;
+}
+
+.portfolio-project-card h2 a:hover svg {
+  transform: translate(2px, -2px);
+}
+
 .portfolio-project-card > p {
   margin: 19px 0;
   color: var(--system-text-secondary);
@@ -616,5 +650,6 @@
   .section-panel { animation: none; }
   .section-navigation button,
   .skill-card,
-  .contact-card { transition: none; }
+  .contact-card,
+  .portfolio-project-card h2 svg { transition: none; }
 }

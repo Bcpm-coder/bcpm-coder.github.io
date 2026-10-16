@@ -14,7 +14,7 @@ export interface App {
 
 export interface PortfolioProject {
   name: string;
-  company?: string;
+  url: string;
   technologies: string[];
   description: string;
   impact: string[];
@@ -31,23 +31,25 @@ export const PORTFOLIO_PROFILE = {
 
 export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
   {
-    name: 'Black Horse Review Platform',
-    technologies: ['Spring Boot', 'MySQL', 'Redis'],
-    description: 'A local lifestyle review application inspired by Dianping, built with Spring Boot, MySQL, and Redis.',
+    name: 'EchoMind',
+    url: 'https://github.com/Bcpm-coder/EchoMind',
+    technologies: ['Python', 'FastAPI', 'Anthropic SDK', 'Redis', 'ChromaDB', 'Docker', 'Prometheus'],
+    description: 'A multi-agent customer service system for support and operations, covering the complete conversation flow from intent recognition and knowledge retrieval to agent routing and memory persistence.',
     impact: [
-      'Supports user authentication, merchant discovery, coupon flash sales, social interactions, and user-generated reviews.',
-      'Uses Redis for caching, distributed locking, session management, and high-concurrency order processing to improve performance and system reliability.',
+      'Combines LLM inference, vector similarity, and keyword rules to identify intent, urgency, and entities.',
+      'Routes requests across General, Technical, Billing, and Escalation agents with collaboration and response synthesis.',
+      'Integrates RAG, layered memory, dynamic skills, tool tracing, circuit breaking, online monitoring, and LLM-as-Judge evaluation.',
     ],
   },
   {
-    name: 'Sales Data Analysis AI Agent',
-    technologies: ['Spring Boot', 'LangChain4j', 'MySQL', 'Redis', 'Qwen-Max', 'SSE'],
-    description: 'A sales data analysis AI Agent that enables sales managers to query business data through natural language without requiring additional reports or APIs.',
+    name: 'hmdp · Black Horse Review Platform',
+    url: 'https://github.com/Bcpm-coder/hmdp',
+    technologies: ['Java', 'Spring Boot', 'MyBatis-Plus', 'MySQL', 'Redis', 'Redisson', 'Caffeine', 'RocketMQ'],
+    description: 'A Dianping-inspired local lifestyle review platform with authentication, merchant discovery, social interactions, user-generated reviews, and coupon flash sales.',
     impact: [
-      'Provides five standardized tools for order queries, performance rankings, trend analysis, chart generation, and anomaly detection.',
-      'Supports multi-step tool calling, SSE streaming, conversation memory, role-based data access, caching, and prompt-injection protection.',
-      'Explicit capability boundaries improve tool-selection accuracy, while dynamic date injection ensures reliable handling of relative-time queries.',
-      'A limited ReAct iteration count prevents repeated tool calls and excessive token consumption, reducing report generation time from several hours to a few minutes.',
+      'Uses Redis pre-deduction, an outbox relay, and RocketMQ consumers to process flash-sale orders asynchronously with idempotency and failure compensation.',
+      'Introduces a Caffeine and Redis two-level cache with transaction-aware invalidation and cross-instance Pub/Sub notifications.',
+      'Implements reusable Redis sliding-window rate limiting for user, IP, and global dimensions through Spring AOP and Lua scripts.',
     ],
   },
 ];
