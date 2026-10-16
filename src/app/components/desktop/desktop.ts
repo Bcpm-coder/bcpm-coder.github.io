@@ -107,7 +107,6 @@ export class DesktopComponent implements OnInit, OnDestroy {
 
   beginDesktopEntry() {
     this.bootShieldVisible.set(true);
-    this.startDesktopMusic();
   }
 
   startDesktopMusic() {
@@ -123,6 +122,7 @@ export class DesktopComponent implements OnInit, OnDestroy {
   finishBoot() {
     this.desktopPhase.set('ready');
     this.bootShieldVisible.set(false);
+    this.startDesktopMusic();
   }
 
   startExternalMusicDrag(event: PointerEvent) {

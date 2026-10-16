@@ -8,14 +8,25 @@ import { WallpaperService } from '../../services/wallpaper';
 })
 export class WallpaperBackgroundComponent implements OnDestroy {
   readonly videoFailed = signal(false);
+  readonly videoSourceReady = signal(false);
   private activeVideo?: HTMLVideoElement;
   private retryTimer?: number;
+  private videoSourceTimer?: number;
   private retryAttempt = 0;
   private playPending = false;
 
   private readonly retryPlayback = () => this.tryPlay();
   private readonly retryWhenVisible = () => {
     if (document.visibilityState === 'visible') this.tryPlay();
+  };
+  private readonly prepareVideoSource = () => {
+    if (this.videoSourceReady() || this.videoSourceTimer !== undefined) return;
+
+    // Let the poster and application shell paint before the video competes for bandwidth.
+    this.videoSourceTimer = window.setTimeout(() => {
+      this.videoSourceTimer = undefined;
+      this.videoSourceReady.set(true);
+    }, 200);
   };
 
   constructor(public readonly wallpaperService: WallpaperService) {
@@ -39,6 +50,12 @@ export class WallpaperBackgroundComponent implements OnDestroy {
     document.addEventListener('click', this.retryPlayback, true);
     document.addEventListener('visibilitychange', this.retryWhenVisible);
     window.addEventListener('pageshow', this.retryPlayback);
+
+    if (document.readyState === 'complete') {
+      this.prepareVideoSource();
+    } else {
+      window.addEventListener('load', this.prepareVideoSource, { once: true });
+    }
   }
 
   onVideoLoaded(event: Event): void {
@@ -74,9 +91,13 @@ export class WallpaperBackgroundComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this.clearRetry();
+    if (this.videoSourceTimer !== undefined) {
+      window.clearTimeout(this.videoSourceTimer);
+    }
     document.removeEventListener('click', this.retryPlayback, true);
     document.removeEventListener('visibilitychange', this.retryWhenVisible);
     window.removeEventListener('pageshow', this.retryPlayback);
+    window.removeEventListener('load', this.prepareVideoSource);
   }
 
   private tryPlay(): void {

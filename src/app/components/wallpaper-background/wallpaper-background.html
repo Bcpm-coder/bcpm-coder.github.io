@@ -8,7 +8,7 @@
     class="wallpaper-image"
     [style.background-image]="'url(\'' + wallpaperService.effectiveWallpaper().assetUrl + '\')'">
   </div>
-} @else if (!videoFailed()) {
+} @else if (videoSourceReady() && !videoFailed()) {
   <video
     class="wallpaper-video"
     [src]="wallpaperService.effectiveWallpaper().assetUrl"
@@ -17,7 +17,7 @@
     [muted]="true"
     loop
     playsinline
-    preload="auto"
+    preload="metadata"
     (loadeddata)="onVideoLoaded($event)"
     (canplay)="onVideoCanPlay($event)"
     (playing)="onVideoPlaying()"
