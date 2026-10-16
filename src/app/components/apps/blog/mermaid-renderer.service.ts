@@ -22,6 +22,9 @@ export class MermaidRendererService {
       startOnLoad: false,
       securityLevel: 'strict',
       suppressErrorRendering: true,
+      // SVG text survives sanitization; HTML labels use stripped foreignObject nodes.
+      htmlLabels: false,
+      flowchart: { htmlLabels: false },
       theme: theme === 'dark' ? 'dark' : 'default',
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", sans-serif',
     });
